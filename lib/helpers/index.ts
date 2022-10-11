@@ -1,1 +1,1 @@
-export * from "./color.helper";
+export * from "./authCheck.helper";

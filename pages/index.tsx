@@ -14,7 +14,7 @@ const Home: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>TimeLog Analyzer</title>
+                <title>Bachelor project</title>
                 <meta name="description" content="A wonderful TimeLog helper" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>

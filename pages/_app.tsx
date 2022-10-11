@@ -22,15 +22,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
                 }}
             >
                 <SessionProvider session={session}>
-                    <ToastsList
-                        hideToast={hideToast}
-                        messages={messages}
-                        visible={messages.length > 0}
-                        durationInSeconds={4}
-                        position={position}
-                        fadeIn={fadeIn}
-                        toast={toast}
-                    />
                     <Layout>
                         <Component {...pageProps} />
                     </Layout>
