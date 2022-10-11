@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Header, { sidebarWidth } from "./header";
 import styled from "styled-components";
 import { mq } from "../../util/media-queries";
 import PageTransition from "../pageTransition/pageTransition";
@@ -24,33 +23,12 @@ const Layout = ({ children }: Layout) => {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <DashboardWrapper>
-                <Header />
-                <PageTransition animationType="fade">
-                    <Main open={showNav} sidebarWidth={sidebarWidth}>
-                        {children}
-                    </Main>
-                </PageTransition>
-            </DashboardWrapper>
+            <DashboardWrapper>{children}</DashboardWrapper>
         </>
     );
 };
 export default Layout;
-export const Main = styled.main<{ open: boolean; sidebarWidth: sidebarWidth }>(
-    ({ open, sidebarWidth }) => ({
-        display: "flex",
-        width: "100%",
-        [mq("lg")]: {
-            padding: "24px",
-            height: "100vh",
-            overflowY: "auto",
-            transition: "width 0.3s ease",
-            width: open
-                ? `calc(100% - ${sidebarWidth.opened})`
-                : `calc(100% - ${sidebarWidth.closed})`,
-        },
-    })
-);
+
 export const DashboardWrapper = styled.div(({}) => ({
     display: "flex",
     width: "100%",

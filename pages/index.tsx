@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect } from "react";
 import useSWR from "swr";
 import ImpactImage from "~/components/image/image";
 import { SvgIcon } from "~/components/svg-icon";
@@ -11,11 +12,21 @@ const Home: NextPage = () => {
     const { data } = useSWR<never[]>("https://api.punkapi.com/v2/beers");
     const { data: session } = useSession();
 
+    useEffect(() => {
+        getUsers();
+    }, []);
+
+    async function getUsers() {
+        const response = await fetch(`./api/backoffice/getUserData`);
+        const data = await response.json();
+        console.log("data", data);
+    }
+
     return (
         <div>
             <Head>
                 <title>Bachelor project</title>
-                <meta name="description" content="A wonderful TimeLog helper" />
+                <meta name="description" content="Best bachelor project" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 

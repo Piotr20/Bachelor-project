@@ -1,6 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
-import { mq } from "../../util/media-queries";
 import { colors } from "../../util/colorPalette";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
