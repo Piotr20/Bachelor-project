@@ -7,19 +7,25 @@ import useSWR from "swr";
 import ImpactImage from "~/components/image/image";
 import { SvgIcon } from "~/components/svg-icon";
 import Text from "~/components/typography/text";
+import useAuth from "~/hooks/useAuth";
+import { getSession } from "next-auth/react";
 
 const Home: NextPage = () => {
     const { data } = useSWR<never[]>("https://api.punkapi.com/v2/beers");
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
+    const { authSignIn, authSignOut } = useAuth();
 
     useEffect(() => {
         getUsers();
-    }, []);
+    }, [session]);
 
     async function getUsers() {
         const response = await fetch(`./api/backoffice/getUserData`);
         const data = await response.json();
         console.log("data", data);
+        const result = await getSession();
+        console.log(status);
+        console.log("result", result);
     }
 
     return (
@@ -42,6 +48,7 @@ const Home: NextPage = () => {
                     src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
                 />
                 <Text tag="p">P text</Text>
+                <button onClick={authSignIn}>Sign in</button>
             </main>
         </div>
     );

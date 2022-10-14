@@ -1,12 +1,19 @@
 import NextAuth from "next-auth";
-import AzureADProvider from "next-auth/providers/azure-ad";
+import AzureADB2CProvider from "next-auth/providers/azure-ad-b2c";
 
-export default NextAuth({
+export const authOptions = {
+    // Configure one or more authentication providers
     providers: [
-        AzureADProvider({
-            clientId: process.env.AZURE_AD_CLIENT_ID,
-            clientSecret: process.env.AZURE_AD_CLIENT_SECRET,
-            tenantId: process.env.AZURE_AD_TENANT_ID,
+        AzureADB2CProvider({
+            tenantId: process.env.AZURE_AD_B2C_TENANT_NAME,
+            clientId: process.env.AZURE_AD_B2C_CLIENT_ID,
+            clientSecret: process.env.AZURE_AD_B2C_CLIENT_SECRET,
+            primaryUserFlow: process.env.AZURE_AD_B2C_PRIMARY_USER_FLOW,
+            authorization: {
+                params: {
+                    scope: `https://${process.env.AZURE_AD_B2C_TENANT_NAME}.onmicrosoft.com/api/Api.read offline_access openid`,
+                },
+            },
         }),
     ],
     callbacks: {
@@ -15,6 +22,7 @@ export default NextAuth({
             if (account) {
                 token.accessToken = account.access_token;
             }
+            console.log(token);
             return token;
         },
         async session({ session, token, user }) {
@@ -23,4 +31,5 @@ export default NextAuth({
             return session;
         },
     },
-});
+};
+export default NextAuth(authOptions);
