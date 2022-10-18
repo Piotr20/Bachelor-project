@@ -3,7 +3,7 @@ import { Schema, model, models } from "mongoose";
 const projectSchema = new Schema({
     name: String,
     tag: String,
-    imageUrl: String,
+    imageURL: String,
     startDate: Date,
     endDate: Date,
     people: [{ type: Schema.Types.ObjectId, ref: "User" }],

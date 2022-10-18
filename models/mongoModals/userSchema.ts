@@ -8,8 +8,11 @@ const userSchema = new Schema({
     location: String,
     role: String,
     projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
-    skills: [{ name: String, expertise: String }],
-    imageUrl: String,
+    skills: [
+        { type: Schema.Types.ObjectId, ref: "Skill" },
+        { expertise: String },
+    ],
+    imageURL: String,
 });
 
 const User = models.User || model("User", userSchema);

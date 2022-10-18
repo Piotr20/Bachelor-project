@@ -2,7 +2,7 @@ import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import { NextRouter, useRouter } from "next/router";
 
-export function authHelper(
+export async function authHelper(
     status: string,
     session: Session | null,
     router: NextRouter,
@@ -11,12 +11,20 @@ export function authHelper(
     const previousRoute = localStorage?.getItem("previousRoute");
     if (status === "unauthenticated") {
         localStorage.setItem("previousRoute", router.asPath);
-        signIn("azure-ad");
+        signIn("azure-ad-b2c");
     } else if (status === "authenticated") {
-        setUserData(session?.user);
-        if (previousRoute) {
+        const response = await fetch(`./api/backoffice/userVerify`, {
+            method: "POST",
+            body: JSON.stringify(session?.user),
+        });
+        const userVerification = await response.json();
+        console.log(userVerification);
+        if (userVerification.userExists && previousRoute) {
+            setUserData(userVerification?.user);
             localStorage?.removeItem("previousRoute");
             router.push(previousRoute);
+        } else if (userVerification.userExists === false) {
+            router.push("/signUp");
         }
     }
 }

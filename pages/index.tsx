@@ -20,14 +20,11 @@ const Home: NextPage = () => {
     }, [session]);
 
     async function getUsers() {
-        const response = await fetch(`./api/backoffice/getUserData`, {
-            headers: {},
+        /*     const response = await fetch(`./api/backoffice/userVerify`, {
+            method: "POST",
+            body: JSON.stringify(session?.user),
         });
-        const data = await response.json();
-        console.log("data", data);
-        const result = await getSession();
-        console.log(status);
-        console.log("result", result);
+        const data = await response.json(); */
     }
 
     return (

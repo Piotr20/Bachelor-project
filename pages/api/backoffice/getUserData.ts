@@ -5,22 +5,14 @@ import User from "../../../models/mongoModals/userSchema";
 import Project from "~/models/mongoModals/projectSchema";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    /*   const { authorization } = req.headers;
-    const { payload, timeNowInSeconds } = decodeJWT(authorization);
-
-    if (payload?.exp >= timeNowInSeconds) {
-        return res.status(200).json({ user: "test" });
-    } else {
-        return res.send({
-            error: "You must be signed in to view the protected content on this page.",
-        });
-    } */
-
     try {
         await connectMongo();
 
         const user = await User.findOne({
             email: "piotrpospiech00@gmail.com",
+        });
+        const project = await Project.findOne({
+            _id: "634d394693bce890a683167f",
         });
 
         /*   const project = await Project.create({
@@ -33,29 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             people: [user._id],
         }); */
 
-        const projects = await Project.aggregate([
-            {
-                $match: { _id: user._id },
-            },
-            {
-                $lookup: {
-                    from: "Project",
-                    localField: "people",
-                    foreignField: "_id",
-                    as: "projects",
-                },
-            },
-            {
-                $unwind: { path: "$users", preserveNullAndEmptyArrays: true },
-            },
-            {
-                $project: {
-                []
-                },
-            },
-        ]);
-
-        res.json({ projects });
+        res.json({ project });
     } catch (error) {
         console.log(error);
         res.json({ error });
