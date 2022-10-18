@@ -22,7 +22,7 @@ export const authOptions = {
             if (account) {
                 token.accessToken = account.access_token;
             }
-            console.log(token);
+
             return token;
         },
         async session({ session, token, user }) {

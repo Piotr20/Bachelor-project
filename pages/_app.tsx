@@ -6,6 +6,7 @@ import { defaultTheme } from "~/styles/default-theme";
 import GlobalStyles from "~/styles/global-styles";
 import { fetcher } from "~/util/fetcher";
 import { SessionProvider } from "next-auth/react";
+import HOCAuthCheck from "~/components/auth/authCheck";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     return (
@@ -18,9 +19,11 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
                 }}
             >
                 <SessionProvider session={session}>
-                    <Layout>
-                        <Component {...pageProps} />
-                    </Layout>
+                    <HOCAuthCheck>
+                        <Layout>
+                            <Component {...pageProps} />
+                        </Layout>
+                    </HOCAuthCheck>
                 </SessionProvider>
             </SWRConfig>
         </ThemeProvider>

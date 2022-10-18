@@ -20,7 +20,9 @@ const Home: NextPage = () => {
     }, [session]);
 
     async function getUsers() {
-        const response = await fetch(`./api/backoffice/getUserData`);
+        const response = await fetch(`./api/backoffice/getUserData`, {
+            headers: {},
+        });
         const data = await response.json();
         console.log("data", data);
         const result = await getSession();
@@ -39,7 +41,7 @@ const Home: NextPage = () => {
             <main>
                 This is main, welcome to main - APITestCount: {data?.length}
                 <SvgIcon svg="circlePlus" size={10} />
-                <Link href="/test">Test page</Link>
+                <Link href="/signUp">Sign up page</Link>
                 <ImpactImage
                     alt="alt text"
                     layout="fill"
@@ -49,6 +51,7 @@ const Home: NextPage = () => {
                 />
                 <Text tag="p">P text</Text>
                 <button onClick={authSignIn}>Sign in</button>
+                <button onClick={authSignOut}>Sign out</button>
             </main>
         </div>
     );
