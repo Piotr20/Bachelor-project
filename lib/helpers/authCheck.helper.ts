@@ -13,7 +13,7 @@ export async function authHelper(
         localStorage.setItem("previousRoute", router.asPath);
         signIn("azure-ad-b2c");
     } else if (status === "authenticated") {
-        const response = await fetch(`./api/backoffice/userVerify`, {
+        const response = await fetch(`./api/user/userVerify`, {
             method: "POST",
             body: JSON.stringify(session?.user),
         });

@@ -1,8 +1,22 @@
-const Step2 = () => {
+import { User } from "~/models";
+
+type StepProps = {
+    user: User;
+    setUser: (data: User) => void;
+};
+const Step2 = ({ user, setUser }: StepProps) => {
     return (
         <>
-            <label htmlFor="project">Your position:</label>
-            <input type="text" />
+            <label htmlFor="project">Project:</label>
+            <input
+                type="text"
+                onChange={(e) =>
+                    setUser({
+                        ...user,
+                        projects: [e.target.value],
+                    })
+                }
+            />
         </>
     );
 };

@@ -1,10 +1,15 @@
-export type User = {
-    id?: string;
-    firstName?: string;
-    lastName?: string;
-    fullName?: string;
-    initials?: string;
-    department?: string;
-};
-
-export type People = User[];
+export type User =
+    | {
+          _id?: string;
+          name?: string;
+          email?: string;
+          experienceYears?: number;
+          phone?: string;
+          department?: string;
+          location?: string;
+          role?: string;
+          projects?: Array<string>;
+          skills?: Array<string>;
+          imageURL?: string;
+      }
+    | undefined;

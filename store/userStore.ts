@@ -1,14 +1,15 @@
 import create from "zustand";
+import { User } from "~/models";
 
 type UserState = {
-    user: any;
-    setUserData: (data: any) => void;
+    user: User;
+    setUserData: (data: User) => void;
 };
 
 export const useUserStore = create<UserState>((set) => ({
-    user: {},
-    setUserData: () =>
-        set((state) => ({
-            user: state,
+    user: undefined,
+    setUserData: (data: User) =>
+        set(() => ({
+            user: data,
         })),
 }));

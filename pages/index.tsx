@@ -20,7 +20,7 @@ const Home: NextPage = () => {
     }, [session]);
 
     async function getUsers() {
-        /*     const response = await fetch(`./api/backoffice/userVerify`, {
+        /*     const response = await fetch(`./api/user/userVerify`, {
             method: "POST",
             body: JSON.stringify(session?.user),
         });
