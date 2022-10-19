@@ -3,6 +3,7 @@ import { decodeJWT } from "~/lib/helpers/tokenDecode.helper";
 import connectMongo from "../../../util/connectMongo";
 import User from "../../../models/mongoModals/userSchema";
 import Project from "~/models/mongoModals/projectSchema";
+import Skill from "~/models/mongoModals/skillSchema";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -14,10 +15,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             user = JSON.parse(req.body);
             mongoUser = await User.findOne({
                 email: user.email,
-            });
+            }).populate([
+                { path: "projects", model: Project },
+                { path: "skills", model: Skill },
+            ]);
         }
         if (mongoUser) {
-            res.json({ userExists: true, user });
+            res.json({ userExists: true, user: mongoUser });
         } else {
             res.json({ userExists: false });
         }

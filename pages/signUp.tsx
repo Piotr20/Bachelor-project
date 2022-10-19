@@ -48,6 +48,7 @@ const SignUp: NextPage = () => {
         });
         const mongoUser: User = await response.json();
         setUserData(mongoUser);
+        router.push("/");
     }
 
     useEffect(() => {

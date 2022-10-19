@@ -9,23 +9,19 @@ import { SvgIcon } from "~/components/svg-icon";
 import Text from "~/components/typography/text";
 import useAuth from "~/hooks/useAuth";
 import { getSession } from "next-auth/react";
+import { useUserStore } from "~/store/userStore";
 
 const Home: NextPage = () => {
     const { data } = useSWR<never[]>("https://api.punkapi.com/v2/beers");
     const { data: session, status } = useSession();
     const { authSignIn, authSignOut } = useAuth();
-
+    const { user, setUserData } = useUserStore((state) => ({
+        user: state.user,
+        setUserData: state.setUserData,
+    }));
     useEffect(() => {
-        getUsers();
+        console.log(user);
     }, [session]);
-
-    async function getUsers() {
-        /*     const response = await fetch(`./api/user/userVerify`, {
-            method: "POST",
-            body: JSON.stringify(session?.user),
-        });
-        const data = await response.json(); */
-    }
 
     return (
         <div>

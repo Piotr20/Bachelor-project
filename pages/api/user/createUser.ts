@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import connectMongo from "../../../util/connectMongo";
 import User from "../../../models/mongoModals/userSchema";
+import Project from "~/models/mongoModals/projectSchema";
+import Skill from "~/models/mongoModals/skillSchema";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -22,6 +24,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 skills: user?.skills,
                 imageURL: user.imageURL,
             });
+            mongoUser = await User.findOne({
+                email: user.email,
+            }).populate([
+                { path: "projects", model: Project },
+                { path: "skills", model: Skill },
+            ]);
         }
 
         res.json({ user: mongoUser });
