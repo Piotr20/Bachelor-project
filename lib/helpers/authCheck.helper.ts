@@ -8,9 +8,7 @@ export async function authHelper(
     router: NextRouter,
     setUserData: (data: any) => void
 ) {
-    const previousRoute = localStorage?.getItem("previousRoute");
     if (status === "unauthenticated") {
-        localStorage.setItem("previousRoute", router.asPath);
         signIn("azure-ad-b2c");
     } else if (status === "authenticated") {
         const response = await fetch(`./api/user/userVerify`, {
@@ -18,11 +16,9 @@ export async function authHelper(
             body: JSON.stringify(session?.user),
         });
         const userVerification = await response.json();
-        console.log(userVerification);
-        if (userVerification.userExists && previousRoute) {
+        if (userVerification.userExists) {
+            console.log(userVerification);
             setUserData(userVerification?.user);
-            localStorage?.removeItem("previousRoute");
-            router.push(previousRoute);
         } else if (userVerification.userExists === false) {
             router.push("/signUp");
         }

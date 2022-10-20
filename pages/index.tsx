@@ -21,7 +21,7 @@ const Home: NextPage = () => {
     }));
     useEffect(() => {
         console.log(user);
-    }, [session]);
+    }, [user]);
 
     return (
         <div>

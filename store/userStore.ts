@@ -9,7 +9,7 @@ type UserState = {
 export const useUserStore = create<UserState>((set) => ({
     user: undefined,
     setUserData: (data: User) =>
-        set(() => ({
+        set((state) => ({
             user: data,
         })),
 }));

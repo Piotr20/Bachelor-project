@@ -10,14 +10,16 @@ type AuthProps = {
 };
 
 const HOCAuthCheck = ({ children }: AuthProps) => {
-    const { setUserData } = useUserStore((state) => ({
+    const { setUserData, user } = useUserStore((state) => ({
         setUserData: state.setUserData,
+        user: state.user,
     }));
     const { data: session, status } = useSession();
     const router = useRouter();
 
     useEffect(() => {
         authHelper(status, session, router, setUserData);
+        console.log(user);
     }, [status]);
 
     return (
