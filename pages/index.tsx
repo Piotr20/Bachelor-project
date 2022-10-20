@@ -12,16 +12,12 @@ import { getSession } from "next-auth/react";
 import { useUserStore } from "~/store/userStore";
 
 const Home: NextPage = () => {
-    const { data } = useSWR<never[]>("https://api.punkapi.com/v2/beers");
     const { data: session, status } = useSession();
     const { authSignIn, authSignOut } = useAuth();
     const { user, setUserData } = useUserStore((state) => ({
         user: state.user,
         setUserData: state.setUserData,
     }));
-    useEffect(() => {
-        console.log(user);
-    }, [user]);
 
     return (
         <div>
@@ -32,17 +28,6 @@ const Home: NextPage = () => {
             </Head>
 
             <main>
-                This is main, welcome to main - APITestCount: {data?.length}
-                <SvgIcon svg="circlePlus" size={10} />
-                <Link href="/signUp">Sign up page</Link>
-                <ImpactImage
-                    alt="alt text"
-                    layout="fill"
-                    ratio="3/1"
-                    containerWidth="50%"
-                    src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-                />
-                <Text tag="p">P text</Text>
                 <button onClick={authSignIn}>Sign in</button>
                 <button onClick={authSignOut}>Sign out</button>
             </main>

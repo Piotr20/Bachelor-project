@@ -14,7 +14,7 @@ const PageTransition = ({
     children,
     animationType = "blip",
 }: PageTransitionProps) => {
-    const { asPath } = useRouter();
+    const { pathname } = useRouter();
 
     const variants = {
         fadeIn: {
@@ -89,7 +89,7 @@ const PageTransition = ({
         <PageBackground>
             <AnimatePresence initial={true} mode="wait">
                 <motion.div
-                    key={asPath}
+                    key={pathname}
                     variants={variants}
                     initial={animationType === "blip" ? "initial" : "fadeOut"}
                     animate={

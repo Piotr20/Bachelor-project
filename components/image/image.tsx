@@ -80,7 +80,10 @@ const ImpactImage = ({
                     unoptimized={unoptimized}
                 />
             ) : (
-                <img
+                <PlaceholderImage
+                    containerRatio={ratio}
+                    width={containerWidth}
+                    height={containerHeight}
                     src="/images/placeholderImage.jpg"
                     alt="placeholder image"
                 />
@@ -92,6 +95,18 @@ const ImpactImage = ({
 export default ImpactImage;
 
 export const NextImageWrapper = styled.div<{
+    containerRatio?: string;
+    width?: number | string;
+    height?: number | string;
+    layout?: string;
+}>(({ containerRatio, width, height, layout }) => ({
+    aspectRatio: containerRatio,
+    width: width,
+    height: height,
+    ...(layout === "fill" ? { position: "relative" } : null),
+}));
+
+export const PlaceholderImage = styled.img<{
     containerRatio?: string;
     width?: number | string;
     height?: number | string;

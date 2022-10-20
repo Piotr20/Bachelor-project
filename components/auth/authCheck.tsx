@@ -19,8 +19,7 @@ const HOCAuthCheck = ({ children }: AuthProps) => {
 
     useEffect(() => {
         authHelper(status, session, router, setUserData);
-        console.log(user);
-    }, [status]);
+    }, [status, session]);
 
     return (
         <>

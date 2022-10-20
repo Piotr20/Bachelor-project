@@ -1,9 +1,5 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import useSWR from "swr";
-import { SvgIcon } from "~/components/svg-icon";
-import HOCAuthCheck from "~/components/auth/authCheck";
 import styled from "styled-components";
 import { flexCenter } from "~/styles/style.helper";
 import { useRouter } from "next/router";

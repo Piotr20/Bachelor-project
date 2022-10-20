@@ -17,7 +17,6 @@ export async function authHelper(
         });
         const userVerification = await response.json();
         if (userVerification.userExists) {
-            console.log(userVerification);
             setUserData(userVerification?.user);
         } else if (userVerification.userExists === false) {
             router.push("/signUp");
