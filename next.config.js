@@ -20,7 +20,11 @@ const nextConfig = {
         return config;
     },
     images: {
-        domains: ["cdn.pixabay.com", "images.punkapi.com"],
+        domains: [
+            "cdn.pixabay.com",
+            "images.punkapi.com",
+            "media-exp1.licdn.com",
+        ],
     },
 };
 

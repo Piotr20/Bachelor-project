@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import Header from "./header";
 import Select from "react-select";
 import { ifProp } from "styled-tools";
+import { useUserStore } from "~/store/userStore";
 
 type LayoutProps = {
     children: ReactNode;
@@ -17,19 +18,21 @@ const Layout = ({ children }: LayoutProps) => {
     const { showNav } = useNavStore((state) => ({
         showNav: state.showNav,
     }));
+
     const router = useRouter();
     const [selectedOption, setSelectedOption] = useState<any>(null);
-    const [searchValue, setSearchValue] = useState<any>(null);
+    const [searchValue, setSearchValue] = useState<
+        string | string[] | undefined
+    >(router.query.search);
     const options = [
-        { value: "all", label: "All" },
-        { value: "people", label: "People" },
-        { value: "projects", label: "Projects" },
-        { value: "skills", label: "Skills" },
+        { value: "all", label: "all" },
+        { value: "people", label: "people" },
+        { value: "projects", label: "projects" },
+        { value: "skills", label: "skills" },
     ];
 
     function executeSearch(e: KeyboardEvent) {
         if (e.key === "Enter") {
-            console.log("do validate");
             const query = {
                 category: router.query.category,
                 search: router.query.search,
@@ -41,7 +44,20 @@ const Layout = ({ children }: LayoutProps) => {
     }
 
     useEffect(() => {
-        console.log(selectedOption);
+        if (router.isReady) {
+            const optionToSet = options.find(
+                (o) => o.value === router.query.category
+            );
+
+            if (optionToSet) {
+                setSelectedOption(optionToSet);
+            } else {
+                setSelectedOption({ value: "all", label: "all" });
+            }
+        }
+    }, [router.isReady]);
+
+    useEffect(() => {
         if (selectedOption) {
             router.replace({
                 query: {
@@ -50,6 +66,9 @@ const Layout = ({ children }: LayoutProps) => {
                 },
             });
         }
+    }, [selectedOption]);
+
+    useEffect(() => {
         if (searchValue) {
             router.replace({
                 query: {
@@ -58,7 +77,7 @@ const Layout = ({ children }: LayoutProps) => {
                 },
             });
         }
-    }, [selectedOption, searchValue]);
+    }, [searchValue]);
 
     if (router.pathname !== "/signUp") {
         return (
@@ -69,6 +88,7 @@ const Layout = ({ children }: LayoutProps) => {
                         <Select
                             isSearchable={false}
                             defaultValue={selectedOption}
+                            value={selectedOption}
                             onChange={(newValue) => {
                                 setSelectedOption(newValue);
                             }}
@@ -76,7 +96,8 @@ const Layout = ({ children }: LayoutProps) => {
                         />
                         <StyledSearchInput
                             type="text"
-                            placeholder="Search here"
+                            placeholder="Type here.."
+                            defaultValue={router.query.search}
                             onChange={(e) => {
                                 setSearchValue(e.target.value);
                             }}

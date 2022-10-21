@@ -10,11 +10,15 @@ import ImpactImage from "../image/image";
 import { Pages, Page } from "~/util/pages";
 import Link from "next/link";
 import { colors } from "~/util/colorPalette";
+import { useUserStore } from "~/store/userStore";
 
 type HeaderProps = {};
 
 const Header = ({}: HeaderProps) => {
     const router = useRouter();
+    const { user } = useUserStore((state) => ({
+        user: state.user,
+    }));
 
     return (
         <StyledHeader>
@@ -35,15 +39,15 @@ const Header = ({}: HeaderProps) => {
             </StyledNav>
             <StyledProfile>
                 <Text tag="h6" additionalStyles={{ paddingRight: "12px" }}>
-                    John Doe
+                    {user?.name}
                 </Text>
                 <ImpactImage
+                    src={user?.imageURL}
+                    alt="alt text"
+                    layout="fill"
                     ratio="1/1"
-                    containerWidth={30}
-                    containerHeight={30}
-                    width={30}
-                    height={30}
-                    objectFit={"fill"}
+                    containerWidth="50%"
+                    style={{ borderRadius: "50%" }}
                 />
             </StyledProfile>
         </StyledHeader>

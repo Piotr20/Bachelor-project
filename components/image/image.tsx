@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { CSSObject } from "styled-components";
 
 import Image, { ImageProps, StaticImageData } from "next/image";
 
@@ -21,6 +21,7 @@ type Props = Omit<ImageProps, "src" | "alt"> & {
     containerHeight?: number | string;
     src?: string | StaticImageData | null;
     alt?: string | null;
+    containerStyles?: CSSObject;
 };
 
 const ImpactImage = ({
@@ -45,6 +46,7 @@ const ImpactImage = ({
     lazyBoundary,
     lazyRoot,
     unoptimized,
+    containerStyles,
 }: Props) => {
     if (ratio && width && height && layout) {
         throw new Error(
@@ -57,6 +59,7 @@ const ImpactImage = ({
             width={containerWidth}
             height={containerHeight}
             layout={layout}
+            containerStyles={containerStyles}
         >
             {src && alt ? (
                 <Image
@@ -99,10 +102,12 @@ export const NextImageWrapper = styled.div<{
     width?: number | string;
     height?: number | string;
     layout?: string;
-}>(({ containerRatio, width, height, layout }) => ({
+    containerStyles?: CSSObject;
+}>(({ containerRatio, width, height, layout, containerStyles }) => ({
     aspectRatio: containerRatio,
     width: width,
     height: height,
+    ...containerStyles,
     ...(layout === "fill" ? { position: "relative" } : null),
 }));
 
