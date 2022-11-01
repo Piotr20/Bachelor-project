@@ -40,7 +40,7 @@ const Layout = ({ children }: LayoutProps) => {
                 search: router.query.search,
             };
 
-            const url = { pathname: "/people", query };
+            const url = { pathname: "/searchResults", query };
             router.push(url);
         }
     }
