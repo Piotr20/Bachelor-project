@@ -24,7 +24,7 @@ const Header = ({}: HeaderProps) => {
         <StyledHeader>
             <StyledLogo></StyledLogo>
             <StyledNav>
-                <StyledNavUl>
+                {/*  <StyledNavUl>
                     {Pages.map((page: Page, key) => {
                         return (
                             <StyledNavLi
@@ -35,7 +35,7 @@ const Header = ({}: HeaderProps) => {
                             </StyledNavLi>
                         );
                     })}
-                </StyledNavUl>
+                </StyledNavUl> */}
             </StyledNav>
             <StyledProfile>
                 <Text tag="h6" additionalStyles={{ paddingRight: "12px" }}>
