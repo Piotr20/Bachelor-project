@@ -1,9 +1,5 @@
 import { User } from "~/models";
-
-type StepProps = {
-    user: User;
-    setUser: (data: User) => void;
-};
+import { StepProps } from "~/models/signUpSteps";
 
 const Step1 = ({ user, setUser }: StepProps) => {
     return (

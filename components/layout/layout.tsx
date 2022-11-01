@@ -7,8 +7,8 @@ import { KeyboardEvent, ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "./header";
 import Select from "react-select";
-import { ifProp } from "styled-tools";
 import { useUserStore } from "~/store/userStore";
+import { options } from "~/util/searchOptions";
 
 type LayoutProps = {
     children: ReactNode;
@@ -24,12 +24,6 @@ const Layout = ({ children }: LayoutProps) => {
     const [searchValue, setSearchValue] = useState<
         string | string[] | undefined
     >(router.query.search);
-    const options = [
-        { value: "all", label: "all" },
-        { value: "people", label: "people" },
-        { value: "projects", label: "projects" },
-        { value: "skills", label: "skills" },
-    ];
 
     function executeSearch(e: KeyboardEvent) {
         if (e.key === "Enter") {
