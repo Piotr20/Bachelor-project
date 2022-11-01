@@ -34,7 +34,9 @@ const Layout = ({ children }: LayoutProps) => {
     function executeSearch(e: KeyboardEvent) {
         if (e.key === "Enter") {
             const query = {
-                category: router.query.category,
+                /*
+               //* Uncomment the following to add category sorting to the search   
+                category: router.query.category, */
                 search: router.query.search,
             };
 
@@ -57,7 +59,8 @@ const Layout = ({ children }: LayoutProps) => {
         }
     }, [router.isReady]);
 
-    useEffect(() => {
+    /* //* Uncomment the following to add category sorting to the search     
+useEffect(() => {
         if (selectedOption) {
             router.replace({
                 query: {
@@ -66,7 +69,7 @@ const Layout = ({ children }: LayoutProps) => {
                 },
             });
         }
-    }, [selectedOption]);
+    }, [selectedOption]); */
 
     useEffect(() => {
         if (searchValue) {
@@ -85,6 +88,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <PageTransition animationType="fade">
                     <Header />
                     <SearchWrapper>
+                        {/* //* Uncomment the following to add category sorting to the search
                         <Select
                             isSearchable={false}
                             defaultValue={selectedOption}
@@ -93,7 +97,7 @@ const Layout = ({ children }: LayoutProps) => {
                                 setSelectedOption(newValue);
                             }}
                             options={options}
-                        />
+                        /> */}
                         <StyledSearchInput
                             type="text"
                             placeholder="Type here.."
