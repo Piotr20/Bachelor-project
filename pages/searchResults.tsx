@@ -1,8 +1,19 @@
 import type { NextPage, GetServerSideProps } from "next";
 import Head from "next/head";
+import styled from "styled-components";
+import SearchBox from "~/components/search/searchBox";
+import SlideIn from "~/components/slider/slider";
 import { fetchSearchResults } from "~/lib/helpers/search.hepler";
+import { Project, Skill, User } from "~/models";
+import { mq } from "~/util/media-queries";
 
-const SearchResults: NextPage = ({ searchHits }: any) => {
+type SearchPageProps =
+    | {
+          searchHits: Array<User & Project & Skill>;
+      }
+    | any;
+
+const SearchResults: NextPage = ({ searchHits }: SearchPageProps) => {
     return (
         <>
             <Head>
@@ -13,25 +24,23 @@ const SearchResults: NextPage = ({ searchHits }: any) => {
 
             <main>
                 Search results
-                <div>
-                    {searchHits?.map((result: any) => {
-                        return <div key={result._id}>{result.name}</div>;
+                <StyledSearchResultsWrapper>
+                    {searchHits?.map((result: Project | Skill | User) => {
+                        return <SearchBox key={result?._id} data={result} />;
                     })}
-                </div>
+                </StyledSearchResultsWrapper>
             </main>
         </>
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const search = context.query["search"];
+export const getServerSideProps: GetServerSideProps<{
+    searchHits: SearchPageProps;
+}> = async (context) => {
+    const search = context.query["search"] as string;
     const data = await fetchSearchResults("all");
-    const searchHits = data.filter((searchHit: any) => {
-        if (
-            searchHit?.name
-                ?.toLowerCase()
-                ?.includes(search?.toString()?.toLowerCase())
-        ) {
+    const searchHits = data.filter((searchHit: Project | Skill | User) => {
+        if (searchHit?.name?.toLowerCase()?.includes(search?.toLowerCase())) {
             return searchHit;
         }
     });
@@ -40,3 +49,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default SearchResults;
+
+export const StyledSearchResultsWrapper = styled.div({
+    display: "grid",
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gap: "12px",
+    padding: "16px",
+    [mq("lg")]: {
+        gridTemplateColumns: "repeat(4, 1fr)",
+    },
+});

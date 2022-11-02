@@ -6,19 +6,15 @@ import { useNavStore } from "~/store/store";
 import { KeyboardEvent, ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "./header";
-import Select from "react-select";
-import { useUserStore } from "~/store/userStore";
+
 import { options } from "~/util/searchOptions";
+import SlideIn from "../slider/slider";
 
 type LayoutProps = {
     children: ReactNode;
 };
 
 const Layout = ({ children }: LayoutProps) => {
-    const { showNav } = useNavStore((state) => ({
-        showNav: state.showNav,
-    }));
-
     const router = useRouter();
     const [selectedOption, setSelectedOption] = useState<any>(null);
     const [searchValue, setSearchValue] = useState<
@@ -80,6 +76,7 @@ useEffect(() => {
         return (
             <>
                 <PageTransition animationType="fade">
+                    <SlideIn />
                     <Header />
                     <SearchWrapper>
                         {/* //* Uncomment the following to add category sorting to the search
@@ -132,11 +129,17 @@ export const SearchWrapper = styled.div(({}) => ({
     display: "flex",
     width: "100%",
     justifyContent: "center",
-    marginTop: "12vh",
+    marginTop: "6vh",
     padding: "24px 0",
+    [mq("lg")]: {
+        marginTop: "12vh",
+    },
 }));
 
 export const StyledSearchInput = styled.input(({}) => ({
     padding: "8px 4px",
-    width: "40%",
+    width: "70%",
+    [mq("lg")]: {
+        width: "40%",
+    },
 }));
