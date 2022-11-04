@@ -12,32 +12,20 @@ type SearchBoxProps = {
 };
 
 const SearchBox = ({ data }: SearchBoxProps) => {
-    const { toggleSlider, openSlider, setOpenSlider } = useNavStore(
+    const { toggleSlider, openSlider, setDataInSlider } = useNavStore(
         (state) => ({
             openSlider: state.openSlider,
             toggleSlider: state.toggleSlider,
-            setOpenSlider: state.setOpenSlider,
+            setDataInSlider: state.setDataInSlider,
         })
     );
     const router = useRouter();
 
     function handleSlideIn() {
         toggleSlider();
+        setDataInSlider(data);
     }
-    useEffect(() => {
-        if (router.isReady) {
-            if (router.query.openSlider && router.query.openSlider === "true") {
-                setOpenSlider(true);
-            } else if (
-                router.query.openSlider &&
-                router.query.openSlider === "false"
-            ) {
-                setOpenSlider(false);
-            }
-        }
-    }, [router.isReady]);
-
-    useEffect(() => {
+    /*     useEffect(() => {
         if (router.isReady) {
             router.replace({
                 query: {
@@ -47,7 +35,18 @@ const SearchBox = ({ data }: SearchBoxProps) => {
                 },
             });
         }
-    }, [openSlider]);
+    }, [openSlider]); */
+    /*     useEffect(() => {
+        if (router.isReady) {
+            router.replace({
+                query: {
+                    ...router.query,
+                    openSlider: `${openSlider}`,
+                    openedResult: `${data?._id}`,
+                },
+            });
+        }
+    }, [openSlider]); */
 
     return (
         <StyledSearchBox>

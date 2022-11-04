@@ -13,6 +13,14 @@ const SlideIn = () => {
     const [openSlider, setOpenSlider] =
         useState<boolean | undefined>(undefined);
 
+    useEffect(() => {
+        if (router.query.openSlider === "true") {
+            setOpenSlider(true);
+        } else if (router.query.openSlider === "false") {
+            setOpenSlider(false);
+        }
+    }, []);
+
     return (
         <>
             {openSlider ? (

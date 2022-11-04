@@ -1,3 +1,6 @@
+import { Project, Skill, User } from "~/models";
+import { DOMAIN_NAME } from "~/util/env-variables";
+
 export async function fetchSearchResults(
     category: "projects" | "skills" | "people" | "all"
 ) {
@@ -24,7 +27,7 @@ export async function fetchSearchResults(
 export async function fetchSingleEndpoint(
     endpoint: "projects" | "skills" | "user"
 ) {
-    const response = await fetch(`http://localhost:3000/api/${endpoint}/all`);
+    const response = await fetch(`${DOMAIN_NAME}/api/${endpoint}/all`);
     const mongoData = await response.json();
     switch (endpoint) {
         case "projects":
@@ -48,4 +51,19 @@ export async function fetchAllEndpoints() {
     const skills = await fetchSingleEndpoint("skills");
     const allEndpointsData = projects.concat(people, skills);
     return allEndpointsData;
+}
+
+export function filterBySearchParam(
+    array: User[] & Project[] & Skill[],
+    searchQuery: string
+) {
+    const filteredArray = array?.filter((searchHit: Project | Skill | User) => {
+        if (
+            searchHit?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())
+        ) {
+            return searchHit;
+        }
+    });
+
+    return filteredArray;
 }

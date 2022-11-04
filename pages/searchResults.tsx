@@ -2,10 +2,16 @@ import type { NextPage, GetServerSideProps } from "next";
 import Head from "next/head";
 import styled from "styled-components";
 import SearchBox from "~/components/search/searchBox";
-import SlideIn from "~/components/slider/slider";
-import { fetchSearchResults } from "~/lib/helpers/search.hepler";
+import { useRouter } from "next/router";
+import useSearch from "~/hooks/useSearch";
+import {
+    fetchSearchResults,
+    filterBySearchParam,
+} from "~/lib/helpers/search.hepler";
 import { Project, Skill, User } from "~/models";
 import { mq } from "~/util/media-queries";
+import { useNavStore } from "~/store/store";
+import { useEffect } from "react";
 
 type SearchPageProps =
     | {
@@ -13,7 +19,27 @@ type SearchPageProps =
       }
     | any;
 
-const SearchResults: NextPage = ({ searchHits }: SearchPageProps) => {
+const SearchResults: NextPage = ({ fallback }: SearchPageProps) => {
+    const { toggleSlider, sliderData, openSlider, setOpenSlider } = useNavStore(
+        (state) => ({
+            openSlider: state.openSlider,
+            toggleSlider: state.toggleSlider,
+            sliderData: state.sliderData,
+            setOpenSlider: state.setOpenSlider,
+        })
+    );
+    const router = useRouter();
+
+    const fallbackData = fallback.searchHits;
+    const searchQuery = router.query.search as string;
+
+    const SWRSearchHits = useSearch("all", fallbackData);
+    const searchHits = filterBySearchParam(
+        SWRSearchHits?.searchHits,
+        searchQuery
+    );
+    console.log("mounted");
+
     return (
         <>
             <Head>
@@ -35,17 +61,19 @@ const SearchResults: NextPage = ({ searchHits }: SearchPageProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps<{
-    searchHits: SearchPageProps;
+    fallback: SearchPageProps;
 }> = async (context) => {
     const search = context.query["search"] as string;
     const data = await fetchSearchResults("all");
-    const searchHits = data.filter((searchHit: Project | Skill | User) => {
-        if (searchHit?.name?.toLowerCase()?.includes(search?.toLowerCase())) {
-            return searchHit;
-        }
-    });
+    const searchHits = filterBySearchParam(data, search);
 
-    return { props: { searchHits } };
+    return {
+        props: {
+            fallback: {
+                searchHits,
+            },
+        },
+    };
 };
 
 export default SearchResults;

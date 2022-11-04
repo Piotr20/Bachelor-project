@@ -7,3 +7,4 @@ export const AZURE_AD_B2C_CLIENT_SECRET =
 export const AZURE_AD_B2C_PRIMARY_USER_FLOW =
     process.env.AZURE_AD_B2C_PRIMARY_USER_FLOW;
 export const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
+export const DOMAIN_NAME = process.env.DOMAIN_NAME;

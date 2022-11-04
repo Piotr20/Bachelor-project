@@ -57,18 +57,25 @@ useEffect(() => {
                     ...router.query,
                     category: `${selectedOption?.value}`,
                 },
-            });
+            },
+                undefined,
+                { shallow: true }
+            );
         }
     }, [selectedOption]); */
 
     useEffect(() => {
         if (searchValue) {
-            router.replace({
-                query: {
-                    ...router.query,
-                    search: `${searchValue}`,
+            router.replace(
+                {
+                    query: {
+                        ...router.query,
+                        search: `${searchValue}`,
+                    },
                 },
-            });
+                undefined,
+                { shallow: true }
+            );
         }
     }, [searchValue]);
 

@@ -5,7 +5,7 @@ import { Project, Skill, User } from "~/models";
 type NavState = {
     showNav: boolean;
     toggleNav: Function;
-    openSlider: boolean;
+    openSlider: boolean | undefined;
     sliderData: User | Project | Skill | undefined;
     toggleSlider: Function;
     setDataInSlider: (data: User | Project | Skill) => void;
@@ -14,7 +14,7 @@ type NavState = {
 
 export const useNavStore = create<NavState>((set) => ({
     showNav: false,
-    openSlider: false,
+    openSlider: undefined,
     sliderData: undefined,
     toggleNav: () =>
         set((state) => ({
@@ -33,15 +33,3 @@ export const useNavStore = create<NavState>((set) => ({
             sliderData: data,
         })),
 }));
-
-export const useSliderStore = create<any>(
-    persist(
-        (set, get) => ({
-            openSlider: false,
-            toggleSlider: () => set({ openSlider: get().openSlider }),
-        }),
-        {
-            name: "openSlider",
-        }
-    )
-);
