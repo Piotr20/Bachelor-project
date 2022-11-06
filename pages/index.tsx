@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         user: state.user,
         setUserData: state.setUserData,
     }));
-    console.log("mounted");
+
     return (
         <div>
             <Head>

@@ -4,10 +4,7 @@ import styled from "styled-components";
 import SearchBox from "~/components/search/searchBox";
 import { useRouter } from "next/router";
 import useSearch from "~/hooks/useSearch";
-import {
-    fetchSearchResults,
-    filterBySearchParam,
-} from "~/lib/helpers/search.hepler";
+import { fetchSearchResults, filterBySearchParam } from "~/lib/helpers/search.hepler";
 import { Project, Skill, User } from "~/models";
 import { mq } from "~/util/media-queries";
 import { useNavStore } from "~/store/store";
@@ -20,25 +17,19 @@ type SearchPageProps =
     | any;
 
 const SearchResults: NextPage = ({ fallback }: SearchPageProps) => {
-    const { toggleSlider, sliderData, openSlider, setOpenSlider } = useNavStore(
-        (state) => ({
-            openSlider: state.openSlider,
-            toggleSlider: state.toggleSlider,
-            sliderData: state.sliderData,
-            setOpenSlider: state.setOpenSlider,
-        })
-    );
+    const { toggleSlider, sliderData, openSlider, setOpenSlider } = useNavStore((state) => ({
+        openSlider: state.openSlider,
+        toggleSlider: state.toggleSlider,
+        sliderData: state.sliderData,
+        setOpenSlider: state.setOpenSlider,
+    }));
     const router = useRouter();
 
     const fallbackData = fallback.searchHits;
     const searchQuery = router.query.search as string;
 
     const SWRSearchHits = useSearch("all", fallbackData);
-    const searchHits = filterBySearchParam(
-        SWRSearchHits?.searchHits,
-        searchQuery
-    );
-    console.log("mounted");
+    const searchHits = filterBySearchParam(SWRSearchHits?.searchHits, searchQuery);
 
     return (
         <>

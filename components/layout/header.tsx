@@ -22,7 +22,9 @@ const Header = ({}: HeaderProps) => {
 
     return (
         <StyledHeader>
-            <StyledLogo></StyledLogo>
+            <StyledLogo>
+                <Link href={"/"}>Logo</Link>
+            </StyledLogo>
             <StyledNav>
                 {/*  <StyledNavUl>
                     {Pages.map((page: Page, key) => {
@@ -91,9 +93,7 @@ export const StyledNavLi = styled.li<{
     height: "100%",
     display: "flex",
     alignItems: "center",
-    borderTop: `4px solid ${
-        active ? colors.secondary.lightYellow : "transparent"
-    }`,
+    borderTop: `4px solid ${active ? colors.secondary.lightYellow : "transparent"}`,
 
     ["a"]: {
         textDecoration: "none",

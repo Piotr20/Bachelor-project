@@ -17,9 +17,11 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
     const router = useRouter();
     const [selectedOption, setSelectedOption] = useState<any>(null);
-    const [searchValue, setSearchValue] = useState<
-        string | string[] | undefined
-    >(router.query.search);
+    const [searchValue, setSearchValue] = useState<string | string[] | undefined>(router.query.search);
+    const { sliderData, openSlider } = useNavStore((state) => ({
+        openSlider: state.openSlider,
+        sliderData: state.sliderData,
+    }));
 
     function executeSearch(e: KeyboardEvent) {
         if (e.key === "Enter") {
@@ -37,9 +39,7 @@ const Layout = ({ children }: LayoutProps) => {
 
     useEffect(() => {
         if (router.isReady) {
-            const optionToSet = options.find(
-                (o) => o.value === router.query.category
-            );
+            const optionToSet = options.find((o) => o.value === router.query.category);
 
             if (optionToSet) {
                 setSelectedOption(optionToSet);
@@ -79,6 +79,22 @@ useEffect(() => {
         }
     }, [searchValue]);
 
+    useEffect(() => {
+        if (sliderData) {
+            router.replace(
+                {
+                    query: {
+                        ...router.query,
+                        openSlider: `${openSlider}`,
+                        openedId: `${sliderData._id}`,
+                    },
+                },
+                undefined,
+                { shallow: true }
+            );
+        }
+    }, [sliderData, openSlider]);
+
     if (router.pathname !== "/signUp") {
         return (
             <>
@@ -113,8 +129,7 @@ useEffect(() => {
     } else {
         return (
             <>
-                <PageTransition animationType="fade">{children}</PageTransition>
-                ;
+                <PageTransition animationType="fade">{children}</PageTransition>;
             </>
         );
     }

@@ -14,7 +14,7 @@ type NavState = {
 
 export const useNavStore = create<NavState>((set) => ({
     showNav: false,
-    openSlider: undefined,
+    openSlider: false,
     sliderData: undefined,
     toggleNav: () =>
         set((state) => ({

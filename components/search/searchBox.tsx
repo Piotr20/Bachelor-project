@@ -12,41 +12,18 @@ type SearchBoxProps = {
 };
 
 const SearchBox = ({ data }: SearchBoxProps) => {
-    const { toggleSlider, openSlider, setDataInSlider } = useNavStore(
-        (state) => ({
-            openSlider: state.openSlider,
-            toggleSlider: state.toggleSlider,
-            setDataInSlider: state.setDataInSlider,
-        })
-    );
+    const { toggleSlider, openSlider, setDataInSlider, setOpenSlider } = useNavStore((state) => ({
+        openSlider: state.openSlider,
+        toggleSlider: state.toggleSlider,
+        setDataInSlider: state.setDataInSlider,
+        setOpenSlider: state.setOpenSlider,
+    }));
     const router = useRouter();
 
     function handleSlideIn() {
-        toggleSlider();
+        setOpenSlider(true);
         setDataInSlider(data);
     }
-    /*     useEffect(() => {
-        if (router.isReady) {
-            router.replace({
-                query: {
-                    ...router.query,
-                    openSlider: `${openSlider}`,
-                    openedResult: `${data?._id}`,
-                },
-            });
-        }
-    }, [openSlider]); */
-    /*     useEffect(() => {
-        if (router.isReady) {
-            router.replace({
-                query: {
-                    ...router.query,
-                    openSlider: `${openSlider}`,
-                    openedResult: `${data?._id}`,
-                },
-            });
-        }
-    }, [openSlider]); */
 
     return (
         <StyledSearchBox>
