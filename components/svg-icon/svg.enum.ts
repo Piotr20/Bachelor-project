@@ -16,5 +16,6 @@ export enum TLASvg {
     searchIcon = 'searchIcon',
     signIn = 'signIn',
     signOut = 'signOut',
+    sliderArrowRight = 'sliderArrowRight',
     successMessage = 'successMessage',
 }

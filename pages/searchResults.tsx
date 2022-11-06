@@ -9,6 +9,7 @@ import { Project, Skill, User } from "~/models";
 import { mq } from "~/util/media-queries";
 import { useNavStore } from "~/store/store";
 import { useEffect } from "react";
+import { useSearchStore } from "~/store/searchStore";
 
 type SearchPageProps =
     | {
@@ -23,6 +24,10 @@ const SearchResults: NextPage = ({ fallback }: SearchPageProps) => {
         sliderData: state.sliderData,
         setOpenSlider: state.setOpenSlider,
     }));
+    const { setSearchResults } = useSearchStore((state) => ({
+        setSearchResults: state.setSearchResults,
+    }));
+
     const router = useRouter();
 
     const fallbackData = fallback.searchHits;

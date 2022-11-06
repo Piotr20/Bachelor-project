@@ -16,6 +16,7 @@ import EyeOpen from './eye-open.svg';
 import SearchIcon from './search-icon.svg';
 import SignIn from './sign-in.svg';
 import SignOut from './sign-out.svg';
+import SliderArrowRight from './slider-arrow-right.svg';
 import SuccessMessage from './success-message.svg';
 
 export const TLAIcons: { [key: string]: FC<any> } = {
@@ -33,5 +34,6 @@ export const TLAIcons: { [key: string]: FC<any> } = {
     searchIcon: SearchIcon,
     signIn: SignIn,
     signOut: SignOut,
+    sliderArrowRight: SliderArrowRight,
     successMessage: SuccessMessage,
 }

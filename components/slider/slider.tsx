@@ -49,16 +49,13 @@ const SlideIn = () => {
                 }
             >
                 <StyledSliderWrapper>
-                    <div
+                    <StyledIconContainer
                         onClick={() => {
                             setOpenSlider(false);
                         }}
                     >
-                        <SvgIcon svg="checked" />
-                    </div>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique voluptatem recusandae
-                    eveniet, molestiae voluptas repellat porro facere obcaecati itaque suscipit illum unde
-                    maiores nostrum quis atque sit laborum nihil!
+                        <SvgIcon svg="sliderArrowRight" />
+                    </StyledIconContainer>
                 </StyledSliderWrapper>
             </motion.div>
         </>
@@ -68,6 +65,16 @@ const SlideIn = () => {
 export default SlideIn;
 
 export const StyledSliderWrapper = styled.div({
-    backgroundColor: "red",
+    backgroundColor: "white",
+    padding: "24px",
     height: "100vh",
+    boxShadow: " 0px -22px 30px -10px rgba(0, 0, 0, 0.16)",
+});
+
+export const StyledIconContainer = styled.div({
+    cursor: "pointer",
+    ["svg"]: {
+        width: "32px !important",
+        height: "32px !important",
+    },
 });

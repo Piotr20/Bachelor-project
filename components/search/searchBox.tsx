@@ -21,7 +21,14 @@ const SearchBox = ({ data }: SearchBoxProps) => {
     const router = useRouter();
 
     function handleSlideIn() {
-        setOpenSlider(true);
+        if (openSlider) {
+            setOpenSlider(false);
+            setTimeout(() => {
+                setOpenSlider(true);
+            }, 500);
+        } else {
+            setOpenSlider(true);
+        }
         setDataInSlider(data);
     }
 
