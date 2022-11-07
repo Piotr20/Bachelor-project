@@ -1,21 +1,35 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavStore } from "~/store/store";
 
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { SvgIcon } from "../svg-icon";
+import ImpactImage from "../image/image";
+import { useSearchStore } from "~/store/searchStore";
+import { Project, Skill, User } from "~/models";
 
 const SlideIn = () => {
     const router = useRouter();
+    const [sliderData, setSliderData] = useState<User & Project & Skill>();
     const { openSlider, setOpenSlider } = useNavStore((state) => ({
         openSlider: state.openSlider,
         setOpenSlider: state.setOpenSlider,
+    }));
+    const { searchResults, setSearchResults } = useSearchStore((state) => ({
+        searchResults: state.searchResults,
+        setSearchResults: state.setSearchResults,
     }));
 
     useEffect(() => {
         if (router.query.openSlider === "true") {
             setOpenSlider(true);
+            const findResultById = searchResults?.find(
+                (result: User & Project & Skill) => result?._id === router.query.openedId
+            );
+            if (findResultById) {
+                setSliderData(findResultById);
+            }
         } else if (router.query.openSlider === "false") {
             setOpenSlider(false);
         }
@@ -56,6 +70,14 @@ const SlideIn = () => {
                     >
                         <SvgIcon svg="sliderArrowRight" />
                     </StyledIconContainer>
+                    <ImpactImage
+                        src={sliderData?.imageURL}
+                        alt="alt text"
+                        layout="fill"
+                        ratio="1/1"
+                        containerWidth="50%"
+                        style={{ borderRadius: "50%" }}
+                    />
                 </StyledSliderWrapper>
             </motion.div>
         </>

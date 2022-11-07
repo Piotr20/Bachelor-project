@@ -24,16 +24,13 @@ const SearchResults: NextPage = ({ fallback }: SearchPageProps) => {
         sliderData: state.sliderData,
         setOpenSlider: state.setOpenSlider,
     }));
-    const { setSearchResults } = useSearchStore((state) => ({
+    const { searchResults, setSearchResults } = useSearchStore((state) => ({
+        searchResults: state.searchResults,
         setSearchResults: state.setSearchResults,
     }));
-
     const router = useRouter();
-
-    const fallbackData = fallback.searchHits;
     const searchQuery = router.query.search as string;
-
-    const SWRSearchHits = useSearch("all", fallbackData);
+    const SWRSearchHits = useSearch("all", fallback.searchHits);
     const searchHits = filterBySearchParam(SWRSearchHits?.searchHits, searchQuery);
 
     return (
