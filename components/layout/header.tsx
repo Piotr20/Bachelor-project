@@ -11,6 +11,7 @@ import { Pages, Page } from "~/util/pages";
 import Link from "next/link";
 import { colors } from "~/util/colorPalette";
 import { useUserStore } from "~/store/userStore";
+import { StyledPageContainer } from "./layout";
 
 type HeaderProps = {};
 
@@ -22,11 +23,12 @@ const Header = ({}: HeaderProps) => {
 
     return (
         <StyledHeader>
-            <StyledLogo>
-                <Link href={"/"}>Logo</Link>
-            </StyledLogo>
-            <StyledNav>
-                {/*  <StyledNavUl>
+            <StyledHeaderContainer>
+                <StyledLogo>
+                    <Link href={"/"}>Logo</Link>
+                </StyledLogo>
+                <StyledNav>
+                    {/*  <StyledNavUl>
                     {Pages.map((page: Page, key) => {
                         return (
                             <StyledNavLi
@@ -38,32 +40,53 @@ const Header = ({}: HeaderProps) => {
                         );
                     })}
                 </StyledNavUl> */}
-            </StyledNav>
-            <StyledProfile>
-                <Text tag="h6" additionalStyles={{ paddingRight: "12px" }}>
-                    {user?.name}
-                </Text>
-                <ImpactImage
-                    src={user?.imageURL}
-                    alt="alt text"
-                    layout="fill"
-                    ratio="1/1"
-                    containerWidth="50%"
-                    style={{ borderRadius: "50%" }}
-                />
-            </StyledProfile>
+                </StyledNav>
+                <StyledProfile>
+                    <Text
+                        tag="h6"
+                        additionalStyles={{
+                            paddingRight: "12px",
+                        }}
+                    >
+                        {user?.name}
+                    </Text>
+                    <ImpactImage
+                        src={user?.imageURL}
+                        alt="alt text"
+                        layout="fill"
+                        ratio="1/1"
+                        containerWidth="50%"
+                        style={{ borderRadius: "50%" }}
+                    />
+                </StyledProfile>
+            </StyledHeaderContainer>
         </StyledHeader>
     );
 };
 export default Header;
 
 export const StyledHeader = styled.header({
+    width: "100%",
+    height: "8vh",
+    padding: "0 24px",
+    [mq("lg")]: {
+        padding: 0,
+    },
+});
+export const StyledHeaderContainer = styled.header({
+    width: "100%",
+    height: "100%",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "100%",
-    height: "8vh",
-    padding: "0 16px",
+    [mq("lg")]: {
+        maxWidth: "1440px",
+        margin: "0 auto",
+    },
+    [mq("xl")]: {
+        maxWidth: "1600px",
+        margin: "0 auto",
+    },
 });
 
 export const StyledLogo = styled.div({
@@ -74,6 +97,7 @@ export const StyledLogo = styled.div({
 export const StyledProfile = styled.div({
     display: "flex",
     alignItems: "center",
+    width: "auto",
 });
 
 export const StyledNav = styled.nav({
@@ -93,7 +117,9 @@ export const StyledNavLi = styled.li<{
     height: "100%",
     display: "flex",
     alignItems: "center",
-    borderTop: `4px solid ${active ? colors.secondary.lightYellow : "transparent"}`,
+    borderTop: `4px solid ${
+        active ? colors.secondary.lightYellow : "transparent"
+    }`,
 
     ["a"]: {
         textDecoration: "none",

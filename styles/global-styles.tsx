@@ -18,7 +18,7 @@ const GlobalStyles = createGlobalStyle`
         body {
             margin: 0;
             padding: 0;
-            background: ${({ theme }) => theme.backgroundColor};  
+            background: #F5F5F5;  
             font-family: 'Plantin Std';
             font-weight: 400;
         };

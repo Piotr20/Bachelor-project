@@ -8,12 +8,16 @@ import { SvgIcon } from "../svg-icon";
 import ImpactImage from "../image/image";
 import { useSearchStore } from "~/store/searchStore";
 import { Project, Skill, User } from "~/models";
+import { exampleDataProject, exampleDataUser } from "~/util/sliderData";
+import SliderBio from "./sliderBio";
+import { mq } from "~/util/media-queries";
 
 const SlideIn = () => {
     const router = useRouter();
-    const [sliderData, setSliderData] = useState<User & Project & Skill>();
+    const [sliderData, setSliderData] = useState<User | Project | Skill>();
     const { openSlider, setOpenSlider } = useNavStore((state) => ({
         openSlider: state.openSlider,
+        sliderData: state.sliderData,
         setOpenSlider: state.setOpenSlider,
     }));
     const { searchResults, setSearchResults } = useSearchStore((state) => ({
@@ -25,7 +29,8 @@ const SlideIn = () => {
         if (router.query.openSlider === "true") {
             setOpenSlider(true);
             const findResultById = searchResults?.find(
-                (result: User & Project & Skill) => result?._id === router.query.openedId
+                (result: User | Project | Skill) =>
+                    result?._id === router.query.openedId
             );
             if (findResultById) {
                 setSliderData(findResultById);
@@ -36,14 +41,12 @@ const SlideIn = () => {
     }, [router.query.openSlider]);
 
     return (
-        <>
+        <AnimationContainer>
             <motion.div
                 initial={{
                     position: "fixed",
                     top: 0,
                     right: "-100%",
-                    width: "50%",
-                    height: "100vh",
                     zIndex: 100,
                 }}
                 animate={
@@ -63,24 +66,19 @@ const SlideIn = () => {
                 }
             >
                 <StyledSliderWrapper>
-                    <StyledIconContainer
-                        onClick={() => {
-                            setOpenSlider(false);
-                        }}
-                    >
-                        <SvgIcon svg="sliderArrowRight" />
+                    <StyledIconContainer>
+                        <StyledSliderCloseWrapper
+                            onClick={() => {
+                                setOpenSlider(false);
+                            }}
+                        >
+                            <SvgIcon svg="sliderArrowRight" />
+                        </StyledSliderCloseWrapper>
                     </StyledIconContainer>
-                    <ImpactImage
-                        src={sliderData?.imageURL}
-                        alt="alt text"
-                        layout="fill"
-                        ratio="1/1"
-                        containerWidth="50%"
-                        style={{ borderRadius: "50%" }}
-                    />
+                    <SliderBio data={exampleDataProject} />
                 </StyledSliderWrapper>
             </motion.div>
-        </>
+        </AnimationContainer>
     );
 };
 
@@ -92,8 +90,19 @@ export const StyledSliderWrapper = styled.div({
     height: "100vh",
     boxShadow: " 0px -22px 30px -10px rgba(0, 0, 0, 0.16)",
 });
+export const AnimationContainer = styled.div({
+    ["&>div"]: {
+        width: "85%",
+        [mq("lg")]: {
+            width: "50%",
+        },
+    },
+});
 
-export const StyledIconContainer = styled.div({
+export const StyledIconContainer = styled.div({});
+
+export const StyledSliderCloseWrapper = styled.span({
+    display: "inline-block",
     cursor: "pointer",
     ["svg"]: {
         width: "32px !important",

@@ -24,6 +24,13 @@ const nextConfig = {
             "cdn.pixabay.com",
             "images.punkapi.com",
             "media-exp1.licdn.com",
+            "assets.stickpng.com",
+            "repository-images.githubusercontent.com",
+            "www.bog-ide.dk",
+            "upload.wikimedia.org",
+            "raw.githubusercontent.com",
+            "www.tutorialsteacher.com",
+            "www.timelog.com",
         ],
     },
 };

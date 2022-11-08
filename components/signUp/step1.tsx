@@ -1,35 +1,62 @@
 import { User } from "~/models";
 import { StepProps } from "~/models/signUpSteps";
+import { Input } from "../input/input";
 
 const Step1 = ({ user, setUser }: StepProps) => {
     return (
         <>
-            <label htmlFor="position">Your position:</label>
-            <input
+            <Input
+                placeholder="Enter your position"
                 type="text"
-                onChange={(e) => setUser({ ...user, role: e.target.value })}
+                onChange={(e) =>
+                    setUser({
+                        ...user,
+                        role: (e.target as HTMLInputElement).value,
+                    })
+                }
             />
-            <label htmlFor="experience">Years of experienc:</label>
-            <input
+
+            <Input
+                placeholder="How long are you at IMPACT?"
                 type="number"
                 onChange={(e) =>
                     setUser({
                         ...user,
-                        experienceYears: Number(e.target.value),
+                        experienceYears: Number(
+                            (e.target as HTMLInputElement).value
+                        ),
                     })
                 }
+                additionalStyles={{
+                    marginTop: "20px",
+                }}
             />
-            <label htmlFor="department">Your department:</label>
-            <input
-                type="text"
-                onChange={(e) => setUser({ ...user, phone: e.target.value })}
-            />
-            <label htmlFor="phone">Your phone no:</label>
-            <input
+
+            <Input
+                placeholder="Your department"
                 type="text"
                 onChange={(e) =>
-                    setUser({ ...user, department: e.target.value })
+                    setUser({
+                        ...user,
+                        department: (e.target as HTMLInputElement).value,
+                    })
                 }
+                additionalStyles={{
+                    marginTop: "20px",
+                }}
+            />
+            <Input
+                placeholder="Enter phone number"
+                type="text"
+                onChange={(e) =>
+                    setUser({
+                        ...user,
+                        phone: (e.target as HTMLInputElement).value,
+                    })
+                }
+                additionalStyles={{
+                    marginTop: "20px",
+                }}
             />
         </>
     );

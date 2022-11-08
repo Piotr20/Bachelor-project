@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useUserStore } from "~/store/userStore";
 import { useSession } from "next-auth/react";
 import { User } from "~/models";
+import { mq } from "~/util/media-queries";
 
 const SignUp: NextPage = () => {
     const router = useRouter();
@@ -62,8 +63,8 @@ const SignUp: NextPage = () => {
             </Head>
 
             <StyledMain>
-                <StyledFormContentBox onSubmit={(e) => e.preventDefault()}>
-                    <StyledForm>
+                <StyledFormContentBox>
+                    <StyledForm onSubmit={(e) => e.preventDefault()}>
                         <AnimatePresence initial={false} mode="wait">
                             <motion.div
                                 key={step}
@@ -132,14 +133,21 @@ export const StyledForm = styled.form({
 export const StyledFormContentBox = styled.div({
     ...flexCenter,
     flexDirection: "column",
-    width: "30%",
-    height: "60%",
-    border: "2px solid black",
+    width: "90%",
+    height: "50%",
+    [mq("lg")]: {
+        width: "40%",
+        height: "75%",
+    },
+
     overflow: "hidden",
+    backgroundColor: "#FFFFFF",
+    boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
+    borderRadius: "40px",
 });
 
 export const StyledFieldsWrapper = styled.div({
-    ...flexCenter,
+    display: "flex",
     flexDirection: "column",
     width: "100%",
     minHeight: "50%",

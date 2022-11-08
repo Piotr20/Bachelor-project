@@ -1,3 +1,6 @@
+import { Project } from "./project";
+import { Skill } from "./skill";
+
 export type User =
     | {
           _id?: string;
@@ -8,8 +11,8 @@ export type User =
           department?: string;
           location?: string;
           role?: string;
-          projects?: Array<string>;
-          skills?: Array<string>;
+          projects?: Array<Project | string>;
+          skills?: Array<Skill | string>;
           imageURL?: string;
       }
     | undefined;

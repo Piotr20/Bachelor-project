@@ -14,7 +14,11 @@ const useSearch = (
     category: "projects" | "skills" | "people" | "all",
     fallbackData: User | Project | Skill
 ) => {
-    if (category === "projects" || category === "skills" || category === "people") {
+    if (
+        category === "projects" ||
+        category === "skills" ||
+        category === "people"
+    ) {
         let url = generateUrl(category);
         const { data, error } = useSWR(url, fetcher, {
             fallbackData: fallbackData,
@@ -25,20 +29,31 @@ const useSearch = (
             isError: error,
         };
     } else if (category === "all") {
-        const { data: mongoPeople, error: peopleError } = useSWR(`/api/user/all`, fetcher, {
-            fallbackData: fallbackData,
-        });
-        const { data: mongoProjects, error: projectError } = useSWR(`/api/projects/all`, fetcher, {
-            fallbackData: fallbackData,
-        });
-        const { data: mongoSkills, error: skillsError } = useSWR(`/api/skills/all`, fetcher, {
-            fallbackData: fallbackData,
-        });
-        const allEndpointsData = [
-            ...(mongoProjects.projects || []),
-            ...(mongoPeople.people || []),
-            ...(mongoSkills.skills || []),
-        ];
+        const { data: mongoPeople, error: peopleError } = useSWR(
+            `/api/user/all`,
+            fetcher,
+            {
+                fallbackData: fallbackData,
+            }
+        );
+        const { data: mongoProjects, error: projectError } = useSWR(
+            `/api/projects/all`,
+            fetcher,
+            {
+                fallbackData: fallbackData,
+            }
+        );
+        const { data: mongoSkills, error: skillsError } = useSWR(
+            `/api/skills/all`,
+            fetcher,
+            {
+                fallbackData: fallbackData,
+            }
+        );
+        const allEndpointsData = mongoProjects?.projects?.concat(
+            mongoPeople?.people,
+            mongoSkills?.skills
+        );
         return {
             searchHits: allEndpointsData,
             isLoading:

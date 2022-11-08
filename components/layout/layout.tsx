@@ -9,6 +9,7 @@ import Header from "./header";
 
 import { options } from "~/util/searchOptions";
 import SlideIn from "../slider/slider";
+import { SvgIcon } from "../svg-icon";
 
 type LayoutProps = {
     children: ReactNode;
@@ -17,7 +18,9 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
     const router = useRouter();
     const [selectedOption, setSelectedOption] = useState<any>(null);
-    const [searchValue, setSearchValue] = useState<string | string[] | undefined>(router.query.search);
+    const [searchValue, setSearchValue] = useState<
+        string | string[] | undefined
+    >(router.query.search);
     const { sliderData, openSlider } = useNavStore((state) => ({
         openSlider: state.openSlider,
         sliderData: state.sliderData,
@@ -39,7 +42,9 @@ const Layout = ({ children }: LayoutProps) => {
 
     useEffect(() => {
         if (router.isReady) {
-            const optionToSet = options.find((o) => o.value === router.query.category);
+            const optionToSet = options.find(
+                (o) => o.value === router.query.category
+            );
 
             if (optionToSet) {
                 setSelectedOption(optionToSet);
@@ -101,8 +106,9 @@ useEffect(() => {
                 <PageTransition animationType="fade">
                     <SlideIn />
                     <Header />
-                    <SearchWrapper>
-                        {/* //* Uncomment the following to add category sorting to the search
+                    <StyledPageContainer>
+                        <SearchWrapper>
+                            {/* //* Uncomment the following to add category sorting to the search
                         <Select
                             isSearchable={false}
                             defaultValue={selectedOption}
@@ -112,29 +118,50 @@ useEffect(() => {
                             }}
                             options={options}
                         /> */}
-                        <StyledSearchInput
-                            type="text"
-                            placeholder="Type here.."
-                            defaultValue={router.query.search}
-                            onChange={(e) => {
-                                setSearchValue(e.target.value);
-                            }}
-                            onKeyDown={(e) => executeSearch(e)}
-                        />
-                    </SearchWrapper>
-                    {children}
+                            <StyledSearchInput
+                                type="text"
+                                placeholder="Type here.."
+                                defaultValue={router.query.search}
+                                onChange={(e) => {
+                                    setSearchValue(e.target.value);
+                                }}
+                                onKeyDown={(e) => executeSearch(e)}
+                            />
+                            <SearchIconWrapper>
+                                <SvgIcon svg="searchIcon" />
+                            </SearchIconWrapper>
+                        </SearchWrapper>
+                        {children}
+                    </StyledPageContainer>
                 </PageTransition>
             </>
         );
     } else {
         return (
             <>
-                <PageTransition animationType="fade">{children}</PageTransition>;
+                <PageTransition animationType="fade">
+                    <StyledPageContainer>{children}</StyledPageContainer>
+                </PageTransition>
+                ;
             </>
         );
     }
 };
 export default Layout;
+
+export const StyledPageContainer = styled.div({
+    padding: "24px",
+    width: "100%",
+    [mq("lg")]: {
+        maxWidth: "1440px",
+        margin: "0 auto",
+        padding: 0,
+    },
+    [mq("xl")]: {
+        maxWidth: "1600px",
+        margin: "0 auto",
+    },
+});
 
 export const DashboardWrapper = styled.div(({}) => ({
     display: "flex",
@@ -153,15 +180,34 @@ export const SearchWrapper = styled.div(({}) => ({
     justifyContent: "center",
     marginTop: "6vh",
     padding: "24px 0",
+    position: "relative",
     [mq("lg")]: {
         marginTop: "12vh",
     },
 }));
 
 export const StyledSearchInput = styled.input(({}) => ({
-    padding: "8px 4px",
-    width: "70%",
+    padding: "10px 6px",
+    paddingLeft: "12px",
+    width: "100%",
+    boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
+    borderRadius: "32px",
+    border: "none",
+    fontSize: "16px",
     [mq("lg")]: {
-        width: "40%",
+        padding: "12px 8px",
+        paddingLeft: "16px",
+        borderRadius: "48px",
+        fontSize: "20px",
     },
 }));
+
+export const SearchIconWrapper = styled.span({
+    position: "absolute",
+    right: "12px",
+    top: "50%",
+    transform: "translate(-50%,-50%)",
+    [mq("lg")]: {
+        right: "16px",
+    },
+});

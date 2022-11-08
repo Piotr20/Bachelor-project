@@ -4,12 +4,16 @@ import styled from "styled-components";
 import SearchBox from "~/components/search/searchBox";
 import { useRouter } from "next/router";
 import useSearch from "~/hooks/useSearch";
-import { fetchSearchResults, filterBySearchParam } from "~/lib/helpers/search.hepler";
+import {
+    fetchSearchResults,
+    filterBySearchParam,
+} from "~/lib/helpers/search.hepler";
 import { Project, Skill, User } from "~/models";
 import { mq } from "~/util/media-queries";
 import { useNavStore } from "~/store/store";
 import { useEffect } from "react";
 import { useSearchStore } from "~/store/searchStore";
+import { ifProp } from "styled-tools";
 
 type SearchPageProps =
     | {
@@ -18,20 +22,30 @@ type SearchPageProps =
     | any;
 
 const SearchResults: NextPage = ({ fallback }: SearchPageProps) => {
-    const { toggleSlider, sliderData, openSlider, setOpenSlider } = useNavStore((state) => ({
-        openSlider: state.openSlider,
-        toggleSlider: state.toggleSlider,
-        sliderData: state.sliderData,
-        setOpenSlider: state.setOpenSlider,
-    }));
+    const { toggleSlider, sliderData, openSlider, setOpenSlider } = useNavStore(
+        (state) => ({
+            openSlider: state.openSlider,
+            toggleSlider: state.toggleSlider,
+            sliderData: state.sliderData,
+            setOpenSlider: state.setOpenSlider,
+        })
+    );
     const { searchResults, setSearchResults } = useSearchStore((state) => ({
         searchResults: state.searchResults,
         setSearchResults: state.setSearchResults,
     }));
+
     const router = useRouter();
+
+    const fallbackData = fallback.searchHits;
     const searchQuery = router.query.search as string;
-    const SWRSearchHits = useSearch("all", fallback.searchHits);
-    const searchHits = filterBySearchParam(SWRSearchHits?.searchHits, searchQuery);
+
+    const SWRSearchHits = useSearch("all", fallbackData);
+    const searchHits = filterBySearchParam(
+        SWRSearchHits?.searchHits,
+        searchQuery
+    );
+    console.log(searchHits);
 
     return (
         <>
@@ -74,9 +88,10 @@ export default SearchResults;
 export const StyledSearchResultsWrapper = styled.div({
     display: "grid",
     gridTemplateColumns: "repeat(2, 1fr)",
-    gap: "12px",
-    padding: "16px",
+    gap: "24px",
+
     [mq("lg")]: {
         gridTemplateColumns: "repeat(4, 1fr)",
+        gap: "32px",
     },
 });

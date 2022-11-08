@@ -5,6 +5,7 @@ import { FC } from 'react';
 import ArrowRight from './arrow-right.svg';
 import BurgerClose from './burger-close.svg';
 import BurgerIcon from './burger-icon.svg';
+import CalendarEmpty from './calendar-empty.svg';
 import Checked from './checked.svg';
 import ChevronCircleRight from './chevron-circle-right.svg';
 import ChevronRight from './chevron-right.svg';
@@ -13,7 +14,9 @@ import CirclePlus from './circle-plus.svg';
 import ErrorTextIcon from './error-text-icon.svg';
 import EyeClosed from './eye-closed.svg';
 import EyeOpen from './eye-open.svg';
+import Location from './location.svg';
 import SearchIcon from './search-icon.svg';
+import Search from './search.svg';
 import SignIn from './sign-in.svg';
 import SignOut from './sign-out.svg';
 import SliderArrowRight from './slider-arrow-right.svg';
@@ -23,6 +26,7 @@ export const TLAIcons: { [key: string]: FC<any> } = {
     arrowRight: ArrowRight,
     burgerClose: BurgerClose,
     burgerIcon: BurgerIcon,
+    calendarEmpty: CalendarEmpty,
     checked: Checked,
     chevronCircleRight: ChevronCircleRight,
     chevronRight: ChevronRight,
@@ -31,7 +35,9 @@ export const TLAIcons: { [key: string]: FC<any> } = {
     errorTextIcon: ErrorTextIcon,
     eyeClosed: EyeClosed,
     eyeOpen: EyeOpen,
+    location: Location,
     searchIcon: SearchIcon,
+    search: Search,
     signIn: SignIn,
     signOut: SignOut,
     sliderArrowRight: SliderArrowRight,
