@@ -15,16 +15,7 @@ type Props = {
     additionalStyles?: CSSObject;
 };
 
-const Text = ({
-    tag,
-    children,
-    dark = false,
-    bold,
-    italic,
-    lineThrough,
-    url,
-    additionalStyles,
-}: Props) => {
+const Text = ({ tag, children, dark = false, bold, italic, lineThrough, url, additionalStyles }: Props) => {
     switch (tag) {
         case "h1":
         case "h2":
@@ -33,12 +24,7 @@ const Text = ({
         case "h5":
         case "h6":
             return (
-                <Heading
-                    tag={tag}
-                    dark={dark}
-                    styles={additionalStyles}
-                    as={tag}
-                >
+                <Heading tag={tag} dark={dark} styles={additionalStyles} as={tag}>
                     {children}
                 </Heading>
             );
@@ -57,12 +43,7 @@ const Text = ({
             );
         case "a":
             return (
-                <LinkCTA
-                    dark={dark}
-                    bold={bold}
-                    styles={additionalStyles}
-                    href={url}
-                >
+                <LinkCTA dark={dark} bold={bold} styles={additionalStyles} href={url}>
                     {children}
                 </LinkCTA>
             );

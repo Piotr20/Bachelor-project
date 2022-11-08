@@ -11,6 +11,7 @@ import { Project, Skill, User } from "~/models";
 import { exampleDataProject, exampleDataUser } from "~/util/sliderData";
 import SliderBio from "./sliderBio";
 import { mq } from "~/util/media-queries";
+import SliderOverview from "./overview";
 
 const SlideIn = () => {
     const router = useRouter();
@@ -29,8 +30,7 @@ const SlideIn = () => {
         if (router.query.openSlider === "true") {
             setOpenSlider(true);
             const findResultById = searchResults?.find(
-                (result: User | Project | Skill) =>
-                    result?._id === router.query.openedId
+                (result: User | Project | Skill) => result?._id === router.query.openedId
             );
             if (findResultById) {
                 setSliderData(findResultById);
@@ -75,7 +75,8 @@ const SlideIn = () => {
                             <SvgIcon svg="sliderArrowRight" />
                         </StyledSliderCloseWrapper>
                     </StyledIconContainer>
-                    <SliderBio data={exampleDataProject} />
+                    <SliderBio data={exampleDataUser} />
+                    <SliderOverview data={exampleDataUser} />
                 </StyledSliderWrapper>
             </motion.div>
         </AnimationContainer>
