@@ -150,16 +150,17 @@ useEffect(() => {
 export default Layout;
 
 export const StyledPageContainer = styled.div({
-    padding: "24px",
+    padding: "0 24px",
     width: "100%",
     [mq("lg")]: {
         maxWidth: "1440px",
         margin: "0 auto",
-        padding: 0,
+        padding: "0 32px",
     },
     [mq("xl")]: {
         maxWidth: "1600px",
         margin: "0 auto",
+        padding: "0 48px",
     },
 });
 

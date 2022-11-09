@@ -70,7 +70,10 @@ export const StyledHeader = styled.header({
     height: "8vh",
     padding: "0 24px",
     [mq("lg")]: {
-        padding: 0,
+        padding: "0 32px",
+    },
+    [mq("xl")]: {
+        padding: "0 48px",
     },
 });
 export const StyledHeaderContainer = styled.header({
