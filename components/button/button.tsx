@@ -1,5 +1,5 @@
 import React, { FC, ReactEventHandler, ReactNode, useState } from "react";
-import styled from "styled-components";
+import styled, { CSSObject } from "styled-components";
 import { SvgIcon } from "~/components/svg-icon";
 import { flexCenter } from "~/styles/style.helper";
 import { mq } from "~/util/media-queries";
@@ -8,10 +8,10 @@ import { ifProp } from "styled-tools";
 
 type ButtonProps = {
     children: ReactNode;
-
     kind: "primary" | "secondary";
     disabled?: boolean;
     onClick?: ReactEventHandler;
+    additionalStyles?: CSSObject;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children">;
 
 export const Button: FC<ButtonProps> = ({
@@ -19,9 +19,15 @@ export const Button: FC<ButtonProps> = ({
     kind,
     disabled,
     onClick,
+    additionalStyles,
 }) => {
     return (
-        <StyledButton onClick={onClick} kind={kind} disabled={disabled}>
+        <StyledButton
+            onClick={onClick}
+            kind={kind}
+            disabled={disabled}
+            additionalStyles={additionalStyles}
+        >
             {children}
         </StyledButton>
     );
@@ -29,26 +35,47 @@ export const Button: FC<ButtonProps> = ({
 
 export const StyledButton = styled.button<{
     kind: "primary" | "secondary";
+    additionalStyles?: CSSObject;
 }>(
-    ({ kind }) => ({
+    ({ kind, additionalStyles }) => ({
         border: "none",
         outline: "none",
-        borderRadius: "40px",
+        borderRadius: "64px",
         lineHeight: "155%",
         cursor: "pointer",
-        [mq("lg")]: {},
+        letterSpacing: "2px",
+        padding: "8px 36px",
+        fontSize: "16px",
+        ...additionalStyles,
+        [mq("lg")]: {
+            padding: "8px 36px",
+            fontSize: "16px",
+        },
     }),
     ifProp({ kind: "primary" }, () => ({
-        fontSize: "14px",
-        padding: "6px 16px",
-        backgroundColor: colors.secondary.lightYellow,
-        color: colors.primary.black,
-        [mq("md")]: {
-            fontSize: "16px",
-            padding: "8px 20px",
+        backgroundColor: colors.primary.black,
+        color: colors.base.white,
+        transition: "all 0.3s ease",
+        ["&:hover"]: {
+            backgroundColor: colors.secondary.lightYellow,
+            color: colors.primary.black,
         },
+        [mq("md")]: {},
+        [mq("lg")]: {},
+    })),
+    ifProp({ kind: "secondary" }, () => ({
+        backgroundColor: colors.base.white,
+        color: colors.primary.black,
+        border: `2px solid ${colors.primary.black}`,
+        transition: "all 0.3s ease",
+        padding: "6px 34px",
+        ["&:hover"]: {
+            backgroundColor: colors.primary.black,
+            color: colors.base.white,
+        },
+        [mq("md")]: {},
         [mq("lg")]: {
-            padding: "10px 44px",
+            padding: "6px 34px",
         },
     }))
 );

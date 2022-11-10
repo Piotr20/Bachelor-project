@@ -6,6 +6,8 @@ import { Button } from "../button/button";
 import ImpactImage from "../image/image";
 import Text from "../typography/text";
 import { useRouter } from "next/router";
+import { colors } from "~/util/colorPalette";
+import { mq } from "~/util/media-queries";
 
 type PeopleSearchBoxProps = {
     data: User;
@@ -35,25 +37,49 @@ const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
 
     return (
         <StyledSearchBox>
-            <ImpactImage
-                src={data?.imageURL}
-                alt="alt text"
-                layout="fill"
-                objectFit="contain"
-                ratio="2/1"
-                containerWidth="100%"
-            />
+            <StyledImage>
+                <ImpactImage
+                    src={data?.imageURL}
+                    alt="alt text"
+                    layout="fill"
+                    objectFit="contain"
+                    ratio="1/1"
+                    containerWidth="100%"
+                    style={{
+                        borderRadius: "50%",
+                    }}
+                />
+            </StyledImage>
             <Text
                 tag="h4"
                 additionalStyles={{
                     textAlign: "center",
-                    marginBottom: "12px",
+                    marginTop: "calc(10% + 28px)",
+                    marginBottom: "4px",
+                    minHeight: "5ch",
+                    maxHeight: "5ch",
+                    overflow: "hidden",
+                    [mq("lg")]: {
+                        marginBottom: "4px",
+                        marginTop: "calc(12.5% + 16px)",
+                        minHeight: "2.5ch",
+                        maxHeight: "2.5ch",
+                    },
                 }}
             >
                 {data?.name}
             </Text>
+            <Text
+                tag="h5"
+                additionalStyles={{
+                    color: colors.primary.lightGrey,
+                    fontWeight: 400,
+                }}
+            >
+                {data?.role + " | " + data?.department}
+            </Text>
             <Button onClick={handleSlideIn} kind="primary">
-                <Text tag="p">Open</Text>
+                Open
             </Button>
         </StyledSearchBox>
     );
@@ -69,4 +95,14 @@ export const StyledSearchBox = styled.div({
     backgroundColor: "white",
     boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
     borderRadius: "12px",
+    position: "relative",
+});
+
+export const StyledImage = styled.div({
+    width: "108px",
+    borderRadius: "50%",
+    position: "absolute",
+    aspectRatio: "1/1",
+    top: "0",
+    transform: "translate(0,-50%)",
 });

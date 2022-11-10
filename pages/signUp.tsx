@@ -12,6 +12,7 @@ import { useUserStore } from "~/store/userStore";
 import { useSession } from "next-auth/react";
 import { User } from "~/models";
 import { mq } from "~/util/media-queries";
+import { Button } from "~/components/button/button";
 
 const SignUp: NextPage = () => {
     const router = useRouter();
@@ -91,18 +92,36 @@ const SignUp: NextPage = () => {
                         </AnimatePresence>
                         <StyledButtonWrapper>
                             {step !== 1 ? (
-                                <ButtonBack onClick={() => setStep(step - 1)}>
+                                <Button
+                                    kind="secondary"
+                                    onClick={() => setStep(step - 1)}
+                                    additionalStyles={{
+                                        marginRight: "auto",
+                                    }}
+                                >
                                     Back
-                                </ButtonBack>
+                                </Button>
                             ) : null}
                             {step !== 3 ? (
-                                <ButtonNext onClick={() => setStep(step + 1)}>
+                                <Button
+                                    kind="primary"
+                                    onClick={() => setStep(step + 1)}
+                                    additionalStyles={{
+                                        marginLeft: "auto",
+                                    }}
+                                >
                                     Next
-                                </ButtonNext>
+                                </Button>
                             ) : (
-                                <ButtonFinish onClick={createUser}>
+                                <Button
+                                    kind="primary"
+                                    onClick={createUser}
+                                    additionalStyles={{
+                                        marginLeft: "auto",
+                                    }}
+                                >
                                     Finish
-                                </ButtonFinish>
+                                </Button>
                             )}
                         </StyledButtonWrapper>
                     </StyledForm>
@@ -133,17 +152,17 @@ export const StyledForm = styled.form({
 export const StyledFormContentBox = styled.div({
     ...flexCenter,
     flexDirection: "column",
-    width: "90%",
-    height: "50%",
+    width: "100%",
+    height: "100%",
+    overflow: "hidden",
+    backgroundColor: "#FFFFFF",
+
     [mq("lg")]: {
         width: "40%",
         height: "75%",
+        boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
+        borderRadius: "40px",
     },
-
-    overflow: "hidden",
-    backgroundColor: "#FFFFFF",
-    boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
-    borderRadius: "40px",
 });
 
 export const StyledFieldsWrapper = styled.div({

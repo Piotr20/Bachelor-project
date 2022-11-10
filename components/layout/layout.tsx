@@ -139,9 +139,7 @@ useEffect(() => {
     } else {
         return (
             <>
-                <PageTransition animationType="fade">
-                    <StyledPageContainer>{children}</StyledPageContainer>
-                </PageTransition>
+                <PageTransition animationType="fade">{children}</PageTransition>
                 ;
             </>
         );

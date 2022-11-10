@@ -22,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
             font-family: 'Plantin Std';
             font-weight: 400;
         };
-        h1,h2,h3,h4,h5,h6 {
+        h1,h2,h3,h4,h5,h6, button {
             font-family: 'Flama Condensed';
         };
     `;
