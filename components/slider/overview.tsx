@@ -45,16 +45,19 @@ const SliderOverview = ({ data }: SliderOverviewProps) => {
         <OverviewContainer>
             <NavWrapper>
                 {overviewNav?.map((node: User & Project & Skill, index) => {
-                    console.log(data);
                     if (true) {
                         return (
-                            <NavNode onClick={() => handleToggle(index)} key={index}>
+                            <NavNode
+                                onClick={() => handleToggle(index)}
+                                key={index}
+                            >
                                 <Text
                                     tag="h5"
                                     additionalStyles={{
                                         cursor: "pointer",
                                         transition: "all .3s ease",
-                                        opacity: openedIndex === index ? 1 : 0.3,
+                                        opacity:
+                                            openedIndex === index ? 1 : 0.3,
                                     }}
                                 >
                                     {node?.name}

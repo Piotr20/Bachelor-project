@@ -12,19 +12,20 @@ type SearchProps = {
 
 const useSearch = (
     category: "projects" | "skills" | "people" | "all",
-    fallbackData: User | Project | Skill
+    fallbackPeople?: User,
+    fallbackProjects?: Project,
+    fallbackSkills?: Skill
 ) => {
-    if (
-        category === "projects" ||
-        category === "skills" ||
-        category === "people"
-    ) {
+    if (category === "people") {
         let url = generateUrl(category);
         const { data, error } = useSWR(url, fetcher, {
-            fallbackData: fallbackData,
+            fallbackData: fallbackPeople,
         });
+        console.log(data);
         return {
-            searchHits: data,
+            searchHits: {
+                people: data,
+            },
             isLoading: !error && !data,
             isError: error,
         };
@@ -33,29 +34,29 @@ const useSearch = (
             `/api/user/all`,
             fetcher,
             {
-                fallbackData: fallbackData,
+                fallbackData: fallbackPeople,
             }
         );
         const { data: mongoProjects, error: projectError } = useSWR(
             `/api/projects/all`,
             fetcher,
             {
-                fallbackData: fallbackData,
+                fallbackData: fallbackProjects,
             }
         );
         const { data: mongoSkills, error: skillsError } = useSWR(
             `/api/skills/all`,
             fetcher,
             {
-                fallbackData: fallbackData,
+                fallbackData: fallbackSkills,
             }
         );
-        const allEndpointsData = mongoProjects?.projects?.concat(
-            mongoPeople?.people,
-            mongoSkills?.skills
-        );
         return {
-            searchHits: allEndpointsData,
+            searchHits: {
+                people: mongoPeople?.people,
+                projects: mongoProjects?.projects,
+                skills: mongoSkills?.skills,
+            },
             isLoading:
                 !peopleError &&
                 !mongoPeople &&

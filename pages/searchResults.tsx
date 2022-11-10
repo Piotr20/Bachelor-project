@@ -39,14 +39,9 @@ const SearchResults: NextPage = ({ fallback }: SearchPageProps) => {
 
     const fallbackData = fallback.searchHits;
     const searchQuery = router.query.search as string;
-
-    const SWRSearchHits = useSearch("all", fallbackData);
-    const searchHits = filterBySearchParam(
-        SWRSearchHits?.searchHits,
-        searchQuery
-    );
-    console.log(searchHits);
-
+    const { people, projects, skills } = fallback.searchHits;
+    const hook = useSearch("people", people);
+    console.log(hook);
     return (
         <>
             <Head>
@@ -57,11 +52,7 @@ const SearchResults: NextPage = ({ fallback }: SearchPageProps) => {
 
             <main>
                 Search results
-                <StyledSearchResultsWrapper>
-                    {searchHits?.map((result: Project | Skill | User) => {
-                        return <SearchBox key={result?._id} data={result} />;
-                    })}
-                </StyledSearchResultsWrapper>
+                <StyledSearchResultsWrapper></StyledSearchResultsWrapper>
             </main>
         </>
     );
@@ -71,13 +62,13 @@ export const getServerSideProps: GetServerSideProps<{
     fallback: SearchPageProps;
 }> = async (context) => {
     const search = context.query["search"] as string;
-    const data = await fetchSearchResults("all");
-    const searchHits = filterBySearchParam(data, search);
-
+    const data = await fetchSearchResults("people");
+    /*  const searchHits = filterBySearchParam(data, search);
+     */
     return {
         props: {
             fallback: {
-                searchHits,
+                searchHits: data,
             },
         },
     };

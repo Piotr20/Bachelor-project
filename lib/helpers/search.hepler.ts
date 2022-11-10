@@ -6,17 +6,17 @@ export async function fetchSearchResults(
 ) {
     switch (category) {
         case "people":
-            const people = fetchSingleEndpoint("user");
+            const people = await fetchSingleEndpoint("user");
             return people;
         case "projects":
             const projects = await fetchSingleEndpoint("projects");
             return projects;
         case "skills":
-            const skills = fetchSingleEndpoint("skills");
+            const skills = await fetchSingleEndpoint("skills");
             return skills;
 
         case "all":
-            const all = fetchAllEndpoints();
+            const all = await fetchAllEndpoints();
             return all;
 
         default:
@@ -32,13 +32,19 @@ export async function fetchSingleEndpoint(
     switch (endpoint) {
         case "projects":
             const { projects } = mongoData;
-            return projects;
+            return {
+                projects: projects,
+            };
         case "skills":
             const { skills } = mongoData;
-            return skills;
+            return {
+                skills: skills,
+            };
         case "user":
             const { people } = mongoData;
-            return people;
+            return {
+                people: people,
+            };
 
         default:
             break;
@@ -49,8 +55,11 @@ export async function fetchAllEndpoints() {
     const projects = await fetchSingleEndpoint("projects");
     const people = await fetchSingleEndpoint("user");
     const skills = await fetchSingleEndpoint("skills");
-    const allEndpointsData = projects.concat(people, skills);
-    return allEndpointsData;
+    return {
+        people: people?.people,
+        projects: projects?.projects,
+        skills: skills?.skills,
+    };
 }
 
 export function filterBySearchParam(
