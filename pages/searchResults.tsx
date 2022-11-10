@@ -40,8 +40,8 @@ const SearchResults: NextPage = ({ fallback }: SearchPageProps) => {
     const fallbackData = fallback.searchHits;
     const searchQuery = router.query.search as string;
     const { people, projects, skills } = fallback.searchHits;
-    const hook = useSearch("people", people);
-    console.log(hook);
+    const searchData = useSearch("all", people, projects, skills);
+    console.log(searchData?.searchHits);
     return (
         <>
             <Head>
@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps<{
     fallback: SearchPageProps;
 }> = async (context) => {
     const search = context.query["search"] as string;
-    const data = await fetchSearchResults("people");
+    const data = await fetchSearchResults("all");
     /*  const searchHits = filterBySearchParam(data, search);
      */
     return {

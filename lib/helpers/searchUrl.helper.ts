@@ -1,13 +1,14 @@
 import { DOMAIN_NAME } from "~/util/env-variables";
 
-export async function generateUrl(
+export function generateUrl(
     endpoint: "projects" | "skills" | "people" | "all"
 ) {
+    console.log(DOMAIN_NAME);
     if (endpoint === "people") {
-        const url = `${DOMAIN_NAME}/api/user/all`;
+        const url = `/api/user/all`;
         return url;
     } else {
-        const url = `${DOMAIN_NAME}/api/${endpoint}/all`;
+        const url = `/api/${endpoint}/all`;
         return url;
     }
 }
