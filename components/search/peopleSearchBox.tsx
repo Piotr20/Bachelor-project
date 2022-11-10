@@ -14,13 +14,12 @@ type PeopleSearchBoxProps = {
 };
 
 const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
-    const { toggleSlider, openSlider, setDataInSlider, setOpenSlider } =
-        useNavStore((state) => ({
-            openSlider: state.openSlider,
-            toggleSlider: state.toggleSlider,
-            setDataInSlider: state.setDataInSlider,
-            setOpenSlider: state.setOpenSlider,
-        }));
+    const { toggleSlider, openSlider, setDataInSlider, setOpenSlider } = useNavStore((state) => ({
+        openSlider: state.openSlider,
+        toggleSlider: state.toggleSlider,
+        setDataInSlider: state.setDataInSlider,
+        setOpenSlider: state.setOpenSlider,
+    }));
     const router = useRouter();
 
     function handleSlideIn() {
@@ -70,7 +69,7 @@ const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
                 {data?.name}
             </Text>
             <Text
-                tag="h5"
+                tag="p"
                 additionalStyles={{
                     color: colors.primary.lightGrey,
                     fontWeight: 400,
