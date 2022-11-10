@@ -1,4 +1,5 @@
 import { Project, Skill, User } from "~/models";
+import Projects from "~/pages/projects";
 import { DOMAIN_NAME } from "~/util/env-variables";
 
 export async function fetchSearchResults(
@@ -63,8 +64,8 @@ export async function fetchAllEndpoints() {
 }
 
 export function filterBySearchParam(
-    array: User[] & Project[] & Skill[],
-    searchQuery: string
+    searchQuery: string,
+    array?: User[] & Project[] & Skill[]
 ) {
     const filteredArray = array?.filter((searchHit: Project | Skill | User) => {
         if (
@@ -75,4 +76,44 @@ export function filterBySearchParam(
     });
 
     return filteredArray;
+}
+
+export function outputFormatterHelper(
+    category: "projects" | "skills" | "people" | "all",
+    searchQuery: string,
+    people?: User[],
+    projects?: Project[],
+    skills?: Skill[]
+) {
+    switch (category) {
+        case "people": {
+            const filteredPeople = filterBySearchParam(searchQuery, people);
+            return {
+                people: filteredPeople,
+            };
+        }
+
+        case "projects": {
+            const filteredProjects = filterBySearchParam(searchQuery, projects);
+            return {
+                projects: filteredProjects,
+            };
+        }
+        case "skills": {
+            const filteredSkills = filterBySearchParam(searchQuery, skills);
+            return {
+                skills: filteredSkills,
+            };
+        }
+        case "all": {
+            const filteredPeople = filterBySearchParam(searchQuery, people);
+            const filteredProjects = filterBySearchParam(searchQuery, projects);
+            const filteredSkills = filterBySearchParam(searchQuery, skills);
+            return {
+                people: filteredPeople,
+                projects: filteredProjects,
+                skills: filteredSkills,
+            };
+        }
+    }
 }

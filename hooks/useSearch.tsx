@@ -1,15 +1,13 @@
 import useSWR from "swr";
 import { generateUrl } from "~/lib/helpers/searchUrl.helper";
 import { Project, Skill, User } from "~/models";
-import { DOMAIN_NAME } from "~/util/env-variables";
-
 import { fetcher } from "~/util/fetcher";
 
 const useSearch = (
     category: "projects" | "skills" | "people" | "all",
-    fallbackPeople?: User,
-    fallbackProjects?: Project,
-    fallbackSkills?: Skill
+    fallbackPeople?: User[],
+    fallbackProjects?: Project[],
+    fallbackSkills?: Skill[]
 ) => {
     switch (category) {
         case "people": {

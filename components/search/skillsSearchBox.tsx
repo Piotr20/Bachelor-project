@@ -7,11 +7,11 @@ import ImpactImage from "../image/image";
 import Text from "../typography/text";
 import { useRouter } from "next/router";
 
-type SearchBoxProps = {
-    data: User | Project | Skill;
+type SkillSearchBoxProps = {
+    data: Skill;
 };
 
-const SearchBox = ({ data }: SearchBoxProps) => {
+const SkillSearchBox = ({ data }: SkillSearchBoxProps) => {
     const { toggleSlider, openSlider, setDataInSlider, setOpenSlider } =
         useNavStore((state) => ({
             openSlider: state.openSlider,
@@ -59,7 +59,7 @@ const SearchBox = ({ data }: SearchBoxProps) => {
     );
 };
 
-export default SearchBox;
+export default SkillSearchBox;
 
 export const StyledSearchBox = styled.div({
     display: "flex",
