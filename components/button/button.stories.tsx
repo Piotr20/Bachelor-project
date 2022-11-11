@@ -3,11 +3,11 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Button } from "./button";
 
 export default {
-  title: "Components/Button",
-  component: Button,
-  argTypes: {
-    disabled: { control: "boolean" },
-  },
+    title: "Components/Button",
+    component: Button,
+    argTypes: {
+        disabled: { control: "boolean" },
+    },
 } as ComponentMeta<typeof Button>;
 
 const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
@@ -16,6 +16,6 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 export const ImpactButton = Template.bind({});
 ImpactButton.args = {
-  label: "CTA Text",
-  disabled: false,
+    kind: "primary",
+    children: "Click",
 };
