@@ -9,8 +9,6 @@ export default {
 
 const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
-// CTA default
-
 export const ImpactButton = Template.bind({});
 ImpactButton.args = {
     kind: "primary",
