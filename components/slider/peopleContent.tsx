@@ -2,20 +2,20 @@ import styled from "styled-components";
 import { Project, Skill, User } from "~/models";
 
 type SliderOverviewProps = {
-    data: User & Project & Skill;
+    people?: Array<User | string>;
 };
 
-const SliderPeopleOverview = ({ data }: SliderOverviewProps) => {
+const PeopleContent = ({ people }: SliderOverviewProps) => {
     return (
         <PeopleContainer>
-            {data?.people?.map((emplouee: any, key) => {
-                return <div key={key}>{emplouee.name}</div>;
+            {people?.map((emplouee: User, key: number) => {
+                return <div key={key}>{emplouee?.name}</div>;
             })}
         </PeopleContainer>
     );
 };
 
-export default SliderPeopleOverview;
+export default PeopleContent;
 
 export const PeopleContainer = styled.div({
     marginTop: "24px",

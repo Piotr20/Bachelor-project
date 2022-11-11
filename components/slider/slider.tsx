@@ -9,13 +9,22 @@ import ImpactImage from "../image/image";
 import { useSearchStore } from "~/store/searchStore";
 import { Project, Skill, User } from "~/models";
 import { exampleDataProject, exampleDataUser } from "~/util/sliderData";
-import SliderBio from "./sliderBio";
+import SliderBioPerson from "./sliderBioPerson";
 import { mq } from "~/util/media-queries";
 import SliderOverview from "./overview";
+import SliderBioProject from "./sliderBioProject";
+import SliderBioSkill from "./sliderBioSkill";
+import PersonOverview from "./overviewPerson";
+import ProjectsOverview from "./overviewProjects";
+import SkillsOverview from "./overviewSkills";
 
 const SlideIn = () => {
     const router = useRouter();
     const [sliderData, setSliderData] = useState<User | Project | Skill>();
+    const [person, setPerson] = useState<User>();
+    const [project, setProject] = useState<Project>();
+    const [skill, setSkill] = useState<Skill>();
+
     const { openSlider, setOpenSlider } = useNavStore((state) => ({
         openSlider: state.openSlider,
         sliderData: state.sliderData,
@@ -30,8 +39,7 @@ const SlideIn = () => {
         if (router.query.openSlider === "true") {
             setOpenSlider(true);
             const findResultById = searchResults?.find(
-                (result: User | Project | Skill) =>
-                    result?._id === router.query.openedId
+                (result: User | Project | Skill) => result?._id === router.query.openedId
             );
             if (findResultById) {
                 setSliderData(findResultById);
@@ -40,6 +48,27 @@ const SlideIn = () => {
             setOpenSlider(false);
         }
     }, [router.query.openSlider]);
+
+    async function getSliderDataById() {
+        const response = await fetch("/api/all/getById", {
+            method: "POST",
+            body: JSON.stringify({
+                id: router.query.openedId,
+            }),
+        });
+        const data = await response.json();
+        const { person, project, skill } = data;
+
+        setPerson(person);
+        setProject(project);
+        setSkill(skill);
+
+        setProject(project);
+    }
+
+    useEffect(() => {
+        getSliderDataById();
+    }, [router.query.openedId]);
 
     return (
         <AnimationContainer>
@@ -76,8 +105,24 @@ const SlideIn = () => {
                             <SvgIcon svg="sliderArrowRight" />
                         </StyledSliderCloseWrapper>
                     </StyledIconContainer>
-                    <SliderBio data={exampleDataUser} />
-                    <SliderOverview data={exampleDataUser} />
+                    {person ? (
+                        <>
+                            <SliderBioPerson data={person} />
+                            <PersonOverview data={person} />
+                        </>
+                    ) : null}
+                    {project ? (
+                        <>
+                            <SliderBioProject data={project} />
+                            <ProjectsOverview data={project} />
+                        </>
+                    ) : null}
+                    {skill ? (
+                        <>
+                            <SliderBioSkill data={skill} />
+                            <SkillsOverview data={skill} />
+                        </>
+                    ) : null}
                 </StyledSliderWrapper>
             </motion.div>
         </AnimationContainer>

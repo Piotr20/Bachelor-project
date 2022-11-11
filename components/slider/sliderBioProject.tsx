@@ -7,10 +7,10 @@ import { SvgIcon } from "../svg-icon";
 import Text from "../typography/text";
 
 type SliderBioProps = {
-    data: User & Project & Skill;
+    data: Project;
 };
 
-const SliderBio = ({ data }: SliderBioProps) => {
+const SliderBioProject = ({ data }: SliderBioProps) => {
     return (
         <BioContainer>
             <ImpactImage
@@ -20,6 +20,18 @@ const SliderBio = ({ data }: SliderBioProps) => {
                 ratio="1/1"
                 containerStyles={{
                     width: "50%",
+
+                    [mq("lg")]: {
+                        width: "184px",
+                    },
+                    [mq("xl")]: {
+                        width: "200px",
+                    },
+                }}
+                placeholderStyles={{
+                    width: "50%",
+                    aspectRatio: "1/1",
+                    borderRadius: "50%",
                     [mq("lg")]: {
                         width: "184px",
                     },
@@ -50,38 +62,25 @@ const SliderBio = ({ data }: SliderBioProps) => {
                     color: colors.primary.lightGrey,
                 }}
             >
-                {data?.role || data?.tag}
+                {data?.tag}
             </Text>
-            {data?.location ? (
-                <IconContainer>
-                    <SvgIcon svg="location" />
-                    <Text
-                        tag="p"
-                        additionalStyles={{
-                            marginLeft: "6px",
-                        }}
-                    >
-                        {data?.location}
-                    </Text>
-                </IconContainer>
-            ) : data?.tag ? (
-                <IconContainer>
-                    <SvgIcon svg="calendarEmpty" />
-                    <Text
-                        tag="p"
-                        additionalStyles={{
-                            marginLeft: "6px",
-                        }}
-                    >
-                        {data?.startDate + "-" + data?.endDate}
-                    </Text>
-                </IconContainer>
-            ) : null}
+
+            <IconContainer>
+                <SvgIcon svg="calendarEmpty" />
+                <Text
+                    tag="p"
+                    additionalStyles={{
+                        marginLeft: "6px",
+                    }}
+                >
+                    {data?.startDate?.toString().split("T")[0]} -{data?.endDate?.toString().split("T")[0]}
+                </Text>
+            </IconContainer>
         </BioContainer>
     );
 };
 
-export default SliderBio;
+export default SliderBioProject;
 
 export const BioContainer = styled.div({
     marginTop: "16px",
@@ -93,7 +92,7 @@ export const BioContainer = styled.div({
 export const IconContainer = styled.div({
     display: "flex",
     marginTop: "8px",
-    opacity: 0.5,
+    opacity: 0.8,
     ["svg"]: {
         width: "24px !important",
         height: "24px !important",

@@ -5,7 +5,7 @@ type SliderOverviewProps = {
     data: User & Project & Skill;
 };
 
-const SliderSkillsOverview = ({ data }: SliderOverviewProps) => {
+const SkillsContent = ({ data }: SliderOverviewProps) => {
     return (
         <SkillsContainer>
             {data?.skills?.map((skill: any, key) => {
@@ -15,7 +15,7 @@ const SliderSkillsOverview = ({ data }: SliderOverviewProps) => {
     );
 };
 
-export default SliderSkillsOverview;
+export default SkillsContent;
 
 export const SkillsContainer = styled.div({
     marginTop: "24px",

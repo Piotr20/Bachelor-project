@@ -7,9 +7,9 @@ import ImpactImage from "../image/image";
 import { SvgIcon } from "../svg-icon";
 import Text from "../typography/text";
 import { motion, AnimatePresence } from "framer-motion";
-import SliderSkillsOverview from "./skillsOverview";
-import SliderPeopleOverview from "./peopleOverview";
-import SliderProjectsOverview from "./projectsOverview";
+import SliderSkillsOverview from "./skillsContent";
+import SliderPeopleOverview from "./peopleContent";
+import SliderProjectsOverview from "./projectContent";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 
@@ -19,8 +19,7 @@ type SliderOverviewProps = {
 
 const SliderOverview = ({ data }: SliderOverviewProps) => {
     const [openedIndex, setOpenedIndex] = useState<number>(0);
-    const [sliderDataType, setSliderDataType] =
-        useState<string | string[] | undefined>(undefined);
+    const [sliderDataType, setSliderDataType] = useState<string | string[] | undefined>(undefined);
     const router = useRouter();
 
     const handleToggle = (index: number) => {
@@ -95,17 +94,13 @@ const SliderOverview = ({ data }: SliderOverviewProps) => {
                 {overviewNav?.map((node: User & Project & Skill, index) => {
                     if (true) {
                         return (
-                            <NavNode
-                                onClick={() => handleToggle(index)}
-                                key={index}
-                            >
+                            <NavNode onClick={() => handleToggle(index)} key={index}>
                                 <Text
                                     tag="h5"
                                     additionalStyles={{
                                         cursor: "pointer",
                                         transition: "all .3s ease",
-                                        opacity:
-                                            openedIndex === index ? 1 : 0.3,
+                                        opacity: openedIndex === index ? 1 : 0.3,
                                     }}
                                 >
                                     {node?.name}
