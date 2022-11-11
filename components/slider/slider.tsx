@@ -30,7 +30,8 @@ const SlideIn = () => {
         if (router.query.openSlider === "true") {
             setOpenSlider(true);
             const findResultById = searchResults?.find(
-                (result: User | Project | Skill) => result?._id === router.query.openedId
+                (result: User | Project | Skill) =>
+                    result?._id === router.query.openedId
             );
             if (findResultById) {
                 setSliderData(findResultById);

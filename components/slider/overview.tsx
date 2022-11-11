@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Project, Skill, User } from "~/models";
 import { colors } from "~/util/colorPalette";
@@ -10,6 +10,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import SliderSkillsOverview from "./skillsOverview";
 import SliderPeopleOverview from "./peopleOverview";
 import SliderProjectsOverview from "./projectsOverview";
+import { useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
 
 type SliderOverviewProps = {
     data: User & Project & Skill;
@@ -17,6 +19,9 @@ type SliderOverviewProps = {
 
 const SliderOverview = ({ data }: SliderOverviewProps) => {
     const [openedIndex, setOpenedIndex] = useState<number>(0);
+    const [sliderDataType, setSliderDataType] =
+        useState<string | string[] | undefined>(undefined);
+    const router = useRouter();
 
     const handleToggle = (index: number) => {
         if (openedIndex === index) {
@@ -24,29 +29,66 @@ const SliderOverview = ({ data }: SliderOverviewProps) => {
         }
         setOpenedIndex(index);
     };
-    const overviewNav = [
-        {
-            name: "Skills",
-        },
-        {
-            name: "Projects",
-        },
-        {
-            name: "People",
-        },
-    ];
 
-    const listings = [
-        <>
-            <SliderSkillsOverview data={data} />
-        </>,
-        <>
-            <SliderProjectsOverview data={data} />
-        </>,
-        <>
-            <SliderPeopleOverview data={data} />,
-        </>,
-    ];
+    useEffect(() => {
+        setSliderDataType(router.query.type);
+    }, [router.query.type]);
+
+    const overviewNav =
+        sliderDataType === "person"
+            ? [
+                  {
+                      name: "Projects",
+                  },
+                  {
+                      name: "Skills",
+                  },
+              ]
+            : sliderDataType === "project"
+            ? [
+                  {
+                      name: "People",
+                  },
+                  {
+                      name: "Skills",
+                  },
+              ]
+            : [
+                  {
+                      name: "People",
+                  },
+                  {
+                      name: "Projects",
+                  },
+              ];
+
+    const listings =
+        sliderDataType === "person"
+            ? [
+                  <>
+                      <SliderProjectsOverview data={data} />
+                  </>,
+                  <>
+                      <SliderSkillsOverview data={data} />
+                  </>,
+              ]
+            : sliderDataType === "project"
+            ? [
+                  <>
+                      <SliderPeopleOverview data={data} />
+                  </>,
+                  <>
+                      <SliderSkillsOverview data={data} />
+                  </>,
+              ]
+            : [
+                  <>
+                      <SliderPeopleOverview data={data} />
+                  </>,
+                  <>
+                      <SliderProjectsOverview data={data} />
+                  </>,
+              ];
     return (
         <OverviewContainer>
             <NavWrapper>
@@ -76,7 +118,7 @@ const SliderOverview = ({ data }: SliderOverviewProps) => {
             <AnimatePresence initial={false} mode="wait">
                 <motion.div
                     key={openedIndex}
-                    initial={{ opacity: 0, x: "100%" }}
+                    initial={{ opacity: 0, x: "100" }}
                     animate={{
                         opacity: 1,
                         x: 0,
@@ -86,7 +128,7 @@ const SliderOverview = ({ data }: SliderOverviewProps) => {
                     }}
                     exit={{
                         opacity: 0,
-                        x: "-100%",
+                        x: "-100",
                         transition: {
                             duration: 0.4,
                         },

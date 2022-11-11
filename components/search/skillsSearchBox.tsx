@@ -16,12 +16,13 @@ type SkillSearchBoxProps = {
 };
 
 const SkillSearchBox = ({ data }: SkillSearchBoxProps) => {
-    const { toggleSlider, openSlider, setDataInSlider, setOpenSlider } =
+    const { openSlider, setDataInSlider, setOpenSlider, setDataType } =
         useNavStore((state) => ({
             openSlider: state.openSlider,
             toggleSlider: state.toggleSlider,
             setDataInSlider: state.setDataInSlider,
             setOpenSlider: state.setOpenSlider,
+            setDataType: state.setDataType,
         }));
     const router = useRouter();
 
@@ -35,6 +36,7 @@ const SkillSearchBox = ({ data }: SkillSearchBoxProps) => {
             setOpenSlider(true);
         }
         setDataInSlider(data);
+        setDataType("skill");
     }
 
     return (

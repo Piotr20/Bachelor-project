@@ -16,12 +16,13 @@ type ProjectsSearchBoxProps = {
 };
 
 const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
-    const { toggleSlider, openSlider, setDataInSlider, setOpenSlider } =
+    const { openSlider, setDataInSlider, setOpenSlider, setDataType } =
         useNavStore((state) => ({
             openSlider: state.openSlider,
             toggleSlider: state.toggleSlider,
             setDataInSlider: state.setDataInSlider,
             setOpenSlider: state.setOpenSlider,
+            setDataType: state.setDataType,
         }));
     const router = useRouter();
 
@@ -35,6 +36,7 @@ const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
             setOpenSlider(true);
         }
         setDataInSlider(data);
+        setDataType("project");
     }
 
     return (

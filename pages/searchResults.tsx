@@ -70,7 +70,7 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
                         marginTop: "24px",
                     }}
                 >
-                    Search results for {router.query.search}
+                    Search results for "{router.query.search}"
                 </Text>
                 <StyledSearchResultsWrapper>
                     {searchHits?.people?.length ? (

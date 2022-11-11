@@ -15,12 +15,12 @@ type PeopleSearchBoxProps = {
 };
 
 const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
-    const { toggleSlider, openSlider, setDataInSlider, setOpenSlider } =
+    const { openSlider, setDataInSlider, setOpenSlider, setDataType } =
         useNavStore((state) => ({
             openSlider: state.openSlider,
-            toggleSlider: state.toggleSlider,
             setDataInSlider: state.setDataInSlider,
             setOpenSlider: state.setOpenSlider,
+            setDataType: state.setDataType,
         }));
     const router = useRouter();
 
@@ -34,6 +34,7 @@ const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
             setOpenSlider(true);
         }
         setDataInSlider(data);
+        setDataType("person");
     }
 
     return (

@@ -2,23 +2,19 @@ import create from "zustand";
 import { Project, Skill, User } from "~/models";
 
 type NavState = {
-    showNav: boolean;
-    toggleNav: Function;
     openSlider: boolean | undefined;
     sliderData: User | Project | Skill | undefined;
     toggleSlider: Function;
+    sliderDataType: "project" | "skill" | "person" | undefined;
     setDataInSlider: (data: User | Project | Skill) => void;
     setOpenSlider: (open: boolean) => void;
+    setDataType: (data: "project" | "skill" | "person" | undefined) => void;
 };
 
 export const useNavStore = create<NavState>((set) => ({
-    showNav: false,
     openSlider: false,
     sliderData: undefined,
-    toggleNav: () =>
-        set((state) => ({
-            showNav: !state.showNav,
-        })),
+    sliderDataType: undefined,
     setOpenSlider: (open) =>
         set((state) => ({
             openSlider: open,
@@ -30,5 +26,9 @@ export const useNavStore = create<NavState>((set) => ({
     setDataInSlider: (data: User | Project | Skill) =>
         set(() => ({
             sliderData: data,
+        })),
+    setDataType: (data: "project" | "skill" | "person" | undefined) =>
+        set(() => ({
+            sliderDataType: data,
         })),
 }));

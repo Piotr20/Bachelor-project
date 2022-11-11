@@ -23,9 +23,10 @@ const Layout = ({ children }: LayoutProps) => {
     const [searchValue, setSearchValue] = useState<
         string | string[] | undefined
     >(router.query.search);
-    const { sliderData, openSlider } = useNavStore((state) => ({
+    const { sliderData, openSlider, sliderDataType } = useNavStore((state) => ({
         openSlider: state.openSlider,
         sliderData: state.sliderData,
+        sliderDataType: state.sliderDataType,
     }));
 
     function executeSearch(e: KeyboardEvent) {
@@ -94,13 +95,14 @@ useEffect(() => {
                         ...router.query,
                         openSlider: `${openSlider}`,
                         openedId: `${sliderData._id}`,
+                        type: `${sliderDataType}`,
                     },
                 },
                 undefined,
                 { shallow: true }
             );
         }
-    }, [sliderData, openSlider]);
+    }, [sliderData, openSlider, sliderDataType]);
 
     if (router.pathname !== "/signUp") {
         return (

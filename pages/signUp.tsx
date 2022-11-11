@@ -13,6 +13,11 @@ import { useSession } from "next-auth/react";
 import { User } from "~/models";
 import { mq } from "~/util/media-queries";
 import { Button } from "~/components/button/button";
+import SignUpBg from "../public/images/impact-signUp.webp";
+import ImpactImage from "~/components/image/image";
+import Text from "~/components/typography/text";
+import ProgressBar from "~/components/signUp/progressBar";
+import { colors } from "~/util/colorPalette";
 
 const SignUp: NextPage = () => {
     const router = useRouter();
@@ -71,68 +76,113 @@ const SignUp: NextPage = () => {
             </Head>
 
             <StyledMain>
-                <StyledFormContentBox>
-                    <StyledForm onSubmit={(e) => e.preventDefault()}>
-                        <AnimatePresence initial={false} mode="wait">
-                            <motion.div
-                                key={step}
-                                initial={{ opacity: 0, x: "100%" }}
-                                animate={{
-                                    opacity: 1,
-                                    x: 0,
-                                    transition: {
-                                        duration: 0.4,
-                                    },
+                <>
+                    <ImpactImage
+                        layout="responsive"
+                        objectFit="cover"
+                        containerStyles={{
+                            width: "100%",
+                            height: "100vh",
+                            overflow: "hidden",
+                            position: "absolute",
+                            zIndex: "0",
+                            filter: "brightness(65%)",
+                        }}
+                        src={SignUpBg}
+                        alt="Impact people"
+                    />
+                    <StyledFormContentBox>
+                        <StyledForm onSubmit={(e) => e.preventDefault()}>
+                            <Text
+                                tag="h2"
+                                additionalStyles={{
+                                    textAlign: "center",
                                 }}
-                                exit={{
-                                    opacity: 0,
-                                    x: "-100%",
-                                    transition: {
-                                        duration: 0.4,
+                            >
+                                Welcome to IMPACT connect
+                            </Text>
+                            <Text
+                                tag="p"
+                                additionalStyles={{
+                                    color: colors.primary.lightGrey,
+                                    textAlign: "center",
+                                    paddingTop: "4px",
+                                    fontSize: "16px",
+                                    [mq("xl")]: {
+                                        fontSize: "20px",
                                     },
                                 }}
                             >
-                                <StyledFieldsWrapper>
-                                    {stepsComponents[step - 1]}
-                                </StyledFieldsWrapper>
-                            </motion.div>
-                        </AnimatePresence>
-                        <StyledButtonWrapper>
-                            {step !== 1 ? (
-                                <Button
-                                    kind="secondary"
-                                    onClick={() => setStep(step - 1)}
-                                    additionalStyles={{
-                                        marginRight: "auto",
-                                    }}
-                                >
-                                    Back
-                                </Button>
-                            ) : null}
-                            {step !== 3 ? (
-                                <Button
-                                    kind="primary"
-                                    onClick={() => setStep(step + 1)}
-                                    additionalStyles={{
-                                        marginLeft: "auto",
-                                    }}
-                                >
-                                    Next
-                                </Button>
-                            ) : (
-                                <Button
-                                    kind="primary"
-                                    onClick={createUser}
-                                    additionalStyles={{
-                                        marginLeft: "auto",
-                                    }}
-                                >
-                                    Finish
-                                </Button>
-                            )}
-                        </StyledButtonWrapper>
-                    </StyledForm>
-                </StyledFormContentBox>
+                                Please fill-in all the missing information in
+                                your profile.
+                            </Text>
+                            <ProgressBar step={step} />
+                            <AnimationContainer>
+                                <AnimatePresence initial={false} mode="wait">
+                                    <motion.div
+                                        key={step}
+                                        initial={{
+                                            opacity: 0,
+                                            x: "100%",
+                                        }}
+                                        animate={{
+                                            opacity: 1,
+                                            x: 0,
+                                            transition: {
+                                                duration: 0.4,
+                                            },
+                                        }}
+                                        exit={{
+                                            opacity: 0,
+                                            x: "-100%",
+                                            transition: {
+                                                duration: 0.4,
+                                            },
+                                        }}
+                                    >
+                                        <StyledFieldsWrapper>
+                                            {stepsComponents[step - 1]}
+                                        </StyledFieldsWrapper>
+                                    </motion.div>
+                                </AnimatePresence>
+                            </AnimationContainer>
+                            <StyledButtonWrapper>
+                                {step !== 1 ? (
+                                    <Button
+                                        kind="secondary"
+                                        onClick={() => setStep(step - 1)}
+                                        additionalStyles={{
+                                            marginRight: "auto",
+                                        }}
+                                    >
+                                        Back
+                                    </Button>
+                                ) : null}
+                                {step !== 3 ? (
+                                    <Button
+                                        kind="primary"
+                                        onClick={() => setStep(step + 1)}
+                                        additionalStyles={{
+                                            marginLeft: "auto",
+                                        }}
+                                    >
+                                        Next
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        kind="primary"
+                                        onClick={createUser}
+                                        additionalStyles={{
+                                            marginLeft: "auto",
+                                        }}
+                                    >
+                                        Finish
+                                    </Button>
+                                )}
+                            </StyledButtonWrapper>
+                        </StyledForm>
+                    </StyledFormContentBox>
+                </>
             </StyledMain>
         </>
     );
@@ -147,17 +197,25 @@ export const StyledMain = styled.main({
     overflow: "hidden",
 });
 
+export const StyledSignUp = styled.main({
+    ...flexCenter,
+    width: "100%",
+    height: "100vh",
+});
+
 export const StyledForm = styled.form({
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
     width: "80%",
-    minHeight: "35%",
-    overflow: "hidden",
+    minHeight: "50%",
     [mq("lg")]: {
         width: "70%",
-        minHeight: "50%",
+        minHeight: "75%",
     },
+});
+
+export const AnimationContainer = styled.div({
+    minHeight: "50%",
 });
 
 export const StyledFormContentBox = styled.div({
@@ -167,11 +225,10 @@ export const StyledFormContentBox = styled.div({
     height: "100%",
     overflow: "hidden",
     backgroundColor: "#FFFFFF",
-
+    zIndex: "2",
     [mq("lg")]: {
         width: "45%",
         height: "75%",
-
         boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
         borderRadius: "40px",
     },
@@ -194,6 +251,7 @@ export const StyledButtonWrapper = styled.div({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: "24px",
 });
 
 export const ButtonBack = styled.button({
