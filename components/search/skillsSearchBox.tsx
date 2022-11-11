@@ -82,6 +82,7 @@ const SkillSearchBox = ({ data }: SkillSearchBoxProps) => {
                     overflow: "hidden",
                     textAlign: "center",
                     fontSize: "16px",
+
                     [mq("lg")]: {
                         minHeight: "2.5ch",
                         maxHeight: "2.5ch",
@@ -92,7 +93,7 @@ const SkillSearchBox = ({ data }: SkillSearchBoxProps) => {
                     },
                 }}
             >
-                {data?.docs}
+                {data?.name}
             </Text>
             <CTASection>
                 <Button onClick={handleSlideIn} kind="link">

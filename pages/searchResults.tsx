@@ -64,7 +64,14 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
             </Head>
 
             <main>
-                <Text tag="h4">Search results for {router.query.search}</Text>
+                <Text
+                    tag="h4"
+                    additionalStyles={{
+                        marginTop: "24px",
+                    }}
+                >
+                    Search results for {router.query.search}
+                </Text>
                 <StyledSearchResultsWrapper>
                     {searchHits?.people?.length ? (
                         <StyledSearchCategory>

@@ -56,6 +56,7 @@ export const StyledButton = styled.button<{
         backgroundColor: colors.primary.black,
         color: colors.base.white,
         transition: "all 0.3s ease",
+        borderRadius: "48px",
         ["&:hover"]: {
             backgroundColor: colors.secondary.lightYellow,
             color: colors.primary.black,
@@ -68,6 +69,7 @@ export const StyledButton = styled.button<{
         color: colors.primary.black,
         border: `2px solid ${colors.primary.black}`,
         transition: "all 0.3s ease",
+        borderRadius: "48px",
         padding: "6px 34px",
         ["&:hover"]: {
             backgroundColor: colors.primary.black,

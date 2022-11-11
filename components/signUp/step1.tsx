@@ -15,7 +15,19 @@ const Step1 = ({ user, setUser }: StepProps) => {
                     })
                 }
             />
-
+            <Input
+                placeholder="Your department"
+                type="text"
+                onChange={(e) =>
+                    setUser({
+                        ...user,
+                        department: (e.target as HTMLInputElement).value,
+                    })
+                }
+                additionalStyles={{
+                    marginTop: "20px",
+                }}
+            />
             <Input
                 placeholder="How long are you at IMPACT?"
                 type="number"
@@ -32,19 +44,6 @@ const Step1 = ({ user, setUser }: StepProps) => {
                 }}
             />
 
-            <Input
-                placeholder="Your department"
-                type="text"
-                onChange={(e) =>
-                    setUser({
-                        ...user,
-                        department: (e.target as HTMLInputElement).value,
-                    })
-                }
-                additionalStyles={{
-                    marginTop: "20px",
-                }}
-            />
             <Input
                 placeholder="Enter phone number"
                 type="text"

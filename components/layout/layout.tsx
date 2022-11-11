@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styled from "styled-components";
+import styled, { CSSObject } from "styled-components";
 import { mq } from "../../util/media-queries";
 import PageTransition from "../pageTransition/pageTransition";
 import { useNavStore } from "~/store/store";
@@ -10,6 +10,8 @@ import Header from "./header";
 import { options } from "~/util/searchOptions";
 import SlideIn from "../slider/slider";
 import { SvgIcon } from "../svg-icon";
+import { colors } from "~/util/colorPalette";
+import Text from "../typography/text";
 
 type LayoutProps = {
     children: ReactNode;
@@ -106,8 +108,21 @@ useEffect(() => {
                 <PageTransition animationType="fade">
                     <SlideIn />
                     <Header />
-                    <StyledPageContainer>
+                    <StyledPageContainer
+                        additionalStyles={{
+                            backgroundColor: colors.primary.black,
+                        }}
+                    >
                         <SearchWrapper>
+                            <Text
+                                tag="h2"
+                                additionalStyles={{
+                                    color: colors.base.white,
+                                    paddingBottom: "16px",
+                                }}
+                            >
+                                Find the help you need
+                            </Text>
                             {/* //* Uncomment the following to add category sorting to the search
                         <Select
                             isSearchable={false}
@@ -131,8 +146,8 @@ useEffect(() => {
                                 <SvgIcon svg="searchIcon" />
                             </SearchIconWrapper>
                         </SearchWrapper>
-                        {children}
                     </StyledPageContainer>
+                    <StyledPageContainer>{children}</StyledPageContainer>
                 </PageTransition>
             </>
         );
@@ -147,20 +162,23 @@ useEffect(() => {
 };
 export default Layout;
 
-export const StyledPageContainer = styled.div({
-    padding: "0 24px",
-    width: "100%",
-    [mq("lg")]: {
-        maxWidth: "1440px",
-        margin: "0 auto",
-        padding: "0 32px",
-    },
-    [mq("xl")]: {
-        maxWidth: "1600px",
-        margin: "0 auto",
-        padding: "0 48px",
-    },
-});
+export const StyledPageContainer = styled.div<{ additionalStyles?: CSSObject }>(
+    ({ additionalStyles }) => ({
+        padding: "0 24px",
+        width: "100%",
+        [mq("lg")]: {
+            maxWidth: "1440px",
+            margin: "0 auto",
+            padding: "0 32px",
+        },
+        [mq("xl")]: {
+            maxWidth: "1600px",
+            margin: "0 auto",
+            padding: "0 48px",
+        },
+        ...additionalStyles,
+    })
+);
 
 export const DashboardWrapper = styled.div(({}) => ({
     display: "flex",
@@ -175,13 +193,16 @@ export const DashboardWrapper = styled.div(({}) => ({
 
 export const SearchWrapper = styled.div(({}) => ({
     display: "flex",
+    flexDirection: "column",
     width: "100%",
     justifyContent: "center",
-    marginTop: "6vh",
+    alignItems: "center",
     padding: "24px 0",
+    paddingTop: "calc(24px + 6vh)",
+    backgroundColor: colors.primary.black,
     position: "relative",
     [mq("lg")]: {
-        marginTop: "12vh",
+        paddingTop: "calc(24px + 12vh)",
     },
 }));
 

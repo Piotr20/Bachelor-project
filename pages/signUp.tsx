@@ -144,9 +144,13 @@ export const StyledForm = styled.form({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    width: "70%",
-    minHeight: "50%",
+    width: "80%",
+    minHeight: "35%",
     overflow: "hidden",
+    [mq("lg")]: {
+        width: "70%",
+        minHeight: "50%",
+    },
 });
 
 export const StyledFormContentBox = styled.div({
@@ -158,7 +162,14 @@ export const StyledFormContentBox = styled.div({
     backgroundColor: "#FFFFFF",
 
     [mq("lg")]: {
-        width: "40%",
+        width: "45%",
+        height: "75%",
+
+        boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
+        borderRadius: "40px",
+    },
+    [mq("xl")]: {
+        width: "35%",
         height: "75%",
         boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
         borderRadius: "40px",
