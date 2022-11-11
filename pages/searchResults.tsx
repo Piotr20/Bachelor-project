@@ -73,6 +73,10 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
                                 tag="p"
                                 additionalStyles={{
                                     color: colors.primary.lightGrey,
+                                    marginBottom: "16px",
+                                    [mq("lg")]: {
+                                        marginBottom: "24px",
+                                    },
                                 }}
                             >
                                 {searchHits?.people?.length} people
@@ -174,6 +178,7 @@ export const StyledSearchResultsWrapper = styled.div({
 export const StyledSearchCategory = styled.div({
     width: "100%",
     marginTop: "24px",
+    paddingBottom: "16px",
     [mq("lg")]: {
         marginTop: "32px",
     },

@@ -22,6 +22,7 @@ type Props = Omit<ImageProps, "src" | "alt"> & {
     src?: string | StaticImageData | null;
     alt?: string | null;
     containerStyles?: CSSObject;
+    placeholderStyles?: CSSObject;
 };
 
 const ImpactImage = ({
@@ -47,6 +48,7 @@ const ImpactImage = ({
     lazyRoot,
     unoptimized,
     containerStyles,
+    placeholderStyles,
 }: Props) => {
     if (ratio && width && height && layout) {
         throw new Error(
@@ -87,6 +89,7 @@ const ImpactImage = ({
                     containerRatio={ratio}
                     width={containerWidth}
                     height={containerHeight}
+                    placeholderStyles={placeholderStyles}
                     src="/images/placeholderImage.jpg"
                     alt="placeholder image"
                 />
@@ -116,9 +119,11 @@ export const PlaceholderImage = styled.img<{
     width?: number | string;
     height?: number | string;
     layout?: string;
-}>(({ containerRatio, width, height, layout }) => ({
+    placeholderStyles?: CSSObject;
+}>(({ containerRatio, width, height, layout, placeholderStyles }) => ({
     aspectRatio: containerRatio,
     width: width,
     height: height,
+    ...placeholderStyles,
     ...(layout === "fill" ? { position: "relative" } : null),
 }));

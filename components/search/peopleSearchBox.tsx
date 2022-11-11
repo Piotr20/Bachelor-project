@@ -8,18 +8,20 @@ import Text from "../typography/text";
 import { useRouter } from "next/router";
 import { colors } from "~/util/colorPalette";
 import { mq } from "~/util/media-queries";
+import { SvgIcon } from "../svg-icon";
 
 type PeopleSearchBoxProps = {
     data: User;
 };
 
 const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
-    const { toggleSlider, openSlider, setDataInSlider, setOpenSlider } = useNavStore((state) => ({
-        openSlider: state.openSlider,
-        toggleSlider: state.toggleSlider,
-        setDataInSlider: state.setDataInSlider,
-        setOpenSlider: state.setOpenSlider,
-    }));
+    const { toggleSlider, openSlider, setDataInSlider, setOpenSlider } =
+        useNavStore((state) => ({
+            openSlider: state.openSlider,
+            toggleSlider: state.toggleSlider,
+            setDataInSlider: state.setDataInSlider,
+            setOpenSlider: state.setOpenSlider,
+        }));
     const router = useRouter();
 
     function handleSlideIn() {
@@ -73,13 +75,29 @@ const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
                 additionalStyles={{
                     color: colors.primary.lightGrey,
                     fontWeight: 400,
+                    marginTop: "4px",
+                    minHeight: "5ch",
+                    maxHeight: "5ch",
+                    overflow: "hidden",
+                    textAlign: "center",
+                    fontSize: "16px",
+                    [mq("lg")]: {
+                        minHeight: "2.5ch",
+                        maxHeight: "2.5ch",
+                        fontSize: "20px !important",
+                    },
+                    [mq("xl")]: {
+                        fontSize: "22px !important",
+                    },
                 }}
             >
                 {data?.role + " | " + data?.department}
             </Text>
-            <Button onClick={handleSlideIn} kind="primary">
-                Open
-            </Button>
+            <CTASection>
+                <Button onClick={handleSlideIn} kind="link">
+                    Show details <SvgIcon svg="arrowRight" />
+                </Button>
+            </CTASection>
         </StyledSearchBox>
     );
 };
@@ -95,13 +113,35 @@ export const StyledSearchBox = styled.div({
     boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
     borderRadius: "12px",
     position: "relative",
+    marginTop: "40px",
+    [mq("lg")]: {
+        marginTop: "50px",
+    },
 });
 
 export const StyledImage = styled.div({
-    width: "108px",
+    width: "80px",
     borderRadius: "50%",
     position: "absolute",
     aspectRatio: "1/1",
     top: "0",
     transform: "translate(0,-50%)",
+    backgroundColor: colors.base.white,
+    padding: "4px",
+    [mq("lg")]: {
+        width: "108px",
+    },
+});
+
+export const CTASection = styled.div({
+    width: "108%",
+    marginTop: "12px",
+    paddingTop: "8px",
+    borderTop: `1px solid ${colors.base.grey500}`,
+    display: "flex",
+    justifyContent: "center",
+    [mq("lg")]: {
+        width: "80%",
+        marginTop: "20px",
+    },
 });

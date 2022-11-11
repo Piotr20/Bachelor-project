@@ -8,7 +8,7 @@ import { ifProp } from "styled-tools";
 
 type ButtonProps = {
     children: ReactNode;
-    kind: "primary" | "secondary";
+    kind: "primary" | "secondary" | "link";
     disabled?: boolean;
     onClick?: ReactEventHandler;
     additionalStyles?: CSSObject;
@@ -34,13 +34,13 @@ export const Button: FC<ButtonProps> = ({
 };
 
 export const StyledButton = styled.button<{
-    kind: "primary" | "secondary";
+    kind: "primary" | "secondary" | "link";
     additionalStyles?: CSSObject;
 }>(
     ({ kind, additionalStyles }) => ({
         border: "none",
         outline: "none",
-        borderRadius: "64px",
+        borderRadius: "64 q qpx",
         lineHeight: "155%",
         cursor: "pointer",
         letterSpacing: "2px",
@@ -76,6 +76,37 @@ export const StyledButton = styled.button<{
         [mq("md")]: {},
         [mq("lg")]: {
             padding: "6px 34px",
+        },
+    })),
+    ifProp({ kind: "link" }, () => ({
+        display: "flex",
+        alignItems: "center",
+        backgroundColor: colors.base.white,
+        color: colors.primary.black,
+        padding: "0 4px",
+        backgroundImage: "linear-gradient(#feff00,#feff00)",
+        backgroundSize: "0 40%",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "0 95%",
+        transition: "all 0.1s ease",
+        ["svg"]: {
+            transition: "margin-left .15s ease",
+            marginLeft: "8px",
+            width: "12px !important",
+            height: "12px !important",
+        },
+        ["&:hover"]: {
+            backgroundImage: "linear-gradient(#feff00,#feff00)",
+            backgroundSize: "100% 40%",
+
+            backgroundPosition: "0 95%",
+            ["svg"]: {
+                marginLeft: "16px",
+            },
+        },
+        [mq("md")]: {},
+        [mq("lg")]: {
+            padding: "0 8px",
         },
     }))
 );
