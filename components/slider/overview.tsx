@@ -37,9 +37,15 @@ const SliderOverview = ({ data }: SliderOverviewProps) => {
     ];
 
     const listings = [
-        <SliderSkillsOverview data={data} />,
-        <SliderProjectsOverview data={data} />,
-        <SliderPeopleOverview data={data} />,
+        <>
+            <SliderSkillsOverview data={data} />
+        </>,
+        <>
+            <SliderProjectsOverview data={data} />
+        </>,
+        <>
+            <SliderPeopleOverview data={data} />,
+        </>,
     ];
     return (
         <OverviewContainer>

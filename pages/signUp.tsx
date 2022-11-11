@@ -23,9 +23,16 @@ const SignUp: NextPage = () => {
         setUserData: state.setUserData,
     }));
     const stepsComponents = [
-        <Step1 user={user} setUser={setUserData} />,
-        <Step2 user={user} setUser={setUserData} />,
-        <Step3 user={user} setUser={setUserData} />,
+        <>
+            <Step1 user={user} setUser={setUserData} />
+        </>,
+
+        <>
+            <Step2 user={user} setUser={setUserData} />
+        </>,
+        <>
+            <Step3 user={user} setUser={setUserData} />
+        </>,
     ];
     async function createUser() {
         const response = await fetch(`./api/user/createUser`, {
