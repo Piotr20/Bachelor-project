@@ -39,6 +39,12 @@ const Step3 = ({ user, setUser }: StepProps) => {
                         borderWidth: "0 !important",
                         borderColor: "none !important",
                     }),
+                    indicatorSeparator: () => ({
+                        display: "none",
+                    }),
+                    indicatorsContainer: () => ({
+                        paddingRight: "0",
+                    }),
                 }}
             />
         </StyledSelect>

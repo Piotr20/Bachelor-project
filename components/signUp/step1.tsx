@@ -48,6 +48,12 @@ const Step1 = ({ user, setUser }: StepProps) => {
                             borderWidth: "0 !important",
                             borderColor: "none !important",
                         }),
+                        indicatorSeparator: () => ({
+                            display: "none",
+                        }),
+                        indicatorsContainer: () => ({
+                            padding: "0",
+                        }),
                     }}
                 />
             </StyledSelect>
@@ -92,6 +98,6 @@ export const StyledSelect = styled.div(() => ({
     border: "none",
     borderBottom: `1px solid ${colors.primary.black}`,
     outline: "none",
-    ["div"]: { border: "none", outline: "none" },
+    ["div"]: { border: "none", outline: "none", paddingRight: "0" },
     ["span"]: { border: "none", outline: "none" },
 }));
