@@ -1,28 +1,22 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Project, Skill, User } from "~/models";
-import { colors } from "~/util/colorPalette";
-import { mq } from "~/util/media-queries";
-import ImpactImage from "../image/image";
-import { SvgIcon } from "../svg-icon";
-import Text from "../typography/text";
+import { Skill } from "~/models";
+import Text from "../../typography/text";
 import { motion, AnimatePresence } from "framer-motion";
-import SliderSkillsOverview from "./skillsContent";
-import SliderPeopleOverview from "./peopleContent";
-import SliderProjectsOverview from "./projectContent";
-import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
-import PeopleContent from "./peopleContent";
-import SkillsContent from "./skillsContent";
-import ProjectsContent from "./projectContent";
+import PeopleContent from "../contents/peopleContent";
+import ProjectsContent from "../contents/projectContent";
 
 type SliderOverviewProps = {
     data: Skill;
 };
 
 const SkillsOverview = ({ data }: SliderOverviewProps) => {
-    const [activeTab, setActiveTab] = useState<number | null>(null);
-    console.log(data);
+    const [activeTab, setActiveTab] = useState<number | null>(0);
+
+    useEffect(() => {
+        setActiveTab(0);
+    }, [data]);
+
     return (
         <OverviewContainer>
             <NavWrapper>
@@ -71,9 +65,9 @@ const SkillsOverview = ({ data }: SliderOverviewProps) => {
                     }}
                 >
                     {activeTab === 0 ? (
-                        <PeopleContent data={data} />
+                        <PeopleContent people={data?.people} />
                     ) : activeTab === 1 ? (
-                        <SkillsContent data={data} />
+                        <ProjectsContent projects={data?.projects} />
                     ) : null}
                 </motion.div>
             </AnimatePresence>

@@ -5,8 +5,8 @@ export type Project =
     | {
           _id?: string;
           name?: string;
-          people?: Array<User | string>;
-          skills?: Array<Skill | string>;
+          people?: User[];
+          skills?: Skill[];
           imageURL?: string;
           tag?: string;
           startDate?: Date;

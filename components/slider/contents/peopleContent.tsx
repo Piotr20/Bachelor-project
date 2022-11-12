@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Project, Skill, User } from "~/models";
 
 type SliderOverviewProps = {
-    people?: Array<User | string>;
+    people?: User[];
 };
 
 const PeopleContent = ({ people }: SliderOverviewProps) => {

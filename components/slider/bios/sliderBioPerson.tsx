@@ -2,15 +2,15 @@ import styled from "styled-components";
 import { Project, Skill, User } from "~/models";
 import { colors } from "~/util/colorPalette";
 import { mq } from "~/util/media-queries";
-import ImpactImage from "../image/image";
-import { SvgIcon } from "../svg-icon";
-import Text from "../typography/text";
+import ImpactImage from "../../image/image";
+import { SvgIcon } from "../../svg-icon";
+import Text from "../../typography/text";
 
 type SliderBioProps = {
-    data: Project;
+    data: User;
 };
 
-const SliderBioProject = ({ data }: SliderBioProps) => {
+const SliderBioPerson = ({ data }: SliderBioProps) => {
     return (
         <BioContainer>
             <ImpactImage
@@ -18,9 +18,9 @@ const SliderBioProject = ({ data }: SliderBioProps) => {
                 alt="alt text"
                 layout="fill"
                 ratio="1/1"
+                objectFit="contain"
                 containerStyles={{
                     width: "50%",
-
                     [mq("lg")]: {
                         width: "184px",
                     },
@@ -62,25 +62,25 @@ const SliderBioProject = ({ data }: SliderBioProps) => {
                     color: colors.primary.lightGrey,
                 }}
             >
-                {data?.tag}
+                {data?.role}
             </Text>
 
             <IconContainer>
-                <SvgIcon svg="calendarEmpty" />
+                <SvgIcon svg="location" />
                 <Text
                     tag="p"
                     additionalStyles={{
                         marginLeft: "6px",
                     }}
                 >
-                    {data?.startDate?.toString().split("T")[0]} -{data?.endDate?.toString().split("T")[0]}
+                    {data?.department}
                 </Text>
             </IconContainer>
         </BioContainer>
     );
 };
 
-export default SliderBioProject;
+export default SliderBioPerson;
 
 export const BioContainer = styled.div({
     marginTop: "16px",

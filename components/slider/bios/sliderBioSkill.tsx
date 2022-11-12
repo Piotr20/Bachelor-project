@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { Project, Skill, User } from "~/models";
+import { Skill } from "~/models";
 import { colors } from "~/util/colorPalette";
 import { mq } from "~/util/media-queries";
-import ImpactImage from "../image/image";
-import { SvgIcon } from "../svg-icon";
-import Text from "../typography/text";
+import ImpactImage from "~/components/image/image";
+import { SvgIcon } from "~/components/svg-icon";
+import Text from "~/components/typography/text";
 
 type SliderBioProps = {
     data: Skill;
@@ -18,6 +18,7 @@ const SliderBioSkill = ({ data }: SliderBioProps) => {
                 alt="alt text"
                 layout="fill"
                 ratio="1/1"
+                objectFit="contain"
                 containerStyles={{
                     width: "50%",
 

@@ -9,14 +9,13 @@ import ImpactImage from "../image/image";
 import { useSearchStore } from "~/store/searchStore";
 import { Project, Skill, User } from "~/models";
 import { exampleDataProject, exampleDataUser } from "~/util/sliderData";
-import SliderBioPerson from "./sliderBioPerson";
+import SliderBioPerson from "./bios/sliderBioPerson";
 import { mq } from "~/util/media-queries";
-import SliderOverview from "./overview";
-import SliderBioProject from "./sliderBioProject";
-import SliderBioSkill from "./sliderBioSkill";
-import PersonOverview from "./overviewPerson";
-import ProjectsOverview from "./overviewProjects";
-import SkillsOverview from "./overviewSkills";
+import SliderBioProject from "./bios/sliderBioProject";
+import SliderBioSkill from "./bios/sliderBioSkill";
+import PersonOverview from "./overviews/overviewPerson";
+import ProjectsOverview from "./overviews/overviewProjects";
+import SkillsOverview from "./overviews/overviewSkills";
 
 const SlideIn = () => {
     const router = useRouter();
@@ -64,6 +63,7 @@ const SlideIn = () => {
         setSkill(skill);
 
         setProject(project);
+        console.log(data);
     }
 
     useEffect(() => {

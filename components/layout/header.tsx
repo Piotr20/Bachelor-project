@@ -28,7 +28,7 @@ const Header = ({}: HeaderProps) => {
             <StyledHeaderContainer>
                 <StyledLogo>
                     <Link href={"/"}>
-                        <Image src={Logo} />
+                        <ImpactImage src={Logo} alt="Impact connect logo" />
                     </Link>
                 </StyledLogo>
                 <StyledNav>
@@ -124,9 +124,7 @@ export const StyledNavLi = styled.li<{
     height: "100%",
     display: "flex",
     alignItems: "center",
-    borderTop: `4px solid ${
-        active ? colors.secondary.lightYellow : "transparent"
-    }`,
+    borderTop: `4px solid ${active ? colors.secondary.lightYellow : "transparent"}`,
 
     ["a"]: {
         textDecoration: "none",

@@ -1,27 +1,21 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Project, Skill, User } from "~/models";
-import { colors } from "~/util/colorPalette";
-import { mq } from "~/util/media-queries";
-import ImpactImage from "../image/image";
-import { SvgIcon } from "../svg-icon";
-import Text from "../typography/text";
+import { Project } from "~/models";
+import Text from "../../typography/text";
 import { motion, AnimatePresence } from "framer-motion";
-import SliderSkillsOverview from "./skillsContent";
-import SliderPeopleOverview from "./peopleContent";
-import SliderProjectsOverview from "./projectContent";
-import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
-import PeopleContent from "./peopleContent";
-import SkillsContent from "./skillsContent";
-import ProjectsContent from "./projectContent";
+import PeopleContent from "../contents/peopleContent";
+import SkillsContent from "../contents/skillsContent";
 
 type SliderOverviewProps = {
-    data: User;
+    data: Project;
 };
 
-const PersonOverview = ({ data }: SliderOverviewProps) => {
-    const [activeTab, setActiveTab] = useState<number | null>(null);
+const ProjectsOverview = ({ data }: SliderOverviewProps) => {
+    const [activeTab, setActiveTab] = useState<number | null>(0);
+
+    useEffect(() => {
+        setActiveTab(0);
+    }, [data]);
 
     return (
         <OverviewContainer>
@@ -35,7 +29,7 @@ const PersonOverview = ({ data }: SliderOverviewProps) => {
                             opacity: activeTab === 0 ? 1 : 0.3,
                         }}
                     >
-                        Projects
+                        People
                     </Text>
                 </NavNode>
                 <NavNode onClick={() => setActiveTab(1)}>
@@ -71,9 +65,9 @@ const PersonOverview = ({ data }: SliderOverviewProps) => {
                     }}
                 >
                     {activeTab === 0 ? (
-                        <ProjectsContent data={data} />
+                        <PeopleContent people={data?.people} />
                     ) : activeTab === 1 ? (
-                        <SkillsContent data={data} />
+                        <SkillsContent skills={data?.skills} />
                     ) : null}
                 </motion.div>
             </AnimatePresence>
@@ -81,7 +75,7 @@ const PersonOverview = ({ data }: SliderOverviewProps) => {
     );
 };
 
-export default PersonOverview;
+export default ProjectsOverview;
 
 export const OverviewContainer = styled.div({
     marginTop: "24px",

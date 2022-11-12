@@ -1,15 +1,15 @@
 import styled from "styled-components";
-import { Project, Skill, User } from "~/models";
+import { Skill } from "~/models";
 
 type SliderOverviewProps = {
-    data: User & Project & Skill;
+    skills?: Skill[];
 };
 
-const SkillsContent = ({ data }: SliderOverviewProps) => {
+const SkillsContent = ({ skills }: SliderOverviewProps) => {
     return (
         <SkillsContainer>
-            {data?.skills?.map((skill: any, key) => {
-                return <div key={key}>{skill.name}</div>;
+            {skills?.map((skill: Skill, key) => {
+                return <div key={key}>{skill?.name}</div>;
             })}
         </SkillsContainer>
     );
