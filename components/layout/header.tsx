@@ -28,7 +28,7 @@ const Header = ({}: HeaderProps) => {
             <StyledHeaderContainer>
                 <StyledLogo>
                     <Link href={"/"}>
-                        <ImpactImage src={Logo} alt="Impact connect logo" />
+                        <Image src={Logo} alt="Impact connect logo" />
                     </Link>
                 </StyledLogo>
                 <StyledNav>
@@ -74,7 +74,7 @@ export const StyledHeader = styled.header({
     width: "100%",
     height: "8vh",
 });
-export const StyledHeaderContainer = styled.header({
+export const StyledHeaderContainer = styled.div({
     width: "100%",
     height: "100%",
     display: "flex",

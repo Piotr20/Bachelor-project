@@ -61,9 +61,6 @@ const SlideIn = () => {
         setPerson(person);
         setProject(project);
         setSkill(skill);
-
-        setProject(project);
-        console.log(data);
     }
 
     useEffect(() => {
