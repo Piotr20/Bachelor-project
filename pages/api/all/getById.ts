@@ -28,6 +28,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                   docs: skillRaw?.docs,
                   imageURL: skillRaw?.imageURL,
                   name: skillRaw?.name,
+                  category: skillRaw?.category,
                   _id: skillRaw?._id,
                   projects: matchedProjects,
                   people: matchedPeople,

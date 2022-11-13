@@ -14,20 +14,9 @@ type ButtonProps = {
     additionalStyles?: CSSObject;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children">;
 
-export const Button: FC<ButtonProps> = ({
-    children,
-    kind,
-    disabled,
-    onClick,
-    additionalStyles,
-}) => {
+export const Button: FC<ButtonProps> = ({ children, kind, disabled, onClick, additionalStyles }) => {
     return (
-        <StyledButton
-            onClick={onClick}
-            kind={kind}
-            disabled={disabled}
-            additionalStyles={additionalStyles}
-        >
+        <StyledButton onClick={onClick} kind={kind} disabled={disabled} additionalStyles={additionalStyles}>
             {children}
         </StyledButton>
     );
@@ -43,7 +32,7 @@ export const StyledButton = styled.button<{
         borderRadius: "64 q qpx",
         lineHeight: "155%",
         cursor: "pointer",
-        letterSpacing: "2px",
+        letterSpacing: "1.75px",
         padding: "8px 36px",
         fontSize: "16px",
         ...additionalStyles,
@@ -91,6 +80,7 @@ export const StyledButton = styled.button<{
         backgroundRepeat: "no-repeat",
         backgroundPosition: "0 95%",
         transition: "all 0.1s ease",
+        letterSpacing: "1px",
         ["svg"]: {
             transition: "margin-left .15s ease",
             marginLeft: "8px",

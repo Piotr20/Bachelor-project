@@ -8,6 +8,16 @@ const GlobalStyles = createGlobalStyle`
             box-sizing: border-box; 
         };
         @font-face {
+            font-family: 'Flama'
+            src: url("/fonts/FlamaBold.woff2") format('woff2');
+            font-weight: bold;
+        };
+        @font-face {
+            font-family: 'Flama'
+            src: url("/fonts/FlamaLightRegular.woff2") format('woff2');
+            font-weight: normal;
+        };
+        @font-face {
             font-family: 'Flama Condensed';
             src: url('/fonts/FlamaCondensed-Medium.woff2') format('woff2');
         };
@@ -20,10 +30,11 @@ const GlobalStyles = createGlobalStyle`
             padding: 0;
             background: #F5F5F5;  
             font-family: 'Plantin Std';
-            font-weight: 400;
+            font-weight: normal;
         };
         h1,h2,h3,h4,h5,h6, button {
-            font-family: 'Flama Condensed';
+            font-family: 'Flama';
+            font-weight: bold;
         };
     `;
 

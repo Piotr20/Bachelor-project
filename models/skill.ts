@@ -7,6 +7,7 @@ export type Skill =
           name?: string;
           imageURL?: string;
           docs?: string;
+          category?: string;
           people?: User[];
           projects?: Project[];
       }

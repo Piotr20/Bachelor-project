@@ -31,6 +31,8 @@ const nextConfig = {
             "raw.githubusercontent.com",
             "www.tutorialsteacher.com",
             "www.timelog.com",
+            "drive.google.com",
+            "l.facebook.com",
         ],
     },
 };

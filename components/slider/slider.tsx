@@ -136,7 +136,7 @@ export const StyledSliderWrapper = styled.div({
 });
 export const AnimationContainer = styled.div({
     ["&>div"]: {
-        width: "85%",
+        width: "100%",
         [mq("lg")]: {
             width: "50%",
         },

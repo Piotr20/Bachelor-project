@@ -63,7 +63,7 @@ const SliderBioSkill = ({ data }: SliderBioProps) => {
                     color: colors.primary.lightGrey,
                 }}
             >
-                {data?.docs}
+                {data?.category}
             </Text>
         </BioContainer>
     );

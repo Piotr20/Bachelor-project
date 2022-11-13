@@ -10,34 +10,21 @@ import { mq } from "~/util/media-queries";
 import { colors } from "~/util/colorPalette";
 import { SvgIcon } from "../svg-icon";
 import { CTASection, StyledImage, StyledSearchBox } from "./peopleSearchBox";
+import { handleSlideIn } from "~/lib/helpers/search.hepler";
 
 type ProjectsSearchBoxProps = {
     data: Project;
 };
 
 const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
-    const { openSlider, setDataInSlider, setOpenSlider, setDataType } =
-        useNavStore((state) => ({
-            openSlider: state.openSlider,
-            toggleSlider: state.toggleSlider,
-            setDataInSlider: state.setDataInSlider,
-            setOpenSlider: state.setOpenSlider,
-            setDataType: state.setDataType,
-        }));
+    const { openSlider, setDataInSlider, setOpenSlider, setDataType } = useNavStore((state) => ({
+        openSlider: state.openSlider,
+        toggleSlider: state.toggleSlider,
+        setDataInSlider: state.setDataInSlider,
+        setOpenSlider: state.setOpenSlider,
+        setDataType: state.setDataType,
+    }));
     const router = useRouter();
-
-    function handleSlideIn() {
-        if (openSlider) {
-            setOpenSlider(false);
-            setTimeout(() => {
-                setOpenSlider(true);
-            }, 500);
-        } else {
-            setOpenSlider(true);
-        }
-        setDataInSlider(data);
-        setDataType("project");
-    }
 
     return (
         <StyledSearchBox>
@@ -100,7 +87,19 @@ const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
                 {data?.tag}
             </Text>
             <CTASection>
-                <Button onClick={handleSlideIn} kind="link">
+                <Button
+                    onClick={() =>
+                        handleSlideIn(
+                            data,
+                            setOpenSlider,
+                            setDataInSlider,
+                            setDataType,
+                            "project",
+                            openSlider
+                        )
+                    }
+                    kind="link"
+                >
                     Show details <SvgIcon svg="arrowRight" />
                 </Button>
             </CTASection>

@@ -9,33 +9,20 @@ import { useRouter } from "next/router";
 import { colors } from "~/util/colorPalette";
 import { mq } from "~/util/media-queries";
 import { SvgIcon } from "../svg-icon";
+import { handleSlideIn } from "~/lib/helpers/search.hepler";
 
 type PeopleSearchBoxProps = {
     data: User;
 };
 
 const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
-    const { openSlider, setDataInSlider, setOpenSlider, setDataType } =
-        useNavStore((state) => ({
-            openSlider: state.openSlider,
-            setDataInSlider: state.setDataInSlider,
-            setOpenSlider: state.setOpenSlider,
-            setDataType: state.setDataType,
-        }));
+    const { openSlider, setDataInSlider, setOpenSlider, setDataType } = useNavStore((state) => ({
+        openSlider: state.openSlider,
+        setDataInSlider: state.setDataInSlider,
+        setOpenSlider: state.setOpenSlider,
+        setDataType: state.setDataType,
+    }));
     const router = useRouter();
-
-    function handleSlideIn() {
-        if (openSlider) {
-            setOpenSlider(false);
-            setTimeout(() => {
-                setOpenSlider(true);
-            }, 500);
-        } else {
-            setOpenSlider(true);
-        }
-        setDataInSlider(data);
-        setDataType("person");
-    }
 
     return (
         <StyledSearchBox>
@@ -95,7 +82,12 @@ const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
                 {data?.role + " | " + data?.department}
             </Text>
             <CTASection>
-                <Button onClick={handleSlideIn} kind="link">
+                <Button
+                    onClick={() =>
+                        handleSlideIn(data, setOpenSlider, setDataInSlider, setDataType, "person", openSlider)
+                    }
+                    kind="link"
+                >
                     Show details <SvgIcon svg="arrowRight" />
                 </Button>
             </CTASection>

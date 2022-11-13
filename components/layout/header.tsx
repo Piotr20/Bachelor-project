@@ -51,6 +51,7 @@ const Header = ({}: HeaderProps) => {
                         additionalStyles={{
                             paddingRight: "12px",
                             color: colors.base.white,
+                            whiteSpace: "nowrap",
                         }}
                     >
                         {user?.name}
@@ -60,7 +61,7 @@ const Header = ({}: HeaderProps) => {
                         alt="alt text"
                         layout="fill"
                         ratio="1/1"
-                        containerWidth="50%"
+                        containerWidth="40px"
                         style={{ borderRadius: "50%" }}
                     />
                 </StyledProfile>

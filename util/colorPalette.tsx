@@ -1,6 +1,6 @@
 export const colors: ColorPalette = {
     primary: {
-        black: "#221819",
+        black: "#171717",
         darkGray: "#303030",
         lightGrey: "#828282",
     },

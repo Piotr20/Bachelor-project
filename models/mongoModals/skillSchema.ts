@@ -4,6 +4,7 @@ const skillSchema = new Schema({
     name: String,
     imageURL: String,
     docs: String,
+    category: String,
 });
 
 const Skill = models.Skill || model("Skill", skillSchema);

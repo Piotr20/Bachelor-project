@@ -2,9 +2,7 @@ import { Project, Skill, User } from "~/models";
 import Projects from "~/pages/projects";
 import { DOMAIN_NAME } from "~/util/env-variables";
 
-export async function fetchSearchResults(
-    category: "projects" | "skills" | "people" | "all"
-) {
+export async function fetchSearchResults(category: "projects" | "skills" | "people" | "all") {
     switch (category) {
         case "people":
             const people = await fetchSingleEndpoint("user");
@@ -25,9 +23,7 @@ export async function fetchSearchResults(
     }
 }
 
-export async function fetchSingleEndpoint(
-    endpoint: "projects" | "skills" | "user"
-) {
+export async function fetchSingleEndpoint(endpoint: "projects" | "skills" | "user") {
     const response = await fetch(`${DOMAIN_NAME}/api/${endpoint}/all`);
     const mongoData = await response.json();
     switch (endpoint) {
@@ -63,14 +59,9 @@ export async function fetchAllEndpoints() {
     };
 }
 
-export function filterBySearchParam(
-    searchQuery: string,
-    array?: User[] & Project[] & Skill[]
-) {
+export function filterBySearchParam(searchQuery: string, array?: User[] & Project[] & Skill[]) {
     const filteredArray = array?.filter((searchHit: Project | Skill | User) => {
-        if (
-            searchHit?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())
-        ) {
+        if (searchHit?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())) {
             return searchHit;
         }
     });
@@ -116,4 +107,24 @@ export function outputFormatterHelper(
             };
         }
     }
+}
+
+export function handleSlideIn(
+    data: User | Project | Skill,
+    setOpenSlider: (open: boolean) => void,
+    setDataInSlider: (data: User | Project | Skill) => void,
+    setDataType: (data: "project" | "skill" | "person" | undefined) => void,
+    type: "project" | "skill" | "person",
+    openSlider?: boolean
+) {
+    if (openSlider) {
+        setOpenSlider(false);
+        setTimeout(() => {
+            setOpenSlider(true);
+        }, 500);
+    } else {
+        setOpenSlider(true);
+    }
+    setDataInSlider(data);
+    setDataType(type);
 }

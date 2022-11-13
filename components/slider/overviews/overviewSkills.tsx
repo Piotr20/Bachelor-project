@@ -41,7 +41,7 @@ const SkillsOverview = ({ data }: SliderOverviewProps) => {
                             opacity: activeTab === 1 ? 1 : 0.3,
                         }}
                     >
-                        Skills
+                        Projects
                     </Text>
                 </NavNode>
             </NavWrapper>
