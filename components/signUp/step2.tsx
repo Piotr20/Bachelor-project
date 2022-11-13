@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { StepProps } from "~/models/signUpSteps";
 import { getAllFromEndpointHelper, handleUserPropsHelper } from "~/lib/helpers/signUp.helper";
 import { StyledSelect } from "./step1";
+import { colors } from "~/util/colorPalette";
 
 const Step2 = ({ user, setUser }: StepProps) => {
     const [selectedProjects, setSelectedProjects] = useState<any>(null);
@@ -27,7 +28,7 @@ const Step2 = ({ user, setUser }: StepProps) => {
                 styles={{
                     valueContainer: (privided) => ({
                         ...privided,
-                        paddingLeft: "0",
+                        paddingLeft: "2.98px",
                         paddingTop: "0",
                         outline: "none !important",
                     }),
@@ -41,11 +42,13 @@ const Step2 = ({ user, setUser }: StepProps) => {
                         borderWidth: "0 !important",
                         borderColor: "none !important",
                     }),
-                    indicatorSeparator: () => ({
-                        display: "none",
-                    }),
-                    indicatorsContainer: () => ({
+                    indicatorsContainer: (privided) => ({
+                        ...privided,
                         paddingRight: "0",
+                    }),
+                    multiValue: (privided) => ({
+                        ...privided,
+                        backgroundColor: colors.secondary.lightYellow + "40",
                     }),
                 }}
             />

@@ -9,23 +9,14 @@ export type InputProps = {
     onChange?: ReactEventHandler;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "children">;
 
-export const Input = ({
-    placeholder,
-    additionalStyles,
-    type,
-    onChange,
-}: InputProps) => {
+export const Input = ({ placeholder, additionalStyles, type, onChange }: InputProps) => {
     const [wordCount, setWordCount] = useState(0);
     const inputRef = useRef<HTMLInputElement>(null);
     const [focus, setFocus] = useState(false);
 
     return (
         <InputWrapper additionalStyles={additionalStyles}>
-            <StyledInput
-                onChange={onChange}
-                placeholder={placeholder}
-                type={type}
-            />
+            <StyledInput onChange={onChange} placeholder={placeholder} type={type} />
         </InputWrapper>
     );
 };
@@ -46,6 +37,7 @@ const StyledInput = styled.input({
     borderBottom: `1px solid ${colors.primary.black}`,
     outline: "none",
     paddingBottom: "10px",
+    paddingLeft: "8px",
     ["&::placeholder"]: {
         color: colors.base.grey500,
     },

@@ -34,7 +34,7 @@ const Step1 = ({ user, setUser }: StepProps) => {
                     styles={{
                         valueContainer: (privided) => ({
                             ...privided,
-                            paddingLeft: "0",
+                            paddingLeft: "2.98px",
                             paddingTop: "0",
                             outline: "none !important",
                         }),
@@ -50,9 +50,6 @@ const Step1 = ({ user, setUser }: StepProps) => {
                         }),
                         indicatorSeparator: () => ({
                             display: "none",
-                        }),
-                        indicatorsContainer: () => ({
-                            padding: "0",
                         }),
                     }}
                 />
@@ -98,6 +95,13 @@ export const StyledSelect = styled.div(() => ({
     border: "none",
     borderBottom: `1px solid ${colors.primary.black}`,
     outline: "none",
-    ["div"]: { border: "none", outline: "none", paddingRight: "0" },
-    ["span"]: { border: "none", outline: "none" },
+    ["div"]: {
+        border: "none",
+        outline: "none",
+    },
+
+    ["span"]: {
+        border: "none",
+        outline: "none",
+    },
 }));

@@ -53,7 +53,7 @@ const SignUp: NextPage = () => {
                 projects: user?.projects,
                 skills: user?.skills,
                 imageURL:
-                    "https://media-exp1.licdn.com/dms/image/C4E03AQESdYwClrBdZw/profile-displayphoto-shrink_800_800/0/1603216082942?e=2147483647&v=beta&t=NyT8ZiZcpnvJd9IINgBgp_fSc8Dk2LIpQpu6jsyXA3g",
+                    "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541",
             }),
         });
         const mongoUser: User = await response.json();
@@ -113,8 +113,7 @@ const SignUp: NextPage = () => {
                                     },
                                 }}
                             >
-                                Please fill-in all the missing information in
-                                your profile.
+                                Please fill-in all the missing information in your profile.
                             </Text>
                             <ProgressBar step={step} />
                             <AnimationContainer>
@@ -140,9 +139,7 @@ const SignUp: NextPage = () => {
                                             },
                                         }}
                                     >
-                                        <StyledFieldsWrapper>
-                                            {stepsComponents[step - 1]}
-                                        </StyledFieldsWrapper>
+                                        <StyledFieldsWrapper>{stepsComponents[step - 1]}</StyledFieldsWrapper>
                                     </motion.div>
                                 </AnimatePresence>
                             </AnimationContainer>
@@ -234,7 +231,7 @@ export const StyledFormContentBox = styled.div({
     },
     [mq("xl")]: {
         width: "35%",
-        height: "75%",
+        height: "70%",
         boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
         borderRadius: "40px",
     },
