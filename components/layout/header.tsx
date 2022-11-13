@@ -19,8 +19,9 @@ type HeaderProps = {};
 
 const Header = ({}: HeaderProps) => {
     const router = useRouter();
-    const { user } = useUserStore((state) => ({
+    const { user, setOpenProfile } = useUserStore((state) => ({
         user: state.user,
+        setOpenProfile: state.setOpenProfile,
     }));
 
     return (
@@ -45,7 +46,7 @@ const Header = ({}: HeaderProps) => {
                     })}
                 </StyledNavUl> */}
                 </StyledNav>
-                <StyledProfile>
+                <StyledProfile onClick={() => setOpenProfile(true)}>
                     <Text
                         tag="h6"
                         additionalStyles={{
@@ -106,6 +107,7 @@ export const StyledProfile = styled.div({
     display: "flex",
     alignItems: "center",
     width: "auto",
+    cursor: "pointer",
 });
 
 export const StyledNav = styled.nav({

@@ -12,6 +12,8 @@ import SlideIn from "../slider/slider";
 import { SvgIcon } from "../svg-icon";
 import { colors } from "~/util/colorPalette";
 import Text from "../typography/text";
+import { useUserStore } from "~/store/userStore";
+import Profile from "../profile/profile";
 
 type LayoutProps = {
     children: ReactNode;
@@ -20,9 +22,10 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
     const router = useRouter();
     const [selectedOption, setSelectedOption] = useState<any>(null);
-    const [searchValue, setSearchValue] = useState<
-        string | string[] | undefined
-    >(router.query.search);
+    const [searchValue, setSearchValue] = useState<string | string[] | undefined>(router.query.search);
+    const { openProfile } = useUserStore((state) => ({
+        openProfile: state.openProfile,
+    }));
     const { sliderData, openSlider, sliderDataType } = useNavStore((state) => ({
         openSlider: state.openSlider,
         sliderData: state.sliderData,
@@ -45,9 +48,7 @@ const Layout = ({ children }: LayoutProps) => {
 
     useEffect(() => {
         if (router.isReady) {
-            const optionToSet = options.find(
-                (o) => o.value === router.query.category
-            );
+            const optionToSet = options.find((o) => o.value === router.query.category);
 
             if (optionToSet) {
                 setSelectedOption(optionToSet);
@@ -88,14 +89,26 @@ useEffect(() => {
     }, [searchValue]);
 
     useEffect(() => {
-        if (sliderData) {
+        if (openSlider) {
+            if (sliderData) {
+                router.replace(
+                    {
+                        query: {
+                            search: `${searchValue}`,
+                            openSlider: `${openSlider}`,
+                            openedId: `${sliderData._id}`,
+                            type: `${sliderDataType}`,
+                        },
+                    },
+                    undefined,
+                    { shallow: true }
+                );
+            }
+        } else {
             router.replace(
                 {
                     query: {
-                        ...router.query,
-                        openSlider: `${openSlider}`,
-                        openedId: `${sliderData._id}`,
-                        type: `${sliderDataType}`,
+                        search: `${searchValue}`,
                     },
                 },
                 undefined,
@@ -104,11 +117,52 @@ useEffect(() => {
         }
     }, [sliderData, openSlider, sliderDataType]);
 
+    useEffect(() => {
+        if (openProfile) {
+            console.log(searchValue);
+            if (searchValue || searchValue !== undefined) {
+                router.replace(
+                    {
+                        query: {
+                            search: `${searchValue}`,
+                            openProfile: `${openProfile}`,
+                        },
+                    },
+                    undefined,
+                    { shallow: true }
+                );
+            } else {
+                router.replace(
+                    {
+                        query: {
+                            openProfile: `${openProfile}`,
+                        },
+                    },
+                    undefined,
+                    { shallow: true }
+                );
+            }
+        } else {
+            let { openProfile, ...query } = router.query;
+            router.replace(
+                {
+                    query: {
+                        ...query,
+                    },
+                },
+                undefined,
+                { shallow: true }
+            );
+        }
+    }, [openProfile]);
+
     if (router.pathname !== "/signUp") {
         return (
             <>
                 <PageTransition animationType="fade">
                     <SlideIn />
+                    <Profile />
+
                     <Header />
                     <StyledPageContainer
                         additionalStyles={{
@@ -156,31 +210,28 @@ useEffect(() => {
     } else {
         return (
             <>
-                <PageTransition animationType="fade">{children}</PageTransition>
-                ;
+                <PageTransition animationType="fade">{children}</PageTransition>;
             </>
         );
     }
 };
 export default Layout;
 
-export const StyledPageContainer = styled.div<{ additionalStyles?: CSSObject }>(
-    ({ additionalStyles }) => ({
-        padding: "0 24px",
-        width: "100%",
-        [mq("lg")]: {
-            maxWidth: "1440px",
-            margin: "0 auto",
-            padding: "0 32px",
-        },
-        [mq("xl")]: {
-            maxWidth: "1600px",
-            margin: "0 auto",
-            padding: "0 48px",
-        },
-        ...additionalStyles,
-    })
-);
+export const StyledPageContainer = styled.div<{ additionalStyles?: CSSObject }>(({ additionalStyles }) => ({
+    padding: "0 24px",
+    width: "100%",
+    [mq("lg")]: {
+        maxWidth: "1440px",
+        margin: "0 auto",
+        padding: "0 32px",
+    },
+    [mq("xl")]: {
+        maxWidth: "1600px",
+        margin: "0 auto",
+        padding: "0 48px",
+    },
+    ...additionalStyles,
+}));
 
 export const DashboardWrapper = styled.div(({}) => ({
     display: "flex",

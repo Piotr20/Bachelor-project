@@ -15,6 +15,8 @@ import ErrorTextIcon from './error-text-icon.svg';
 import EyeClosed from './eye-closed.svg';
 import EyeOpen from './eye-open.svg';
 import Location from './location.svg';
+import LogOut from './log-out.svg';
+import ProfileEdit from './profile-edit.svg';
 import SearchIcon from './search-icon.svg';
 import Search from './search.svg';
 import SignIn from './sign-in.svg';
@@ -36,6 +38,8 @@ export const TLAIcons: { [key: string]: FC<any> } = {
     eyeClosed: EyeClosed,
     eyeOpen: EyeOpen,
     location: Location,
+    logOut: LogOut,
+    profileEdit: ProfileEdit,
     searchIcon: SearchIcon,
     search: Search,
     signIn: SignIn,
