@@ -7,11 +7,9 @@ const userSchema = new Schema({
     department: String,
     location: String,
     role: String,
+    phone: String,
     projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
-    skills: [
-        { type: Schema.Types.ObjectId, ref: "Skill" },
-        { expertise: String },
-    ],
+    skills: [{ type: Schema.Types.ObjectId, ref: "Skill" }, { expertise: String }],
     imageURL: String,
 });
 

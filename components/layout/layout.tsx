@@ -120,7 +120,7 @@ useEffect(() => {
     useEffect(() => {
         if (openProfile) {
             console.log(searchValue);
-            if (searchValue || searchValue !== undefined) {
+            if (router.query.search || typeof router.query.search === "string") {
                 router.replace(
                     {
                         query: {

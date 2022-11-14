@@ -32,19 +32,19 @@ const Step1 = ({ user, setUser }: StepProps) => {
                     }}
                     options={departmentOptions}
                     styles={{
-                        valueContainer: (privided) => ({
-                            ...privided,
+                        valueContainer: (provided) => ({
+                            ...provided,
                             paddingLeft: "2.98px",
                             paddingTop: "0",
                             outline: "none !important",
                         }),
-                        input: (privided) => ({
-                            ...privided,
+                        input: (provided) => ({
+                            ...provided,
                             padding: "0",
                             margin: "0",
                         }),
-                        control: (privided) => ({
-                            ...privided,
+                        control: (provided) => ({
+                            ...provided,
                             borderWidth: "0 !important",
                             borderColor: "none !important",
                         }),

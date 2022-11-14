@@ -24,31 +24,31 @@ const Step3 = ({ user, setUser }: StepProps) => {
                 }}
                 options={skillOptions}
                 styles={{
-                    valueContainer: (privided) => ({
-                        ...privided,
+                    valueContainer: (provided) => ({
+                        ...provided,
                         paddingLeft: "2.98px",
                         paddingTop: "0",
                         outline: "none !important",
                     }),
-                    input: (privided) => ({
-                        ...privided,
+                    input: (provided) => ({
+                        ...provided,
                         padding: "0",
                         margin: "0",
                     }),
-                    control: (privided) => ({
-                        ...privided,
+                    control: (provided) => ({
+                        ...provided,
                         borderWidth: "0 !important",
                         borderColor: "none !important",
                     }),
                     indicatorSeparator: () => ({
                         display: "none",
                     }),
-                    indicatorsContainer: (privided) => ({
-                        ...privided,
+                    indicatorsContainer: (provided) => ({
+                        ...provided,
                         paddingRight: "0",
                     }),
-                    multiValue: (privided) => ({
-                        ...privided,
+                    multiValue: (provided) => ({
+                        ...provided,
                         backgroundColor: colors.secondary.lightYellow + "40",
                     }),
                 }}
