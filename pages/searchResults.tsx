@@ -14,7 +14,7 @@ import SkillSearchBox from "~/components/search/skillsSearchBox";
 import Text from "~/components/typography/text";
 import { colors } from "~/util/colorPalette";
 
-type SearchHits = {
+export type SearchHits = {
     people?: User[];
     projects?: Project[];
     skills?: Skill[];

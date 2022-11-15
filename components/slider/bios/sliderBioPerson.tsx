@@ -21,6 +21,7 @@ const SliderBioPerson = ({ data }: SliderBioProps) => {
                 objectFit="contain"
                 containerStyles={{
                     width: "50%",
+                    filter: "drop-shadow(2px 4px 12px rgba(0, 0, 0, 0.08))",
                     [mq("lg")]: {
                         width: "184px",
                     },
@@ -32,6 +33,7 @@ const SliderBioPerson = ({ data }: SliderBioProps) => {
                     width: "50%",
                     aspectRatio: "1/1",
                     borderRadius: "50%",
+
                     [mq("lg")]: {
                         width: "184px",
                     },

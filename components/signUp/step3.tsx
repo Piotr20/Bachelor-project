@@ -49,7 +49,7 @@ const Step3 = ({ user, setUser }: StepProps) => {
                     }),
                     multiValue: (provided) => ({
                         ...provided,
-                        backgroundColor: colors.secondary.lightYellow + "40",
+                        backgroundColor: colors.secondary.lightYellow + "60",
                     }),
                 }}
             />
