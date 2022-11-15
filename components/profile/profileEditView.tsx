@@ -19,21 +19,25 @@ import { StyledSelect } from "../signUp/step1";
 import { departmentOptions } from "~/util/departmentOptions";
 import Select from "react-select";
 import { getAllFromEndpointHelper, handleUserPropsHelper } from "~/lib/helpers/signUp.helper";
+import { Button } from "../button/button";
 
 const ProfileEditView = () => {
     const [selectedProjects, setSelectedProjects] = useState<any>(null);
     const [projectOptions, setProjectOptions] = useState<any[]>([]);
     const [selectedSkills, setSelectedSkills] = useState<any>(null);
     const [skillOptions, setSkillOptions] = useState<any[]>([]);
-    const { user, setUserData } = useUserStore((state) => ({
+    const router = useRouter();
+    const { user, setUserData, setEditMode } = useUserStore((state) => ({
         user: state.user,
         setUserData: state.setUserData,
+        setEditMode: state.setEditMode,
     }));
 
     useEffect(() => {
         getAllFromEndpointHelper(setProjectOptions, "projects");
         getAllFromEndpointHelper(setSkillOptions, "skills");
     }, []);
+
     let defaultProjects: any[] = [];
     user?.projects?.map((project: Project) => {
         defaultProjects.push({
@@ -49,6 +53,17 @@ const ProfileEditView = () => {
         });
     });
 
+    async function updateUser() {
+        const response = await fetch(`./api/user/updateUser`, {
+            method: "POST",
+            body: JSON.stringify(user),
+        });
+        const mongoUser: User = await response.json();
+        setUserData(mongoUser);
+        router.reload();
+        setEditMode(false);
+    }
+    console.log(user);
     return (
         <ProfileOverview>
             <Text
@@ -239,6 +254,16 @@ const ProfileEditView = () => {
                     }}
                 />
             </StyledSelect>
+            <Button
+                onClick={updateUser}
+                kind="primary"
+                additionalStyles={{
+                    marginTop: "32px",
+                    marginLeft: "auto",
+                }}
+            >
+                Save
+            </Button>
         </ProfileOverview>
     );
 };
@@ -247,6 +272,8 @@ export default ProfileEditView;
 
 export const ProfileOverview = styled.div({
     marginTop: "40px",
+    display: "flex",
+    flexDirection: "column",
     [mq("lg")]: {
         width: "80%",
         margin: "0 auto",

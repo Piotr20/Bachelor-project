@@ -27,7 +27,7 @@ const SkillSearchBox = ({ data }: SkillSearchBoxProps) => {
             <StyledImage>
                 <ImpactImage
                     src={data?.imageURL}
-                    alt="alt text"
+                    alt={data?.name}
                     layout="fill"
                     objectFit="contain"
                     ratio="1/1"
