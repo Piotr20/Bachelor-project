@@ -11,8 +11,21 @@ export type User =
           department?: string;
           location?: string;
           role?: string;
-          projects?: Project[] | string[];
-          skills?: Skill[] | string[];
+          projects?: Project[];
+          skills?: Skill[];
+          imageURL?: string;
+      }
+    | {
+          _id?: string;
+          name?: string;
+          email?: string;
+          experienceYears?: number;
+          phone?: string;
+          department?: string;
+          location?: string;
+          role?: string;
+          projects?: string[];
+          skills?: string[];
           imageURL?: string;
       }
     | undefined;

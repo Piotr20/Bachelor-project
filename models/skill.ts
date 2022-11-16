@@ -8,7 +8,16 @@ export type Skill =
           imageURL?: string;
           docs?: string;
           category?: string;
-          people?: User[] | string[];
-          projects?: Project[] | string[];
+          people?: User[];
+          projects?: Project[];
+      }
+    | {
+          _id?: string;
+          name?: string;
+          imageURL?: string;
+          docs?: string;
+          category?: string;
+          people?: string[];
+          projects?: string[];
       }
     | undefined;
