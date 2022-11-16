@@ -11,11 +11,13 @@ import ChevronCircleRight from './chevron-circle-right.svg';
 import ChevronRight from './chevron-right.svg';
 import CirclePlusInverted from './circle-plus-inverted.svg';
 import CirclePlus from './circle-plus.svg';
+import Email from './email.svg';
 import ErrorTextIcon from './error-text-icon.svg';
 import EyeClosed from './eye-closed.svg';
 import EyeOpen from './eye-open.svg';
 import Location from './location.svg';
 import LogOut from './log-out.svg';
+import Phone from './phone.svg';
 import ProfileEdit from './profile-edit.svg';
 import SearchIcon from './search-icon.svg';
 import Search from './search.svg';
@@ -34,11 +36,13 @@ export const TLAIcons: { [key: string]: FC<any> } = {
     chevronRight: ChevronRight,
     circlePlusInverted: CirclePlusInverted,
     circlePlus: CirclePlus,
+    email: Email,
     errorTextIcon: ErrorTextIcon,
     eyeClosed: EyeClosed,
     eyeOpen: EyeOpen,
     location: Location,
     logOut: LogOut,
+    phone: Phone,
     profileEdit: ProfileEdit,
     searchIcon: SearchIcon,
     search: Search,
