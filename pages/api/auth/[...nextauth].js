@@ -5,10 +5,11 @@ export const authOptions = {
     // Configure one or more authentication providers
     providers: [
         AzureADB2CProvider({
-            tenantId: process.env.AZURE_AD_B2C_TENANT_NAME,
-            clientId: process.env.AZURE_AD_B2C_CLIENT_ID,
+            tenantId: process.env.NEXT_PUBLIC_AZURE_AD_B2C_TENANT_NAME,
+            clientId: process.env.NEXT_PUBLIC_AZURE_AD_B2C_CLIENT_ID,
             clientSecret: process.env.AZURE_AD_B2C_CLIENT_SECRET,
-            primaryUserFlow: process.env.AZURE_AD_B2C_PRIMARY_USER_FLOW,
+            primaryUserFlow:
+                process.env.NEXT_PUBLIC_AZURE_AD_B2C_PRIMARY_USER_FLOW,
             authorization: {
                 params: {
                     scope: `https://${process.env.AZURE_AD_B2C_TENANT_NAME}.onmicrosoft.com/api/Api.read offline_access openid`,

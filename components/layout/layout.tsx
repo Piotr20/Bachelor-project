@@ -113,18 +113,17 @@ useEffect(() => {
     }, [selectedOption]); */
 
     useEffect(() => {
-        if (searchValue) {
-            router.replace(
-                {
-                    query: {
-                        ...router.query,
-                        search: `${searchValue}`,
-                    },
+        const { search, ...queries } = router.query;
+        router.replace(
+            {
+                query: {
+                    ...queries,
+                    ...(!!searchValue ? { search: `${searchValue}` } : {}),
                 },
-                undefined,
-                { shallow: true }
-            );
-        }
+            },
+            undefined,
+            { shallow: true }
+        );
     }, [searchValue]);
 
     useEffect(() => {
