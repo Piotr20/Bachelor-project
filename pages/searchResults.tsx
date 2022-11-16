@@ -3,7 +3,10 @@ import Head from "next/head";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import useSearch from "~/hooks/useSearch";
-import { fetchSearchResults, outputFormatterHelper } from "~/lib/helpers/search.hepler";
+import {
+    fetchSearchResults,
+    outputFormatterHelper,
+} from "~/lib/helpers/search.hepler";
 import { Project, Skill, User } from "~/models";
 import { mq } from "~/util/media-queries";
 import { useNavStore } from "~/store/store";
@@ -25,12 +28,14 @@ type SearchPageProps = {
 };
 
 const SearchResults = ({ fallback }: SearchPageProps) => {
-    const { toggleSlider, sliderData, openSlider, setOpenSlider } = useNavStore((state) => ({
-        openSlider: state.openSlider,
-        toggleSlider: state.toggleSlider,
-        sliderData: state.sliderData,
-        setOpenSlider: state.setOpenSlider,
-    }));
+    const { toggleSlider, sliderData, openSlider, setOpenSlider } = useNavStore(
+        (state) => ({
+            openSlider: state.openSlider,
+            toggleSlider: state.toggleSlider,
+            sliderData: state.sliderData,
+            setOpenSlider: state.setOpenSlider,
+        })
+    );
     const { searchResults, setSearchResults } = useSearchStore((state) => ({
         searchResults: state.searchResults,
         setSearchResults: state.setSearchResults,
@@ -65,7 +70,7 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
                         marginTop: "24px",
                     }}
                 >
-                    Search results for "{router.query.search}"
+                    Search results for {`"${router.query.search}"`}
                 </Text>
                 <StyledSearchResultsWrapper>
                     {searchHits?.people?.length ? (
@@ -85,7 +90,12 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
                             </Text>
                             <BoxContainer>
                                 {searchHits?.people?.map((result: User) => {
-                                    return <PeopleSearchBox key={result?._id} data={result} />;
+                                    return (
+                                        <PeopleSearchBox
+                                            key={result?._id}
+                                            data={result}
+                                        />
+                                    );
                                 })}
                             </BoxContainer>
                         </StyledSearchCategory>
@@ -102,9 +112,16 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
                                 {searchHits?.projects?.length} projects
                             </Text>
                             <BoxContainer>
-                                {searchHits?.projects?.map((result: Project) => {
-                                    return <ProjectsSearchBox key={result?._id} data={result} />;
-                                })}
+                                {searchHits?.projects?.map(
+                                    (result: Project) => {
+                                        return (
+                                            <ProjectsSearchBox
+                                                key={result?._id}
+                                                data={result}
+                                            />
+                                        );
+                                    }
+                                )}
                             </BoxContainer>
                         </StyledSearchCategory>
                     ) : null}
@@ -121,7 +138,12 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
                             </Text>
                             <BoxContainer>
                                 {searchHits?.skills?.map((result: Skill) => {
-                                    return <SkillSearchBox key={result?._id} data={result} />;
+                                    return (
+                                        <SkillSearchBox
+                                            key={result?._id}
+                                            data={result}
+                                        />
+                                    );
                                 })}
                             </BoxContainer>
                         </StyledSearchCategory>
@@ -137,7 +159,13 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async (context) => {
     const search = context.query["search"] as string;
     const data = await fetchSearchResults("all");
-    const searchHits = outputFormatterHelper("all", search, data?.people, data?.projects, data?.skills);
+    const searchHits = outputFormatterHelper(
+        "all",
+        search,
+        data?.people,
+        data?.projects,
+        data?.skills
+    );
 
     return {
         props: {

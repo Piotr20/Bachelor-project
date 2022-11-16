@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { getAllFromEndpointHelper, handleUserPropsHelper } from "~/lib/helpers/signUp.helper";
+import {
+    getAllFromEndpointHelper,
+    handleUserPropsHelper,
+} from "~/lib/helpers/signUp.helper";
 import { StepProps } from "~/models/signUpSteps";
 import Select from "react-select";
 import { StyledSelect } from "./step1";
@@ -20,7 +23,13 @@ const Step3 = ({ user, setUser }: StepProps) => {
                 defaultValue={selectedSkills}
                 value={selectedSkills}
                 onChange={(newValue: any) => {
-                    handleUserPropsHelper(newValue, setUser, user, setSelectedSkills, "skills");
+                    handleUserPropsHelper(
+                        newValue,
+                        setUser,
+                        user,
+                        setSelectedSkills,
+                        "skills"
+                    );
                 }}
                 options={skillOptions}
                 styles={{
