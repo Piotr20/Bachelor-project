@@ -62,6 +62,7 @@ const Layout = ({ children, fallback }: LayoutProps) => {
 
     function executeSearch(e: KeyboardEvent) {
         if (e.key === "Enter") {
+            setShowSuggestions(false);
             const query = {
                 /*
                //* Uncomment the following to add category sorting to the search   
