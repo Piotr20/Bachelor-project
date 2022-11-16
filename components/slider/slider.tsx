@@ -5,10 +5,8 @@ import { useNavStore } from "~/store/store";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { SvgIcon } from "../svg-icon";
-import ImpactImage from "../image/image";
 import { useSearchStore } from "~/store/searchStore";
 import { Project, Skill, User } from "~/models";
-import { exampleDataProject, exampleDataUser } from "~/util/sliderData";
 import SliderBioPerson from "./bios/sliderBioPerson";
 import { mq } from "~/util/media-queries";
 import SliderBioProject from "./bios/sliderBioProject";
@@ -38,7 +36,8 @@ const SlideIn = () => {
         if (router.query.openSlider === "true") {
             setOpenSlider(true);
             const findResultById = searchResults?.find(
-                (result: User | Project | Skill) => result?._id === router.query.openedId
+                (result: User | Project | Skill) =>
+                    result?._id === router.query.openedId
             );
             if (findResultById) {
                 setSliderData(findResultById);
