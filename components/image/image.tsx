@@ -63,7 +63,7 @@ const ImpactImage = ({
             layout={layout}
             containerStyles={containerStyles}
         >
-            {src && alt ? (
+            {src && src !== undefined && alt ? (
                 <Image
                     layout={layout}
                     alt={alt}
