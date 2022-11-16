@@ -14,20 +14,25 @@ import { colors } from "~/util/colorPalette";
 import Text from "../typography/text";
 import { useUserStore } from "~/store/userStore";
 import Profile from "../profile/profile";
-import { fetchSearchResults, outputFormatterHelper } from "~/lib/helpers/search.hepler";
+import {
+    fetchSearchResults,
+    outputFormatterHelper,
+} from "~/lib/helpers/search.hepler";
 import { SearchHits } from "~/pages/searchResults";
 import useSearch from "~/hooks/useSearch";
 import { Project, Skill, User } from "~/models";
 
 type LayoutProps = {
     children: ReactNode;
-    fallback: { searchHits: SearchHits };
+    fallback?: { searchHits: SearchHits };
 };
 
 const Layout = ({ children, fallback }: LayoutProps) => {
     const router = useRouter();
     const [selectedOption, setSelectedOption] = useState<any>(null);
-    const [searchValue, setSearchValue] = useState<string | string[] | undefined>(router.query.search);
+    const [searchValue, setSearchValue] = useState<
+        string | string[] | undefined
+    >(router.query.search);
     const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
     const { openProfile } = useUserStore((state) => ({
         openProfile: state.openProfile,
@@ -40,7 +45,12 @@ const Layout = ({ children, fallback }: LayoutProps) => {
 
     const searchQuery = router.query.search as string;
     const fallbackHits = fallback?.searchHits;
-    const searchData = useSearch("all", fallbackHits?.people, fallbackHits?.projects, fallbackHits?.skills);
+    const searchData = useSearch(
+        "all",
+        fallbackHits?.people,
+        fallbackHits?.projects,
+        fallbackHits?.skills
+    );
 
     const searchHits = outputFormatterHelper(
         "all",
@@ -74,7 +84,9 @@ const Layout = ({ children, fallback }: LayoutProps) => {
 
     useEffect(() => {
         if (router.isReady) {
-            const optionToSet = options.find((o) => o.value === router.query.category);
+            const optionToSet = options.find(
+                (o) => o.value === router.query.category
+            );
 
             if (optionToSet) {
                 setSelectedOption(optionToSet);
@@ -146,7 +158,10 @@ useEffect(() => {
     useEffect(() => {
         if (openProfile) {
             console.log(searchValue);
-            if (router.query.search || typeof router.query.search === "string") {
+            if (
+                router.query.search ||
+                typeof router.query.search === "string"
+            ) {
                 router.replace(
                     {
                         query: {
@@ -226,12 +241,19 @@ useEffect(() => {
                                         handleSuggestions();
                                     }}
                                     onKeyDown={(e) => executeSearch(e)}
-                                    onBlur={(e) => setTimeout(() => setShowSuggestions(false), 100)}
+                                    onBlur={(e) =>
+                                        setTimeout(
+                                            () => setShowSuggestions(false),
+                                            100
+                                        )
+                                    }
                                 />
                                 <SearchIconWrapper>
                                     <SvgIcon svg="searchIcon" />
                                 </SearchIconWrapper>
-                                <SearchSuggestionsContainer active={showSuggestions}>
+                                <SearchSuggestionsContainer
+                                    active={showSuggestions}
+                                >
                                     <Text
                                         tag="h5"
                                         additionalStyles={{
@@ -244,81 +266,117 @@ useEffect(() => {
                                     >
                                         Suggestions
                                     </Text>
-                                    {searchHits.people?.map((employee: User, key) => {
-                                        return (
-                                            <SearchSuggestion
-                                                key={key}
-                                                onClick={() => {
-                                                    setSearchValue(employee?.name);
-                                                    const query = {
-                                                        search: employee?.name,
-                                                    };
-                                                    const url = { pathname: "/searchResults", query };
-                                                    setShowSuggestions(false);
-                                                    router.push(url);
-                                                }}
-                                            >
-                                                <Text
-                                                    tag="h6"
-                                                    additionalStyles={{
-                                                        color: colors.primary.lightGrey,
+                                    {searchHits.people?.map(
+                                        (employee: User, key) => {
+                                            return (
+                                                <SearchSuggestion
+                                                    key={key}
+                                                    onClick={() => {
+                                                        setSearchValue(
+                                                            employee?.name
+                                                        );
+                                                        const query = {
+                                                            search: employee?.name,
+                                                        };
+                                                        const url = {
+                                                            pathname:
+                                                                "/searchResults",
+                                                            query,
+                                                        };
+                                                        setShowSuggestions(
+                                                            false
+                                                        );
+                                                        router.push(url);
                                                     }}
                                                 >
-                                                    {employee?.name}
-                                                </Text>
-                                            </SearchSuggestion>
-                                        );
-                                    })}
-                                    {searchHits.projects?.map((project: Project, key) => {
-                                        return (
-                                            <SearchSuggestion
-                                                key={key}
-                                                onClick={() => {
-                                                    setSearchValue(project?.name);
-                                                    const query = {
-                                                        search: project?.name,
-                                                    };
-                                                    const url = { pathname: "/searchResults", query };
-                                                    setShowSuggestions(false);
-                                                    router.push(url);
-                                                }}
-                                            >
-                                                <Text
-                                                    tag="h6"
-                                                    additionalStyles={{
-                                                        color: colors.primary.lightGrey,
+                                                    <Text
+                                                        tag="h6"
+                                                        additionalStyles={{
+                                                            color: colors
+                                                                .primary
+                                                                .lightGrey,
+                                                        }}
+                                                    >
+                                                        {employee?.name}
+                                                    </Text>
+                                                </SearchSuggestion>
+                                            );
+                                        }
+                                    )}
+                                    {searchHits.projects?.map(
+                                        (project: Project, key) => {
+                                            return (
+                                                <SearchSuggestion
+                                                    key={key}
+                                                    onClick={() => {
+                                                        setSearchValue(
+                                                            project?.name
+                                                        );
+                                                        const query = {
+                                                            search: project?.name,
+                                                        };
+                                                        const url = {
+                                                            pathname:
+                                                                "/searchResults",
+                                                            query,
+                                                        };
+                                                        setShowSuggestions(
+                                                            false
+                                                        );
+                                                        router.push(url);
                                                     }}
                                                 >
-                                                    {project?.name}
-                                                </Text>
-                                            </SearchSuggestion>
-                                        );
-                                    })}
-                                    {searchHits.skills?.map((skill: Skill, key) => {
-                                        return (
-                                            <SearchSuggestion
-                                                key={key}
-                                                onClick={() => {
-                                                    setSearchValue(skill?.name);
-                                                    const query = {
-                                                        search: skill?.name,
-                                                    };
-                                                    const url = { pathname: "/searchResults", query };
-                                                    setShowSuggestions(false);
-                                                    router.push(url);
-                                                }}
-                                            >
-                                                <Text
-                                                    tag="h6"
-                                                    additionalStyles={{
-                                                        color: colors.primary.lightGrey,
+                                                    <Text
+                                                        tag="h6"
+                                                        additionalStyles={{
+                                                            color: colors
+                                                                .primary
+                                                                .lightGrey,
+                                                        }}
+                                                    >
+                                                        {project?.name}
+                                                    </Text>
+                                                </SearchSuggestion>
+                                            );
+                                        }
+                                    )}
+                                    {searchHits.skills?.map(
+                                        (skill: Skill, key) => {
+                                            return (
+                                                <SearchSuggestion
+                                                    key={key}
+                                                    onClick={() => {
+                                                        setSearchValue(
+                                                            skill?.name
+                                                        );
+                                                        const query = {
+                                                            search: skill?.name,
+                                                        };
+                                                        const url = {
+                                                            pathname:
+                                                                "/searchResults",
+                                                            query,
+                                                        };
+                                                        setShowSuggestions(
+                                                            false
+                                                        );
+                                                        router.push(url);
                                                     }}
                                                 >
-                                                    {skill?.name}
-                                                </Text>
-                                            </SearchSuggestion>
-                                        );
-                                    })}
+                                                    <Text
+                                                        tag="h6"
+                                                        additionalStyles={{
+                                                            color: colors
+                                                                .primary
+                                                                .lightGrey,
+                                                        }}
+                                                    >
+                                                        {skill?.name}
+                                                    </Text>
+                                                </SearchSuggestion>
+                                            );
+                                        }
+                                    )}
                                 </SearchSuggestionsContainer>
                             </SearchInputWrapper>
                         </SearchWrapper>
@@ -330,7 +388,8 @@ useEffect(() => {
     } else {
         return (
             <>
-                <PageTransition animationType="fade">{children}</PageTransition>;
+                <PageTransition animationType="fade">{children}</PageTransition>
+                ;
             </>
         );
     }
@@ -342,7 +401,13 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async (context) => {
     const search = context.query["search"] as string;
     const data = await fetchSearchResults("all");
-    const searchHits = outputFormatterHelper("all", search, data?.people, data?.projects, data?.skills);
+    const searchHits = outputFormatterHelper(
+        "all",
+        search,
+        data?.people,
+        data?.projects,
+        data?.skills
+    );
 
     return {
         props: {
@@ -353,21 +418,23 @@ export const getServerSideProps: GetServerSideProps<{
     };
 };
 
-export const StyledPageContainer = styled.div<{ additionalStyles?: CSSObject }>(({ additionalStyles }) => ({
-    padding: "0 24px",
-    width: "100%",
-    [mq("lg")]: {
-        maxWidth: "1440px",
-        margin: "0 auto",
-        padding: "0 32px",
-    },
-    [mq("xl")]: {
-        maxWidth: "1600px",
-        margin: "0 auto",
-        padding: "0 48px",
-    },
-    ...additionalStyles,
-}));
+export const StyledPageContainer = styled.div<{ additionalStyles?: CSSObject }>(
+    ({ additionalStyles }) => ({
+        padding: "0 24px",
+        width: "100%",
+        [mq("lg")]: {
+            maxWidth: "1440px",
+            margin: "0 auto",
+            padding: "0 32px",
+        },
+        [mq("xl")]: {
+            maxWidth: "1600px",
+            margin: "0 auto",
+            padding: "0 48px",
+        },
+        ...additionalStyles,
+    })
+);
 
 export const DashboardWrapper = styled.div(({}) => ({
     display: "flex",
@@ -401,26 +468,28 @@ export const SearchInputWrapper = styled.div({
     width: "100%",
 });
 
-export const StyledSearchInput = styled.input<{ active: boolean }>(({ active }) => ({
-    padding: "10px 6px",
-    paddingLeft: "12px",
-    width: "100%",
-    boxShadow: active ? "0px 22px 30px -10px rgba(0, 0, 0, 0.1)" : "none",
-    borderRadius: "32px",
-    borderTop: `2px solid ${colors.primary.black}`,
-    borderBottom: "none",
-    borderLeft: "none",
-    borderRight: "none",
-    fontSize: "16px",
-    zIndex: "2",
-    outline: "none",
-    [mq("lg")]: {
-        padding: "12px 8px",
-        paddingLeft: "16px",
-        borderRadius: "48px",
-        fontSize: "20px",
-    },
-}));
+export const StyledSearchInput = styled.input<{ active: boolean }>(
+    ({ active }) => ({
+        padding: "10px 6px",
+        paddingLeft: "12px",
+        width: "100%",
+        boxShadow: active ? "0px 22px 30px -10px rgba(0, 0, 0, 0.1)" : "none",
+        borderRadius: "32px",
+        borderTop: `2px solid ${colors.primary.black}`,
+        borderBottom: "none",
+        borderLeft: "none",
+        borderRight: "none",
+        fontSize: "16px",
+        zIndex: "2",
+        outline: "none",
+        [mq("lg")]: {
+            padding: "12px 8px",
+            paddingLeft: "16px",
+            borderRadius: "48px",
+            fontSize: "20px",
+        },
+    })
+);
 
 export const SearchIconWrapper = styled.span({
     position: "absolute",
@@ -445,25 +514,27 @@ export const SearchIconWrapper = styled.span({
     },
 });
 
-export const SearchSuggestionsContainer = styled.div<{ active: boolean }>(({ active }) => ({
-    display: active ? "block" : "none",
-    position: "absolute",
-    left: "-2px",
-    top: "50%",
-    backgroundColor: "white",
-    width: "calc(100% + 4px)",
-    zIndex: "-1",
-    padding: "calc(19px + 8px) 0 8px 0",
-    border: `2px solid ${colors.primary.black}`,
-    borderBottomRightRadius: "24px",
-    borderBottomLeftRadius: "24px",
-    overflow: "hidden",
-    [mq("lg")]: {
-        padding: "calc(23.5px + 12px) 0 12px 0",
-        borderBottomRightRadius: "32px",
-        borderBottomLeftRadius: "32px",
-    },
-}));
+export const SearchSuggestionsContainer = styled.div<{ active: boolean }>(
+    ({ active }) => ({
+        display: active ? "block" : "none",
+        position: "absolute",
+        left: "-2px",
+        top: "50%",
+        backgroundColor: "white",
+        width: "calc(100% + 4px)",
+        zIndex: "-1",
+        padding: "calc(19px + 8px) 0 8px 0",
+        border: `2px solid ${colors.primary.black}`,
+        borderBottomRightRadius: "24px",
+        borderBottomLeftRadius: "24px",
+        overflow: "hidden",
+        [mq("lg")]: {
+            padding: "calc(23.5px + 12px) 0 12px 0",
+            borderBottomRightRadius: "32px",
+            borderBottomLeftRadius: "32px",
+        },
+    })
+);
 
 export const SearchSuggestion = styled.div({
     width: "100%",
