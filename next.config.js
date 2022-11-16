@@ -33,6 +33,7 @@ const nextConfig = {
             "www.timelog.com",
             "drive.google.com",
             "l.facebook.com",
+            "www.google.com",
         ],
     },
 };
