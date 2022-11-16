@@ -1,5 +1,5 @@
 export const departmentOptions = [
-    { value: "Umit 1", label: "Umit 1" },
-    { value: "Umit 2", label: "Umit 2" },
-    { value: "Umit 3", label: "Umit 3" },
+    { value: "Unit 1", label: "Unit 1" },
+    { value: "Unit 2", label: "Unit 2" },
+    { value: "Unit 3", label: "Unit 3" },
 ];

@@ -132,6 +132,7 @@ export const StyledSliderWrapper = styled.div({
     padding: "24px",
     height: "100vh",
     boxShadow: " 0px -22px 30px -10px rgba(0, 0, 0, 0.16)",
+    overflowY: "auto",
 });
 export const AnimationContainer = styled.div({
     ["&>div"]: {

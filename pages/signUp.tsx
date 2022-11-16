@@ -58,6 +58,7 @@ const SignUp: NextPage = () => {
         });
         const mongoUser: User = await response.json();
         setUserData(mongoUser);
+        router.reload();
         router.push("/");
     }
 
@@ -113,7 +114,8 @@ const SignUp: NextPage = () => {
                                     },
                                 }}
                             >
-                                Please fill-in all the missing information in your profile.
+                                Please fill-in all the missing information in
+                                your profile.
                             </Text>
                             <ProgressBar step={step} />
                             <AnimationContainer>
@@ -139,7 +141,9 @@ const SignUp: NextPage = () => {
                                             },
                                         }}
                                     >
-                                        <StyledFieldsWrapper>{stepsComponents[step - 1]}</StyledFieldsWrapper>
+                                        <StyledFieldsWrapper>
+                                            {stepsComponents[step - 1]}
+                                        </StyledFieldsWrapper>
                                     </motion.div>
                                 </AnimatePresence>
                             </AnimationContainer>
