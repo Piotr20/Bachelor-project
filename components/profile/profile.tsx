@@ -19,13 +19,14 @@ import ProfileEditView from "./profileEditView";
 
 const Profile = () => {
     const router = useRouter();
-    const { user, openProfile, editMode, setOpenProfile, setEditMode } = useUserStore((state) => ({
-        user: state.user,
-        openProfile: state.openProfile,
-        editMode: state.editMode,
-        setOpenProfile: state.setOpenProfile,
-        setEditMode: state.setEditMode,
-    }));
+    const { user, openProfile, editMode, setOpenProfile, setEditMode } =
+        useUserStore((state) => ({
+            user: state.user,
+            openProfile: state.openProfile,
+            editMode: state.editMode,
+            setOpenProfile: state.setOpenProfile,
+            setEditMode: state.setEditMode,
+        }));
     const { authSignIn, authSignOut } = useAuth();
 
     useEffect(() => {
@@ -148,7 +149,11 @@ const Profile = () => {
                                 },
                             }}
                         >
-                            {!editMode ? <ProfileOverview user={user} /> : <ProfileEditView />}
+                            {!editMode ? (
+                                <ProfileOverview user={user} />
+                            ) : (
+                                <ProfileEditView />
+                            )}
                         </motion.div>
                     </AnimatePresence>
                 </StyledSliderWrapper>
