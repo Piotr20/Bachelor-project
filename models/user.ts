@@ -2,7 +2,7 @@ import { Project } from "./project";
 import { Skill } from "./skill";
 
 export type User =
-    | {
+    | ({
           _id?: string;
           name?: string;
           email?: string;
@@ -14,8 +14,7 @@ export type User =
           projects?: Project[];
           skills?: Skill[];
           imageURL?: string;
-      }
-    | {
+      } & {
           _id?: string;
           name?: string;
           email?: string;
@@ -27,5 +26,5 @@ export type User =
           projects?: string[];
           skills?: string[];
           imageURL?: string;
-      }
+      })
     | undefined;
