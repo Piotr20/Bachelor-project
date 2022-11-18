@@ -9,69 +9,46 @@ const useSearch = (
     fallbackProjects?: Project[],
     fallbackSkills?: Skill[]
 ) => {
+    const { data: mongoPeople, error: peopleError } = useSWR(`/api/user/all`, fetcher, {
+        fallbackData: fallbackPeople,
+    });
+    const { data: mongoProjects, error: projectError } = useSWR(`/api/projects/all`, fetcher, {
+        fallbackData: fallbackProjects,
+    });
+    const { data: mongoSkills, error: skillsError } = useSWR(`/api/skills/all`, fetcher, {
+        fallbackData: fallbackSkills,
+    });
     switch (category) {
         case "people": {
-            let url = generateUrl(category);
-            const { data, error } = useSWR(url, fetcher, {
-                fallbackData: fallbackPeople,
-            });
             return {
                 searchHits: {
-                    people: data?.people,
+                    people: mongoPeople?.people,
                 },
-                isLoading: !error && !data,
-                isError: error,
+                isLoading: !peopleError && !mongoPeople,
+                isError: peopleError,
             };
         }
+
         case "projects": {
-            let url = generateUrl(category);
-            const { data, error } = useSWR(url, fetcher, {
-                fallbackData: fallbackProjects,
-            });
             return {
                 searchHits: {
-                    projects: data?.projects,
+                    projects: mongoProjects?.projects,
                 },
-                isLoading: !error && !data,
-                isError: error,
+                isLoading: !projectError && !mongoProjects,
+                isError: projectError,
             };
         }
         case "skills": {
-            let url = generateUrl(category);
-            const { data, error } = useSWR(url, fetcher, {
-                fallbackData: fallbackSkills,
-            });
             return {
                 searchHits: {
-                    skills: data?.skills,
+                    skills: mongoSkills?.skills,
                 },
-                isLoading: !error && !data,
-                isError: error,
+                isLoading: !skillsError && !mongoSkills,
+                isError: skillsError,
             };
         }
 
         case "all":
-            const { data: mongoPeople, error: peopleError } = useSWR(
-                `/api/user/all`,
-                fetcher,
-                {
-                    fallbackData: fallbackPeople,
-                }
-            );
-            const { data: mongoProjects, error: projectError } = useSWR(
-                `/api/projects/all`,
-                fetcher,
-                {
-                    fallbackData: fallbackProjects,
-                }
-            );
-            const { data: mongoSkills, error: skillsError } = useSWR(
-                `/api/skills/all`,
-                fetcher,
-                {
-                    fallbackData: fallbackSkills,
-                }
-            );
             return {
                 searchHits: {
                     people: mongoPeople?.people,

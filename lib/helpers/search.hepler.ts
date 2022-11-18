@@ -60,13 +60,17 @@ export async function fetchAllEndpoints() {
 }
 
 export function filterBySearchParam(searchQuery: string, array?: User[] & Project[] & Skill[]) {
-    const filteredArray = array?.filter((searchHit: Project | Skill | User) => {
-        if (searchHit?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())) {
-            return searchHit;
-        }
-    });
+    if (array) {
+        const filteredArray = array?.filter((searchHit: Project | Skill | User) => {
+            if (searchHit?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())) {
+                return searchHit;
+            }
+        });
 
-    return filteredArray;
+        return filteredArray;
+    } else {
+        return array;
+    }
 }
 
 export function outputFormatterHelper(

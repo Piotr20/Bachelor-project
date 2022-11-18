@@ -39,11 +39,22 @@ const Layout = ({ children, fallback }: LayoutProps) => {
     }));
 
     const searchQuery = router.query.search as string;
+    const categoryQuery = (router.query.category ? router?.query?.category : "") as
+        | "all"
+        | "people"
+        | "projects"
+        | "skills";
+
     const fallbackHits = fallback?.searchHits;
-    const searchData = useSearch("all", fallbackHits?.people, fallbackHits?.projects, fallbackHits?.skills);
+    const searchData = useSearch(
+        categoryQuery,
+        fallbackHits?.people,
+        fallbackHits?.projects,
+        fallbackHits?.skills
+    );
 
     const searchHits = outputFormatterHelper(
-        "all",
+        categoryQuery,
         searchQuery,
         searchData?.searchHits?.people,
         searchData?.searchHits?.projects,
@@ -54,9 +65,7 @@ const Layout = ({ children, fallback }: LayoutProps) => {
         if (e.key === "Enter") {
             setShowSuggestions(false);
             const query = {
-                /*
-               //* Uncomment the following to add category sorting to the search   
-                category: router.query.category, */
+                category: router.query.category,
                 search: router.query.search,
             };
 
@@ -248,7 +257,7 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                                     </SearchIconWrapper>
                                     <SearchSuggestionsContainer active={showSuggestions}>
                                         <Text
-                                            tag="h5"
+                                            tag="h4"
                                             additionalStyles={{
                                                 marginBottom: "12px",
                                                 padding: "0 12px",
@@ -257,92 +266,147 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                                                 },
                                             }}
                                         >
-                                            Suggestions
+                                            {`Suggestions (${
+                                                (searchHits?.people?.length as number) +
+                                                (searchHits?.projects?.length as number) +
+                                                (searchHits?.skills?.length as number)
+                                            })`}
                                         </Text>
-                                        {searchHits.people?.map((employee: User, key) => {
-                                            return (
-                                                <SearchSuggestion
-                                                    key={key}
-                                                    onClick={() => {
-                                                        setSearchValue(employee?.name);
-                                                        const query = {
-                                                            search: employee?.name,
-                                                        };
-                                                        const url = {
-                                                            pathname: "/searchResults",
-                                                            query,
-                                                        };
-                                                        setShowSuggestions(false);
-                                                        router.push(url);
+                                        {searchHits?.people ? (
+                                            <>
+                                                <Text
+                                                    tag="h5"
+                                                    additionalStyles={{
+                                                        marginBottom: "4px",
+                                                        padding: "0 12px",
+                                                        [mq("lg")]: {
+                                                            padding: "0 16px",
+                                                        },
                                                     }}
                                                 >
-                                                    <Text
-                                                        tag="h6"
-                                                        additionalStyles={{
-                                                            color: colors.primary.lightGrey,
-                                                        }}
-                                                    >
-                                                        {employee?.name}
-                                                    </Text>
-                                                </SearchSuggestion>
-                                            );
-                                        })}
-                                        {searchHits.projects?.map((project: Project, key) => {
-                                            return (
-                                                <SearchSuggestion
-                                                    key={key}
-                                                    onClick={() => {
-                                                        setSearchValue(project?.name);
-                                                        const query = {
-                                                            search: project?.name,
-                                                        };
-                                                        const url = {
-                                                            pathname: "/searchResults",
-                                                            query,
-                                                        };
-                                                        setShowSuggestions(false);
-                                                        router.push(url);
+                                                    People
+                                                </Text>
+                                                {searchHits.people?.map((employee: User, key) => {
+                                                    return (
+                                                        <SearchSuggestion
+                                                            key={key}
+                                                            onClick={() => {
+                                                                setSearchValue(employee?.name);
+                                                                const query = {
+                                                                    ...router.query,
+                                                                    search: employee?.name,
+                                                                };
+                                                                const url = {
+                                                                    pathname: "/searchResults",
+                                                                    query,
+                                                                };
+                                                                setShowSuggestions(false);
+                                                                router.push(url);
+                                                            }}
+                                                        >
+                                                            <Text
+                                                                tag="h6"
+                                                                additionalStyles={{
+                                                                    color: colors.primary.lightGrey,
+                                                                }}
+                                                            >
+                                                                {employee?.name}
+                                                            </Text>
+                                                        </SearchSuggestion>
+                                                    );
+                                                })}
+                                            </>
+                                        ) : null}
+                                        {searchHits?.projects ? (
+                                            <>
+                                                <Text
+                                                    tag="h5"
+                                                    additionalStyles={{
+                                                        marginBottom: "4px",
+                                                        padding: "0 12px",
+                                                        [mq("lg")]: {
+                                                            padding: "0 16px",
+                                                        },
                                                     }}
                                                 >
-                                                    <Text
-                                                        tag="h6"
-                                                        additionalStyles={{
-                                                            color: colors.primary.lightGrey,
-                                                        }}
-                                                    >
-                                                        {project?.name}
-                                                    </Text>
-                                                </SearchSuggestion>
-                                            );
-                                        })}
-                                        {searchHits.skills?.map((skill: Skill, key) => {
-                                            return (
-                                                <SearchSuggestion
-                                                    key={key}
-                                                    onClick={() => {
-                                                        setSearchValue(skill?.name);
-                                                        const query = {
-                                                            search: skill?.name,
-                                                        };
-                                                        const url = {
-                                                            pathname: "/searchResults",
-                                                            query,
-                                                        };
-                                                        setShowSuggestions(false);
-                                                        router.push(url);
+                                                    Projects
+                                                </Text>
+                                                {searchHits.projects?.map((project: Project, key) => {
+                                                    return (
+                                                        <SearchSuggestion
+                                                            key={key}
+                                                            onClick={() => {
+                                                                setSearchValue(project?.name);
+                                                                const query = {
+                                                                    ...router.query,
+                                                                    search: project?.name,
+                                                                };
+                                                                const url = {
+                                                                    pathname: "/searchResults",
+                                                                    query,
+                                                                };
+                                                                setShowSuggestions(false);
+                                                                router.push(url);
+                                                            }}
+                                                        >
+                                                            <Text
+                                                                tag="h6"
+                                                                additionalStyles={{
+                                                                    color: colors.primary.lightGrey,
+                                                                }}
+                                                            >
+                                                                {project?.name}
+                                                            </Text>
+                                                        </SearchSuggestion>
+                                                    );
+                                                })}
+                                            </>
+                                        ) : null}
+                                        {searchHits?.skills ? (
+                                            <>
+                                                <Text
+                                                    tag="h5"
+                                                    additionalStyles={{
+                                                        marginBottom: "4px",
+                                                        padding: "0 12px",
+                                                        [mq("lg")]: {
+                                                            padding: "0 16px",
+                                                        },
                                                     }}
                                                 >
-                                                    <Text
-                                                        tag="h6"
-                                                        additionalStyles={{
-                                                            color: colors.primary.lightGrey,
-                                                        }}
-                                                    >
-                                                        {skill?.name}
-                                                    </Text>
-                                                </SearchSuggestion>
-                                            );
-                                        })}
+                                                    Skills
+                                                </Text>
+                                                {searchHits.skills?.map((skill: Skill, key) => {
+                                                    return (
+                                                        <SearchSuggestion
+                                                            key={key}
+                                                            onClick={() => {
+                                                                setSearchValue(skill?.name);
+                                                                const query = {
+                                                                    ...router.query,
+                                                                    search: skill?.name,
+                                                                };
+                                                                const url = {
+                                                                    pathname: "/searchResults",
+                                                                    query,
+                                                                };
+                                                                setShowSuggestions(false);
+                                                                router.push(url);
+                                                            }}
+                                                        >
+                                                            <Text
+                                                                tag="h6"
+                                                                additionalStyles={{
+                                                                    color: colors.primary.lightGrey,
+                                                                }}
+                                                            >
+                                                                {skill?.name}
+                                                            </Text>
+                                                        </SearchSuggestion>
+                                                    );
+                                                })}
+                                            </>
+                                        ) : null}
                                     </SearchSuggestionsContainer>
                                 </SearchInputWrapper>
                             </SearchBarGroup>
@@ -366,8 +430,13 @@ export const getServerSideProps: GetServerSideProps<{
     fallback: { searchHits: SearchHits };
 }> = async (context) => {
     const search = context.query["search"] as string;
-    const data = await fetchSearchResults("all");
-    const searchHits = outputFormatterHelper("all", search, data?.people, data?.projects, data?.skills);
+    const category = (context.query["category"] ? context.query["category"] : "all") as
+        | "projects"
+        | "skills"
+        | "people"
+        | "all";
+    const data = await fetchSearchResults(category);
+    const searchHits = outputFormatterHelper(category, search, data?.people, data?.projects, data?.skills);
 
     return {
         props: {

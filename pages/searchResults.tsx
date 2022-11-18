@@ -38,12 +38,18 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
 
     const router = useRouter();
 
-    const searchQuery = (router.query.search ? router.query.search : "") as string;
-    const { people, projects, skills } = fallback.searchHits;
-    const searchData = useSearch("all", people, projects, skills);
+    const searchQuery = (router.query.search ? router?.query?.search : "") as string;
+    const categoryQuery = (router.query.category ? router?.query?.category : "") as
+        | "all"
+        | "people"
+        | "projects"
+        | "skills";
 
+    const { people, projects, skills } = fallback.searchHits;
+    const searchData = useSearch(categoryQuery, people, projects, skills);
+    console.log(searchData);
     const searchHits = outputFormatterHelper(
-        "all",
+        categoryQuery,
         searchQuery,
         searchData?.searchHits?.people,
         searchData?.searchHits?.projects,
@@ -136,10 +142,15 @@ export const getServerSideProps: GetServerSideProps<{
     fallback: { searchHits: SearchHits };
 }> = async (context) => {
     const search = (context.query["search"] ? context.query["search"] : "") as string;
+    const category = (context.query["category"] ? context.query["category"] : "all") as
+        | "projects"
+        | "skills"
+        | "people"
+        | "all";
 
-    const data = await fetchSearchResults("all");
-    const searchHits = outputFormatterHelper("all", search, data?.people, data?.projects, data?.skills);
-
+    const data = await fetchSearchResults(category);
+    const searchHits = outputFormatterHelper(category, search, data?.people, data?.projects, data?.skills);
+    console.log("searchHits here", searchHits);
     return {
         props: {
             fallback: {
