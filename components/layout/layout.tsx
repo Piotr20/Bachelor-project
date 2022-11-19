@@ -26,7 +26,10 @@ type LayoutProps = {
 
 const Layout = ({ children, fallback }: LayoutProps) => {
     const router = useRouter();
-    const [selectedOption, setSelectedOption] = useState<any>(null);
+    const [selectedOption, setSelectedOption] = useState<any>({
+        value: router.query.category ? router.query.category : "all",
+        label: router.query.category ? router.query.category : "all",
+    });
     const [searchValue, setSearchValue] = useState<string | string[] | undefined>(router.query.search);
     const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
     const { openProfile } = useUserStore((state) => ({
@@ -39,7 +42,7 @@ const Layout = ({ children, fallback }: LayoutProps) => {
     }));
 
     const searchQuery = router.query.search as string;
-    const categoryQuery = (router.query.category ? router?.query?.category : "") as
+    const categoryQuery = (router.query.category ? router?.query?.category : "all   ") as
         | "all"
         | "people"
         | "projects"
@@ -88,7 +91,7 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                 setSelectedOption({ value: "all", label: "all" });
             }
         }
-    }, [router.isReady]);
+    }, [router.isReady, router.query.category]);
 
     useEffect(() => {
         if (selectedOption) {

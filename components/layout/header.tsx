@@ -28,7 +28,11 @@ const Header = ({}: HeaderProps) => {
         <StyledHeader>
             <StyledHeaderContainer>
                 <StyledLogo>
-                    <Link href={"/"}>
+                    <Link
+                        href={{
+                            pathname: "/",
+                        }}
+                    >
                         <Image src={Logo} alt="Impact connect logo" />
                     </Link>
                 </StyledLogo>

@@ -39,7 +39,7 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
     const router = useRouter();
 
     const searchQuery = (router.query.search ? router?.query?.search : "") as string;
-    const categoryQuery = (router.query.category ? router?.query?.category : "") as
+    const categoryQuery = (router.query.category ? router?.query?.category : "all") as
         | "all"
         | "people"
         | "projects"
