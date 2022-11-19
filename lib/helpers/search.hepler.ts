@@ -1,5 +1,6 @@
 import { Project, Skill, User } from "~/models";
 import Projects from "~/pages/projects";
+import { skillsGroupType } from "~/pages/searchResults";
 import { DOMAIN_NAME } from "~/util/env-variables";
 
 export async function fetchSearchResults(category: "projects" | "skills" | "people" | "all") {
@@ -60,17 +61,26 @@ export async function fetchAllEndpoints() {
 }
 
 export function filterBySearchParam(searchQuery: string, array?: User[] & Project[] & Skill[]) {
-    if (array) {
-        const filteredArray = array?.filter((searchHit: Project | Skill | User) => {
-            if (searchHit?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())) {
-                return searchHit;
+    const filteredArray = array?.filter((searchHit: Project | Skill | User) => {
+        if (searchHit?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())) {
+            return searchHit;
+        }
+    });
+
+    return filteredArray;
+}
+
+export function filterSkillBySearchParam(searchQuery: string, array?: User[] & Project[]) {
+    const hitsMap = new Map();
+    array?.map((searchHit: Project | User) => {
+        searchHit?.skills?.map((skill: Skill) => {
+            if (skill?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())) {
+                hitsMap.set(`${searchHit._id}`, searchHit);
             }
         });
-
-        return filteredArray;
-    } else {
-        return array;
-    }
+    });
+    const filteredArray = Array.from(hitsMap, ([name, value]) => ({ ...value }));
+    return filteredArray;
 }
 
 export function outputFormatterHelper(
@@ -78,7 +88,7 @@ export function outputFormatterHelper(
     searchQuery: string,
     people?: User[],
     projects?: Project[],
-    skills?: Skill[]
+    skills?: skillsGroupType
 ) {
     switch (category) {
         case "people": {
@@ -95,19 +105,32 @@ export function outputFormatterHelper(
             };
         }
         case "skills": {
-            const filteredSkills = filterBySearchParam(searchQuery, skills);
+            const filteredSkillsList = filterBySearchParam(searchQuery, skills?.skillsList);
+            const filteredSkillsPeople = filterSkillBySearchParam(searchQuery, skills?.people);
+            const filteredSkillsProjects = filterSkillBySearchParam(searchQuery, skills?.projects);
+
             return {
-                skills: filteredSkills,
+                skills: {
+                    skillsList: filteredSkillsList,
+                    people: filteredSkillsPeople,
+                    projects: filteredSkillsProjects,
+                },
             };
         }
         case "all": {
             const filteredPeople = filterBySearchParam(searchQuery, people);
             const filteredProjects = filterBySearchParam(searchQuery, projects);
-            const filteredSkills = filterBySearchParam(searchQuery, skills);
+            const filteredSkillsList = filterBySearchParam(searchQuery, skills?.skillsList);
+            const filteredSkillsPeople = filterSkillBySearchParam(searchQuery, skills?.people);
+            const filteredSkillsProjects = filterSkillBySearchParam(searchQuery, skills?.projects);
             return {
                 people: filteredPeople,
                 projects: filteredProjects,
-                skills: filteredSkills,
+                skills: {
+                    skillsList: filteredSkillsList,
+                    people: filteredSkillsPeople,
+                    projects: filteredSkillsProjects,
+                },
             };
         }
     }

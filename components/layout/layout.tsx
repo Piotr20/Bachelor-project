@@ -41,8 +41,8 @@ const Layout = ({ children, fallback }: LayoutProps) => {
         sliderDataType: state.sliderDataType,
     }));
 
-    const searchQuery = router.query.search as string;
-    const categoryQuery = (router.query.category ? router?.query?.category : "all   ") as
+    const searchQuery = (router.query.search ? router.query.search : "") as string;
+    const categoryQuery = (router.query.category ? router?.query?.category : "all") as
         | "all"
         | "people"
         | "projects"
@@ -53,7 +53,7 @@ const Layout = ({ children, fallback }: LayoutProps) => {
         categoryQuery,
         fallbackHits?.people,
         fallbackHits?.projects,
-        fallbackHits?.skills
+        fallbackHits?.skills?.skillsList
     );
 
     const searchHits = outputFormatterHelper(
@@ -123,12 +123,13 @@ const Layout = ({ children, fallback }: LayoutProps) => {
     }, [searchValue]);
 
     useEffect(() => {
-        const { search, ...queries } = router.query;
+        const { search, category, ...queries } = router.query;
         if (openSlider) {
             if (sliderData) {
                 router.replace(
                     {
                         query: {
+                            ...(!!categoryQuery ? { category: `${categoryQuery}` } : {}),
                             ...(!!searchValue ? { search: `${searchValue}` } : {}),
                             openSlider: `${openSlider}`,
                             openedId: `${sliderData._id}`,
@@ -143,6 +144,7 @@ const Layout = ({ children, fallback }: LayoutProps) => {
             router.replace(
                 {
                     query: {
+                        ...(!!categoryQuery ? { category: `${categoryQuery}` } : {}),
                         ...(!!searchValue ? { search: `${searchValue}` } : {}),
                     },
                 },
@@ -154,11 +156,11 @@ const Layout = ({ children, fallback }: LayoutProps) => {
 
     useEffect(() => {
         if (openProfile) {
-            console.log(searchValue);
             if (router.query.search || typeof router.query.search === "string") {
                 router.replace(
                     {
                         query: {
+                            category: `${categoryQuery}`,
                             search: `${searchValue}`,
                             openProfile: `${openProfile}`,
                         },
@@ -263,27 +265,27 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                                             tag="h4"
                                             additionalStyles={{
                                                 marginBottom: "12px",
-                                                padding: "0 12px",
+                                                padding: "0 8px",
                                                 [mq("lg")]: {
-                                                    padding: "0 16px",
+                                                    padding: "0 12px",
                                                 },
                                             }}
                                         >
                                             {`Suggestions (${
-                                                (searchHits?.people?.length as number) +
-                                                (searchHits?.projects?.length as number) +
-                                                (searchHits?.skills?.length as number)
+                                                ((searchHits?.people?.length || 0) as number) +
+                                                ((searchHits?.projects?.length || 0) as number) +
+                                                ((searchHits?.skills?.skillsList?.length || 0) as number)
                                             })`}
                                         </Text>
-                                        {searchHits?.people ? (
+                                        {searchHits?.people?.length ? (
                                             <>
                                                 <Text
                                                     tag="h5"
                                                     additionalStyles={{
                                                         marginBottom: "4px",
-                                                        padding: "0 12px",
+                                                        padding: "0 8px",
                                                         [mq("lg")]: {
-                                                            padding: "0 16px",
+                                                            padding: "0 12px",
                                                         },
                                                     }}
                                                 >
@@ -320,15 +322,15 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                                                 })}
                                             </>
                                         ) : null}
-                                        {searchHits?.projects ? (
+                                        {searchHits?.projects?.length ? (
                                             <>
                                                 <Text
                                                     tag="h5"
                                                     additionalStyles={{
                                                         marginBottom: "4px",
-                                                        padding: "0 12px",
+                                                        padding: "0 8px",
                                                         [mq("lg")]: {
-                                                            padding: "0 16px",
+                                                            padding: "0 12px",
                                                         },
                                                     }}
                                                 >
@@ -365,21 +367,21 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                                                 })}
                                             </>
                                         ) : null}
-                                        {searchHits?.skills ? (
+                                        {searchHits?.skills?.skillsList?.length ? (
                                             <>
                                                 <Text
                                                     tag="h5"
                                                     additionalStyles={{
                                                         marginBottom: "4px",
-                                                        padding: "0 12px",
+                                                        padding: "0 8px",
                                                         [mq("lg")]: {
-                                                            padding: "0 16px",
+                                                            padding: "0 12px",
                                                         },
                                                     }}
                                                 >
                                                     Skills
                                                 </Text>
-                                                {searchHits.skills?.map((skill: Skill, key) => {
+                                                {searchHits.skills?.skillsList?.map((skill: Skill, key) => {
                                                     return (
                                                         <SearchSuggestion
                                                             key={key}
@@ -409,6 +411,21 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                                                     );
                                                 })}
                                             </>
+                                        ) : null}
+                                        {!searchHits?.skills?.skillsList?.length &&
+                                        !searchHits?.projects?.length &&
+                                        !searchHits?.people?.length ? (
+                                            <Text
+                                                tag="p"
+                                                additionalStyles={{
+                                                    paddingLeft: "8px",
+                                                    [mq("lg")]: {
+                                                        paddingLeft: "12px",
+                                                    },
+                                                }}
+                                            >
+                                                No suggestions found
+                                            </Text>
                                         ) : null}
                                     </SearchSuggestionsContainer>
                                 </SearchInputWrapper>
@@ -486,7 +503,6 @@ export const SearchWrapper = styled.div(({}) => ({
     padding: "24px 0",
     paddingTop: "calc(24px + 6vh)",
     backgroundColor: colors.primary.black,
-    position: "relative",
     [mq("lg")]: {
         paddingTop: "calc(24px + 12vh)",
     },
@@ -497,7 +513,9 @@ export const SearchBarGroup = styled.div({
     width: "100%",
     gap: "8px",
     flexGrow: "1",
-    height: "100%",
+    zIndex: "10",
+    position: "sticky",
+    top: "2vh",
 });
 
 export const SearchInputWrapper = styled.div({

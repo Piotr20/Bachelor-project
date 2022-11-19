@@ -13,11 +13,18 @@ import ProjectsSearchBox from "~/components/search/projectsSearchBox";
 import SkillSearchBox from "~/components/search/skillsSearchBox";
 import Text from "~/components/typography/text";
 import { colors } from "~/util/colorPalette";
+import { useEffect } from "react";
 
 export type SearchHits = {
     people?: User[];
     projects?: Project[];
-    skills?: Skill[];
+    skills?: skillsGroupType;
+};
+
+export type skillsGroupType = {
+    people?: User[];
+    projects?: Project[];
+    skillsList?: Skill[];
 };
 
 type SearchPageProps = {
@@ -39,15 +46,14 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
     const router = useRouter();
 
     const searchQuery = (router.query.search ? router?.query?.search : "") as string;
-    const categoryQuery = (router.query.category ? router?.query?.category : "all") as
+    const categoryQuery = (router.query.category ? router?.query?.category : "") as
         | "all"
         | "people"
         | "projects"
         | "skills";
 
     const { people, projects, skills } = fallback.searchHits;
-    const searchData = useSearch(categoryQuery, people, projects, skills);
-    console.log(searchData);
+    const searchData = useSearch(categoryQuery, people, projects, skills?.skillsList);
     const searchHits = outputFormatterHelper(
         categoryQuery,
         searchQuery,
@@ -114,20 +120,38 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
                             </BoxContainer>
                         </StyledSearchCategory>
                     ) : null}
-                    {searchHits?.skills?.length ? (
+                    {searchHits?.skills?.people?.length ? (
                         <StyledSearchCategory>
-                            <Text tag="h5">Skills</Text>
+                            <Text tag="h5">{`People with skills matching "${searchQuery}"`}</Text>
                             <Text
                                 tag="p"
                                 additionalStyles={{
                                     color: colors.primary.lightGrey,
                                 }}
                             >
-                                {searchHits?.skills?.length} skills
+                                {searchHits?.skills?.people?.length} people
                             </Text>
                             <BoxContainer>
-                                {searchHits?.skills?.map((result: Skill) => {
-                                    return <SkillSearchBox key={result?._id} data={result} />;
+                                {searchHits?.skills?.people?.map((result: Skill) => {
+                                    return <PeopleSearchBox key={result?._id} data={result} />;
+                                })}
+                            </BoxContainer>
+                        </StyledSearchCategory>
+                    ) : null}
+                    {searchHits?.skills?.projects?.length ? (
+                        <StyledSearchCategory>
+                            <Text tag="h5">{`Projects with skills matching "${searchQuery}"`}</Text>
+                            <Text
+                                tag="p"
+                                additionalStyles={{
+                                    color: colors.primary.lightGrey,
+                                }}
+                            >
+                                {searchHits?.skills?.projects?.length} projects
+                            </Text>
+                            <BoxContainer>
+                                {searchHits?.skills?.projects?.map((result: Skill) => {
+                                    return <ProjectsSearchBox key={result?._id} data={result} />;
                                 })}
                             </BoxContainer>
                         </StyledSearchCategory>
@@ -150,7 +174,6 @@ export const getServerSideProps: GetServerSideProps<{
 
     const data = await fetchSearchResults(category);
     const searchHits = outputFormatterHelper(category, search, data?.people, data?.projects, data?.skills);
-    console.log("searchHits here", searchHits);
     return {
         props: {
             fallback: {
