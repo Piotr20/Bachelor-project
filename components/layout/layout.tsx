@@ -512,10 +512,10 @@ export const SearchBarGroup = styled.div({
     display: "flex",
     width: "100%",
     gap: "8px",
-    flexGrow: "1",
+
     zIndex: "10",
     position: "sticky",
-    top: "2vh",
+    top: 0,
 });
 
 export const SearchInputWrapper = styled.div({

@@ -28,7 +28,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 }
             ).populate([
                 { path: "projects", model: Project },
-                { path: "skills", model: Skill },
+                {
+                    path: "skills",
+                    populate: {
+                        path: "skill",
+                        model: Skill,
+                    },
+                },
             ]);
         }
 

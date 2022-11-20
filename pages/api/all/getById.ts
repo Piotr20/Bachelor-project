@@ -11,7 +11,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const { id } = JSON.parse(req.body);
         const person = await User.findById(id).populate([
             { path: "projects", model: Project },
-            { path: "skills", model: Skill },
+            {
+                path: "skills",
+                populate: {
+                    path: "skill",
+                    model: Skill,
+                },
+            },
         ]);
 
         const project = await Project.findById(id).populate([
@@ -22,7 +28,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const skillRaw = await Skill.findById(id);
 
         const matchedProjects = await Project.find({ skills: id });
-        const matchedPeople = await User.find({ skills: id });
+        const matchedPeople = await User.find({ skills: { $elemMatch: { skill: id } } });
+        console.log("similar people", matchedPeople);
         const skill = skillRaw
             ? {
                   docs: skillRaw?.docs,

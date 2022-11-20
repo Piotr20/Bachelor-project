@@ -5,6 +5,7 @@ import Text from "../../typography/text";
 import { motion, AnimatePresence } from "framer-motion";
 import SkillsContent from "../contents/skillsContent";
 import ProjectsContent from "../contents/projectContent";
+import SkillsContentExpertise from "../contents/skillsContentExpertise";
 
 type SliderOverviewProps = {
     data: User;
@@ -67,7 +68,7 @@ const PersonOverview = ({ data }: SliderOverviewProps) => {
                     {activeTab === 0 ? (
                         <ProjectsContent projects={data?.projects} />
                     ) : activeTab === 1 ? (
-                        <SkillsContent skills={data?.skills} />
+                        <SkillsContentExpertise skills={data?.skills} />
                     ) : null}
                 </motion.div>
             </AnimatePresence>

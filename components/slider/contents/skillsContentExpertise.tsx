@@ -8,10 +8,10 @@ import { colors } from "~/util/colorPalette";
 import { mq } from "~/util/media-queries";
 
 type SliderOverviewProps = {
-    skills?: Skill[];
+    skills?: UserSkill[];
 };
 
-const SkillsContent = ({ skills }: SliderOverviewProps) => {
+const SkillsContentExpertise = ({ skills }: SliderOverviewProps) => {
     const { openSlider, setDataInSlider, setOpenSlider, setDataType } = useNavStore((state) => ({
         openSlider: state.openSlider,
         toggleSlider: state.toggleSlider,
@@ -22,12 +22,12 @@ const SkillsContent = ({ skills }: SliderOverviewProps) => {
 
     return (
         <SkillsContainer>
-            {skills?.map((skill: Skill, key) => {
+            {skills?.map((userSkill: UserSkill, key) => {
                 return (
                     <SkillTag
                         onClick={() =>
                             handleSlideIn(
-                                skill,
+                                userSkill?.skill,
                                 setOpenSlider,
                                 setDataInSlider,
                                 setDataType,
@@ -38,8 +38,8 @@ const SkillsContent = ({ skills }: SliderOverviewProps) => {
                         key={key}
                     >
                         <ImpactImage
-                            src={skill?.imageURL}
-                            alt={skill?.name}
+                            src={userSkill?.skill?.imageURL}
+                            alt={userSkill?.skill?.name}
                             layout="fill"
                             ratio="1/1"
                             objectFit="contain"
@@ -66,7 +66,7 @@ const SkillsContent = ({ skills }: SliderOverviewProps) => {
                             }}
                             style={{ borderRadius: "50%" }}
                         />
-                        <Text tag="h6"> {skill?.name}</Text>
+                        <Text tag="h6"> {userSkill?.skill?.name}</Text>
                     </SkillTag>
                 );
             })}
@@ -74,7 +74,7 @@ const SkillsContent = ({ skills }: SliderOverviewProps) => {
     );
 };
 
-export default SkillsContent;
+export default SkillsContentExpertise;
 
 export const SkillsContainer = styled.div({
     marginTop: "24px",

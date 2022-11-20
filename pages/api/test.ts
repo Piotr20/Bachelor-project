@@ -1,18 +1,17 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import connectMongo from "../../../util/connectMongo";
-import Skill from "~/models/mongoModals/skillSchema";
+import { decodeJWT } from "~/lib/helpers/tokenDecode.helper";
 import Project from "~/models/mongoModals/projectSchema";
+import Skill from "~/models/mongoModals/skillSchema";
 import User from "~/models/mongoModals/userSchema";
+import connectMongo from "~/util/connectMongo";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         await connectMongo();
 
-        const projects = await Project.find().populate([
-            { path: "people", model: User },
-            { path: "skills", model: Skill },
-        ]);
-        const people = await User.find().populate([
+        const user = await User.find({
+            _id: "634fe42fd8604cc58b9a73b1",
+        }).populate([
             { path: "projects", model: Project },
             {
                 path: "skills",
@@ -22,16 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 },
             },
         ]);
-
-        const skills = await Skill.find();
-
-        res.json({
-            skills: {
-                people: people,
-                projects: projects,
-                skillsList: skills,
-            },
-        });
+        res.json({ user });
     } catch (error) {
         console.log(error);
         res.json({ error });

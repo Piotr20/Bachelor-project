@@ -12,7 +12,7 @@ export type User =
           location?: string;
           role?: string;
           projects?: Project[];
-          skills?: Skill[];
+          skills?: UserSkill[] | Skill[];
           imageURL?: string;
       } & {
           _id?: string;
@@ -28,3 +28,5 @@ export type User =
           imageURL?: string;
       })
     | undefined;
+
+export type UserSkill = { skill?: Skill & string; expertise?: string };
