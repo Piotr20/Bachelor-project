@@ -18,6 +18,7 @@ import { fetchSearchResults, outputFormatterHelper } from "~/lib/helpers/search.
 import { SearchHits } from "~/pages/searchResults";
 import useSearch from "~/hooks/useSearch";
 import { Project, Skill, User } from "~/models";
+import { Button } from "../button/button";
 
 type LayoutProps = {
     children: ReactNode;
@@ -216,50 +217,64 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                             >
                                 Find the help you need
                             </Text>
-                            <SearchBarGroup>
-                                <StyledSelect>
-                                    <Select
-                                        isSearchable={false}
-                                        defaultValue={selectedOption}
-                                        value={selectedOption}
-                                        onChange={(newValue) => {
-                                            setSelectedOption(newValue);
-                                        }}
-                                        options={options}
-                                        styles={{
-                                            container: (provided) => ({
-                                                ...provided,
-                                                height: "100%",
-                                                width: "100%",
-                                                borderRadius: "32px",
-                                            }),
-                                            control: (provided) => ({
-                                                ...provided,
-                                                height: "100%",
-                                            }),
-                                            singleValue: (provided) => ({
-                                                ...provided,
-                                                textOverflow: "initial",
-                                            }),
-                                        }}
-                                    />
-                                </StyledSelect>
-                                <SearchInputWrapper>
-                                    <StyledSearchInput
-                                        active={!showSuggestions}
-                                        type="text"
-                                        placeholder="Type here.."
-                                        defaultValue={router.query.search}
-                                        onChange={(e) => {
-                                            setSearchValue(e.target.value);
-                                            setShowSuggestions(true);
-                                        }}
-                                        onKeyDown={(e) => executeSearch(e)}
-                                        onBlur={(e) => setTimeout(() => setShowSuggestions(false), 100)}
-                                    />
-                                    <SearchIconWrapper>
-                                        <SvgIcon svg="searchIcon" />
-                                    </SearchIconWrapper>
+                            <SearchContainer>
+                                <SearchBarGroup>
+                                    <SearchInputWrapper>
+                                        <StyledSearchInput
+                                            active={!showSuggestions}
+                                            type="text"
+                                            placeholder="Type here.."
+                                            defaultValue={router.query.search}
+                                            onChange={(e) => {
+                                                setSearchValue(e.target.value);
+                                                setShowSuggestions(true);
+                                            }}
+                                            onKeyDown={(e) => executeSearch(e)}
+                                            onBlur={(e) => setTimeout(() => setShowSuggestions(false), 100)}
+                                        />
+                                    </SearchInputWrapper>
+                                    <StyledSelect>
+                                        <Select
+                                            isSearchable={false}
+                                            defaultValue={selectedOption}
+                                            value={selectedOption}
+                                            onChange={(newValue) => {
+                                                setSelectedOption(newValue);
+                                            }}
+                                            options={options}
+                                            styles={{
+                                                container: (provided) => ({
+                                                    ...provided,
+                                                    height: "100%",
+                                                    width: "100%",
+                                                    borderRadius: "32px",
+                                                }),
+                                                control: (provided) => ({
+                                                    ...provided,
+                                                    height: "100%",
+                                                    border: "none",
+                                                    borderRadius: 0,
+                                                    borderTopRightRadius: "32px",
+                                                    borderBottomRightRadius: "32px",
+                                                    outline: "none",
+                                                    ["&:hover"]: {
+                                                        border: "none",
+                                                    },
+                                                }),
+                                                singleValue: (provided) => ({
+                                                    ...provided,
+                                                    textOverflow: "initial",
+                                                }),
+                                                indicatorSeparator: () => ({
+                                                    display: "none",
+                                                }),
+                                                menu: (provided) => ({
+                                                    ...provided,
+                                                    marginTop: 0,
+                                                }),
+                                            }}
+                                        />
+                                    </StyledSelect>
                                     <SearchSuggestionsContainer active={showSuggestions}>
                                         <Text
                                             tag="h4"
@@ -428,8 +443,9 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                                             </Text>
                                         ) : null}
                                     </SearchSuggestionsContainer>
-                                </SearchInputWrapper>
-                            </SearchBarGroup>
+                                </SearchBarGroup>
+                                <Button kind="primary">Search</Button>
+                            </SearchContainer>
                         </SearchWrapper>
                     </StyledPageContainer>
                     <StyledPageContainer>{children}</StyledPageContainer>
@@ -511,8 +527,6 @@ export const SearchWrapper = styled.div(({}) => ({
 export const SearchBarGroup = styled.div({
     display: "flex",
     width: "100%",
-    gap: "8px",
-
     zIndex: "10",
     position: "sticky",
     top: 0,
@@ -524,12 +538,19 @@ export const SearchInputWrapper = styled.div({
     width: "100%",
 });
 
+export const SearchContainer = styled.div({
+    display: "flex",
+    width: "100%",
+    gap: "8px",
+});
+
 export const StyledSearchInput = styled.input<{ active: boolean }>(({ active }) => ({
     padding: "10px 6px",
     paddingLeft: "12px",
     width: "100%",
     boxShadow: active ? "0px 22px 30px -10px rgba(0, 0, 0, 0.1)" : "none",
-    borderRadius: "32px",
+    borderBottomLeftRadius: "32px",
+    borderTopLeftRadius: "32px",
     borderTop: `2px solid ${colors.primary.black}`,
     borderBottom: "none",
     borderLeft: "none",
@@ -540,7 +561,8 @@ export const StyledSearchInput = styled.input<{ active: boolean }>(({ active }) 
     [mq("lg")]: {
         padding: "12px 8px",
         paddingLeft: "16px",
-        borderRadius: "48px",
+        borderBottomLeftRadius: "48px",
+        borderTopLeftRadius: "48px",
         fontSize: "20px",
     },
 }));
@@ -619,6 +641,18 @@ export const StyledSelect = styled.div({
     borderTop: `2px solid ${colors.primary.black}`,
     width: "140px",
     fontFamily: "Flama",
+    position: "relative",
+    ["&::before"]: {
+        content: '""',
+        zIndex: "1",
+        width: "2px",
+        height: "70%",
+        position: "absolute",
+        left: "0",
+        top: "50%",
+        transform: "translate(-50%,-50%)",
+        backgroundColor: colors.primary.black,
+    },
     [mq("lg")]: {
         width: "120px",
     },
