@@ -1,4 +1,4 @@
-import { Project, Skill, User } from "~/models";
+import { Project, Skill, User, UserSkill } from "~/models";
 import { Option } from "~/models/option";
 
 export async function getAllFromEndpointHelper(setBasedOnEndpoint: any, endpoint: "projects" | "skills") {
@@ -14,7 +14,6 @@ export async function getAllFromEndpointHelper(setBasedOnEndpoint: any, endpoint
     if (endpoint === "skills") {
         const skillList = await response.json();
         let skillArray: Option[] = [];
-        console.log(skillList);
         skillList.skills?.skillsList?.forEach((skill: Skill) => {
             skillArray.push({ value: skill?._id, label: skill?.name });
         });
@@ -36,10 +35,27 @@ export function handleUserPropsHelper(
             if (propertyToSet === "projects") {
                 setUser({
                     ...user,
-                    projects: selectedIDs,
+                    projects: selectedIDs as Project[],
                 });
             }
         }
     });
     setSelectedOptions(selectedOptions);
+}
+
+export function UserPropsSkillsHelper(
+    expertise: "basic" | "intermidiate" | "expert",
+    selectedOptions: Option[],
+    mongoSkills: UserSkill[],
+    setMongoSkils: (data: UserSkill[]) => void
+) {
+    let selectedMongoSkills: UserSkill[] = [];
+    console.log(mongoSkills);
+    selectedOptions.forEach((option: Option) => {
+        selectedMongoSkills?.push({
+            skill: option?.value,
+            expertise: expertise,
+        });
+    });
+    setMongoSkils(selectedMongoSkills);
 }

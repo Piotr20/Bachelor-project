@@ -9,6 +9,8 @@ export const colors: ColorPalette = {
         lightYellow: "#FEFF00",
         softYellow: "#FFF9B2",
         yellowGreen: "#938314",
+        red: "#FC5B2A",
+        green: "#3F9F1C",
     },
     base: {
         grey800: "#151515",
@@ -53,6 +55,8 @@ type ColorsSecondary = {
     lightYellow: string;
     softYellow: string;
     yellowGreen: string;
+    red: string;
+    green: string;
 };
 type ColorsBase = {
     grey800: string;
