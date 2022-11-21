@@ -31,10 +31,6 @@ const Step3 = ({ user, setUser }: StepProps) => {
         });
     }, [selectedMongoBasicSkills, selectedMongoIntermidiateSkills, selectedMongoExpertSkills]);
 
-    useEffect(() => {
-        console.log(user);
-    }, [user]);
-
     return (
         <>
             <StyledSelect>
