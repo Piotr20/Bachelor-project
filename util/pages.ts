@@ -8,16 +8,12 @@ export const Pages: Page[] = [
         name: "Home",
         path: "/",
     },
-    /*  {
-        name: "Projects",
-        path: "/projects",
-    },
     {
         name: "People",
         path: "/people",
     },
     {
-        name: "Skills",
-        path: "/skills",
-    }, */
+        name: "Projects",
+        path: "/projects",
+    },
 ];

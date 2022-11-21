@@ -8,33 +8,22 @@ import { ifProp } from "styled-tools";
 
 type ButtonProps = {
     children: ReactNode;
-    kind: "primary" | "secondary" | "link";
+    kind: "primary" | "secondary" | "link" | "search";
     disabled?: boolean;
     onClick?: ReactEventHandler;
     additionalStyles?: CSSObject;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children">;
 
-export const Button: FC<ButtonProps> = ({
-    children,
-    kind,
-    disabled,
-    onClick,
-    additionalStyles,
-}) => {
+export const Button: FC<ButtonProps> = ({ children, kind, disabled, onClick, additionalStyles }) => {
     return (
-        <StyledButton
-            onClick={onClick}
-            kind={kind}
-            disabled={disabled}
-            additionalStyles={additionalStyles}
-        >
+        <StyledButton onClick={onClick} kind={kind} disabled={disabled} additionalStyles={additionalStyles}>
             {children}
         </StyledButton>
     );
 };
 
 export const StyledButton = styled.button<{
-    kind: "primary" | "secondary" | "link";
+    kind: "primary" | "secondary" | "link" | "search";
     additionalStyles?: CSSObject;
 }>(
     ({ kind, additionalStyles }) => ({
@@ -49,7 +38,6 @@ export const StyledButton = styled.button<{
         ...additionalStyles,
         [mq("lg")]: {
             padding: "8px 36px",
-            fontSize: "16px",
         },
     }),
     ifProp({ kind: "primary" }, () => ({
@@ -110,6 +98,33 @@ export const StyledButton = styled.button<{
         [mq("md")]: {},
         [mq("lg")]: {
             padding: "0 8px",
+        },
+    })),
+    ifProp({ kind: "search" }, () => ({
+        backgroundColor: colors.secondary.lightYellow,
+        color: colors.primary.black,
+        transition: "all 0.3s ease",
+        borderRadius: "48px",
+        display: "flex",
+        alignItems: "center",
+        padding: "8px 12px",
+        ["&:hover"]: {
+            backgroundColor: colors.secondary.darkYellow,
+            color: colors.primary.black,
+        },
+        ["p"]: {
+            display: "none",
+            [mq("lg")]: { display: "block" },
+        },
+        [mq("lg")]: {},
+        ["span"]: {
+            width: "16px !important",
+            height: "16px !important",
+            [mq("lg")]: {
+                marginRight: "8px",
+                width: "20px !important",
+                height: "20px !important",
+            },
         },
     }))
 );

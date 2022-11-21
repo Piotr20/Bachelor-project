@@ -37,18 +37,17 @@ const Header = ({}: HeaderProps) => {
                     </Link>
                 </StyledLogo>
                 <StyledNav>
-                    {/*  <StyledNavUl>
-                    {Pages.map((page: Page, key) => {
-                        return (
-                            <StyledNavLi
-                                active={router.pathname === page.path}
-                                key={key}
-                            >
-                                <Link href={page.path}>{page.name}</Link>
-                            </StyledNavLi>
-                        );
-                    })}
-                </StyledNavUl> */}
+                    {
+                        <StyledNavUl>
+                            {Pages.map((page: Page, key) => {
+                                return (
+                                    <StyledNavLi active={router.pathname === page.path} key={key}>
+                                        <Link href={page.path}>{page.name}</Link>
+                                    </StyledNavLi>
+                                );
+                            })}
+                        </StyledNavUl>
+                    }
                 </StyledNav>
                 <StyledProfile onClick={() => setOpenProfile(true)}>
                     <Text
@@ -57,6 +56,10 @@ const Header = ({}: HeaderProps) => {
                             paddingRight: "12px",
                             color: colors.base.white,
                             whiteSpace: "nowrap",
+                            display: "none",
+                            [mq("lg")]: {
+                                display: "block",
+                            },
                         }}
                     >
                         {user?.name}
@@ -78,7 +81,7 @@ export default Header;
 
 export const StyledHeader = styled.header({
     width: "100%",
-    height: "8vh",
+    height: "6.5vh",
 });
 export const StyledHeaderContainer = styled.div({
     width: "100%",
@@ -88,6 +91,7 @@ export const StyledHeaderContainer = styled.div({
     alignItems: "center",
     backgroundColor: colors.primary.black,
     padding: "0 24px",
+    position: "relative",
     [mq("lg")]: {
         maxWidth: "1440px",
         margin: "0 auto",
@@ -120,22 +124,32 @@ export const StyledNav = styled.nav({
     height: "100%",
 });
 export const StyledNavUl = styled.ul({
-    display: "flex",
     height: "100%",
     alignItems: "center",
     listStyle: "none",
+    position: "absolute",
+    left: "50%",
+    transform: "translateX(-50%)",
+    display: "none",
+    [mq("lg")]: {
+        display: "flex",
+    },
 });
 export const StyledNavLi = styled.li<{
     active: boolean;
 }>(({ active }) => ({
     height: "100%",
     display: "flex",
-    alignItems: "center",
-    borderTop: `4px solid ${active ? colors.secondary.lightYellow : "transparent"}`,
+    alignItems: "flex-start",
+    borderTop: `2px solid ${active ? colors.secondary.lightYellow : "transparent"}`,
 
     ["a"]: {
         textDecoration: "none",
         padding: "8px 12px",
-        color: active ? colors.primary.black : "initial",
+        paddingTop: "16px",
+        color: active ? colors.base.white : colors.base.grey500,
+        fontFamily: "Flama",
+        fontSize: "18px",
+        letterSpacing: "1px",
     },
 }));

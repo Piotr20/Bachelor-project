@@ -1,10 +1,7 @@
 import { Project, Skill, User } from "~/models";
 import { Option } from "~/models/option";
 
-export async function getAllFromEndpointHelper(
-    setBasedOnEndpoint: any,
-    endpoint: "projects" | "skills"
-) {
+export async function getAllFromEndpointHelper(setBasedOnEndpoint: any, endpoint: "projects" | "skills") {
     const response = await fetch(`./api/${endpoint}/all`);
     if (endpoint === "projects") {
         const projectList = await response.json();
@@ -17,7 +14,8 @@ export async function getAllFromEndpointHelper(
     if (endpoint === "skills") {
         const skillList = await response.json();
         let skillArray: Option[] = [];
-        skillList.skills?.forEach((skill: Skill) => {
+        console.log(skillList);
+        skillList.skills?.skillsList?.forEach((skill: Skill) => {
             skillArray.push({ value: skill?._id, label: skill?.name });
         });
         setBasedOnEndpoint(skillArray);
@@ -39,12 +37,6 @@ export function handleUserPropsHelper(
                 setUser({
                     ...user,
                     projects: selectedIDs,
-                });
-            }
-            if (propertyToSet === "skills") {
-                setUser({
-                    ...user,
-                    skills: selectedIDs,
                 });
             }
         }

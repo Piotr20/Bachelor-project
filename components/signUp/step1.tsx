@@ -28,7 +28,6 @@ const Step1 = ({ user, setUser }: StepProps) => {
                             ...user,
                             department: newValue?.value,
                         });
-                        console.log(user);
                     }}
                     options={departmentOptions}
                     styles={{

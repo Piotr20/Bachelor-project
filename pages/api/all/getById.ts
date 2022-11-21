@@ -29,7 +29,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
         const matchedProjects = await Project.find({ skills: id });
         const matchedPeople = await User.find({ skills: { $elemMatch: { skill: id } } });
-        console.log("similar people", matchedPeople);
         const skill = skillRaw
             ? {
                   docs: skillRaw?.docs,

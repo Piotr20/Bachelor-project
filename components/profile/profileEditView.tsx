@@ -18,10 +18,7 @@ import { Input } from "../input/input";
 import { StyledSelect } from "../signUp/step1";
 import { departmentOptions } from "~/util/departmentOptions";
 import Select from "react-select";
-import {
-    getAllFromEndpointHelper,
-    handleUserPropsHelper,
-} from "~/lib/helpers/signUp.helper";
+import { getAllFromEndpointHelper, handleUserPropsHelper } from "~/lib/helpers/signUp.helper";
 import { Button } from "../button/button";
 
 const ProfileEditView = () => {
@@ -66,7 +63,6 @@ const ProfileEditView = () => {
         router.reload();
         setEditMode(false);
     }
-    console.log(user);
     return (
         <ProfileOverview>
             <Text
@@ -134,9 +130,7 @@ const ProfileEditView = () => {
                 onChange={(e) =>
                     setUserData({
                         ...user,
-                        experienceYears: Number(
-                            (e.target as HTMLInputElement).value
-                        ),
+                        experienceYears: Number((e.target as HTMLInputElement).value),
                     })
                 }
                 additionalStyles={{
@@ -176,13 +170,7 @@ const ProfileEditView = () => {
                     isMulti={true}
                     defaultValue={defaultProjects}
                     onChange={(newValue: any) => {
-                        handleUserPropsHelper(
-                            newValue,
-                            setUserData,
-                            user,
-                            setSelectedProjects,
-                            "projects"
-                        );
+                        handleUserPropsHelper(newValue, setUserData, user, setSelectedProjects, "projects");
                     }}
                     options={projectOptions}
                     styles={{
@@ -208,8 +196,7 @@ const ProfileEditView = () => {
                         }),
                         multiValue: (privided) => ({
                             ...privided,
-                            backgroundColor:
-                                colors.secondary.lightYellow + "40",
+                            backgroundColor: colors.secondary.lightYellow + "40",
                         }),
                     }}
                 />
@@ -232,13 +219,7 @@ const ProfileEditView = () => {
                     isMulti={true}
                     defaultValue={defaultSkills}
                     onChange={(newValue: any) => {
-                        handleUserPropsHelper(
-                            newValue,
-                            setUserData,
-                            user,
-                            setSelectedSkills,
-                            "skills"
-                        );
+                        handleUserPropsHelper(newValue, setUserData, user, setSelectedSkills, "skills");
                     }}
                     options={skillOptions}
                     styles={{
@@ -267,8 +248,7 @@ const ProfileEditView = () => {
                         }),
                         multiValue: (provided) => ({
                             ...provided,
-                            backgroundColor:
-                                colors.secondary.lightYellow + "40",
+                            backgroundColor: colors.secondary.lightYellow + "40",
                         }),
                     }}
                 />

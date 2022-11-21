@@ -14,6 +14,7 @@ import SkillSearchBox from "~/components/search/skillsSearchBox";
 import Text from "~/components/typography/text";
 import { colors } from "~/util/colorPalette";
 import { useEffect } from "react";
+import NoResults from "~/components/search/noResults";
 
 export type SearchHits = {
     people?: User[];
@@ -155,6 +156,13 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
                                 })}
                             </BoxContainer>
                         </StyledSearchCategory>
+                    ) : null}
+                    {!searchHits?.skills?.people?.length &&
+                    !searchHits?.skills?.projects?.length &&
+                    !searchHits?.skills?.skillsList?.length &&
+                    !searchHits?.projects?.length &&
+                    !searchHits?.people?.length ? (
+                        <NoResults />
                     ) : null}
                 </StyledSearchResultsWrapper>
             </main>
