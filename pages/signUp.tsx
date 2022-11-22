@@ -18,6 +18,7 @@ import ImpactImage from "~/components/image/image";
 import Text from "~/components/typography/text";
 import ProgressBar from "~/components/signUp/progressBar";
 import { colors } from "~/util/colorPalette";
+import { authHelper } from "~/lib/helpers";
 
 const SignUp: NextPage = () => {
     const router = useRouter();
@@ -57,8 +58,7 @@ const SignUp: NextPage = () => {
             }),
         });
         const mongoUser: User = await response.json();
-        setUserData(mongoUser);
-        router.reload();
+        authHelper(status, session, router, setUserData);
         router.push("/");
     }
 
@@ -114,8 +114,7 @@ const SignUp: NextPage = () => {
                                     },
                                 }}
                             >
-                                Please fill-in all the missing information in
-                                your profile.
+                                Please fill-in all the missing information in your profile.
                             </Text>
                             <ProgressBar step={step} />
                             <AnimationContainer>
@@ -141,9 +140,7 @@ const SignUp: NextPage = () => {
                                             },
                                         }}
                                     >
-                                        <StyledFieldsWrapper>
-                                            {stepsComponents[step - 1]}
-                                        </StyledFieldsWrapper>
+                                        <StyledFieldsWrapper>{stepsComponents[step - 1]}</StyledFieldsWrapper>
                                     </motion.div>
                                 </AnimatePresence>
                             </AnimationContainer>

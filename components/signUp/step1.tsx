@@ -5,20 +5,45 @@ import Select from "react-select";
 import { departmentOptions } from "~/util/departmentOptions";
 import styled from "styled-components";
 import { colors } from "~/util/colorPalette";
+import { positionsOptions } from "~/util/positionOptions";
 
 const Step1 = ({ user, setUser }: StepProps) => {
     return (
         <>
-            <Input
-                placeholder="Enter your position"
-                type="text"
-                onChange={(e) =>
-                    setUser({
-                        ...user,
-                        role: (e.target as HTMLInputElement).value,
-                    })
-                }
-            />
+            <StyledSelect>
+                <Select
+                    isSearchable={true}
+                    placeholder="Chose your position"
+                    onChange={(newValue: any) => {
+                        setUser({
+                            ...user,
+                            role: newValue?.value,
+                        });
+                    }}
+                    options={positionsOptions}
+                    styles={{
+                        valueContainer: (provided) => ({
+                            ...provided,
+                            paddingLeft: "2.98px",
+                            paddingTop: "0",
+                            outline: "none !important",
+                        }),
+                        input: (provided) => ({
+                            ...provided,
+                            padding: "0",
+                            margin: "0",
+                        }),
+                        control: (provided) => ({
+                            ...provided,
+                            borderWidth: "0 !important",
+                            borderColor: "none !important",
+                        }),
+                        indicatorSeparator: () => ({
+                            display: "none",
+                        }),
+                    }}
+                />
+            </StyledSelect>
             <StyledSelect>
                 <Select
                     isSearchable={true}
@@ -54,7 +79,7 @@ const Step1 = ({ user, setUser }: StepProps) => {
                 />
             </StyledSelect>
             <Input
-                placeholder="How long are you at IMPACT?"
+                placeholder="How long are you at IMPACT? (in years)"
                 type="number"
                 onChange={(e) =>
                     setUser({

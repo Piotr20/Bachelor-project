@@ -14,6 +14,7 @@ import { useUserStore } from "~/store/userStore";
 import { StyledPageContainer } from "./layout";
 import Logo from "../../public/images/impact-logo-white.png";
 import ImpactImage from "../image/image";
+import { SvgIcon } from "../svg-icon";
 
 type HeaderProps = {};
 
@@ -42,7 +43,12 @@ const Header = ({}: HeaderProps) => {
                             {Pages.map((page: Page, key) => {
                                 return (
                                     <StyledNavLi active={router.pathname === page.path} key={key}>
-                                        <Link href={page.path}>{page.name}</Link>
+                                        <Link href={page.path}>
+                                            <a>
+                                                <SvgIcon svg={page.icon} />
+                                                {page.name}
+                                            </a>
+                                        </Link>
                                     </StyledNavLi>
                                 );
                             })}
@@ -124,32 +130,63 @@ export const StyledNav = styled.nav({
     height: "100%",
 });
 export const StyledNavUl = styled.ul({
-    height: "100%",
     alignItems: "center",
     listStyle: "none",
-    position: "absolute",
-    left: "50%",
-    transform: "translateX(-50%)",
-    display: "none",
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    backgroundColor: colors.primary.black,
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-around",
+    padding: "0 32px",
+    height: "8vh",
     [mq("lg")]: {
+        width: "auto",
+        height: "100%",
         display: "flex",
+        position: "absolute",
+        left: "50%",
+        transform: "translateX(-50%)",
     },
 });
 export const StyledNavLi = styled.li<{
     active: boolean;
 }>(({ active }) => ({
-    height: "100%",
-    display: "flex",
-    alignItems: "flex-start",
-    borderTop: `2px solid ${active ? colors.secondary.lightYellow : "transparent"}`,
+    letterSpacing: "1px",
+    fontFamily: "Flama",
+    fontSize: "18px",
+    color: active ? colors.base.white : colors.base.grey500,
+    padding: "2px 8px",
 
-    ["a"]: {
-        textDecoration: "none",
+    [mq("lg")]: {
+        height: "100%",
         padding: "8px 12px",
         paddingTop: "16px",
+        alignItems: "flex-start",
+        borderTop: `2px solid ${active ? colors.secondary.lightYellow : "transparent"}`,
+    },
+    ["a"]: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textDecoration: "none",
         color: active ? colors.base.white : colors.base.grey500,
-        fontFamily: "Flama",
-        fontSize: "18px",
-        letterSpacing: "1px",
+        ["span"]: {
+            width: "32px !important",
+            height: "32px !important",
+            ["svg"]: {
+                width: "32px !important",
+                height: "32px !important",
+                fill: active ? colors.base.white : colors.base.grey500,
+                ["path"]: {
+                    fill: active ? colors.base.white : colors.base.grey500,
+                },
+            },
+
+            [mq("lg")]: {
+                display: "none",
+            },
+        },
     },
 }));
