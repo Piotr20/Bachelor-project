@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import { mq } from "~/util/media-queries";
 import { colors } from "~/util/colorPalette";
 import { SvgIcon } from "../svg-icon";
-import { CTASection, StyledImage, StyledSearchBox } from "./peopleSearchBox";
 import { handleSlideIn } from "~/lib/helpers/search.hepler";
 
 type ProjectsSearchBoxProps = {
@@ -17,18 +16,21 @@ type ProjectsSearchBoxProps = {
 };
 
 const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
-    const { openSlider, setDataInSlider, setOpenSlider, setDataType } =
-        useNavStore((state) => ({
-            openSlider: state.openSlider,
-            toggleSlider: state.toggleSlider,
-            setDataInSlider: state.setDataInSlider,
-            setOpenSlider: state.setOpenSlider,
-            setDataType: state.setDataType,
-        }));
+    const { openSlider, setDataInSlider, setOpenSlider, setDataType } = useNavStore((state) => ({
+        openSlider: state.openSlider,
+        toggleSlider: state.toggleSlider,
+        setDataInSlider: state.setDataInSlider,
+        setOpenSlider: state.setOpenSlider,
+        setDataType: state.setDataType,
+    }));
     const router = useRouter();
 
     return (
-        <StyledSearchBox>
+        <StyledSearchBox
+            onClick={() =>
+                handleSlideIn(data, setOpenSlider, setDataInSlider, setDataType, "project", openSlider)
+            }
+        >
             <StyledImage>
                 <ImpactImage
                     src={data?.imageURL}
@@ -109,3 +111,46 @@ const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
 };
 
 export default ProjectsSearchBox;
+
+export const StyledSearchBox = styled.div({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "16px",
+    backgroundColor: "white",
+    boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
+    borderRadius: "12px",
+    position: "relative",
+    marginTop: "40px",
+    cursor: "pointer",
+    [mq("lg")]: {
+        marginTop: "50px",
+    },
+});
+
+export const StyledImage = styled.div({
+    width: "80px",
+    borderRadius: "50%",
+    position: "absolute",
+    aspectRatio: "1/1",
+    top: "0",
+    transform: "translate(0,-50%)",
+    backgroundColor: colors.base.white,
+    padding: "4px",
+    [mq("lg")]: {
+        width: "108px",
+    },
+});
+
+export const CTASection = styled.div({
+    width: "108%",
+    marginTop: "12px",
+    paddingTop: "8px",
+    borderTop: `1px solid ${colors.base.grey500}`,
+    display: "flex",
+    justifyContent: "center",
+    [mq("lg")]: {
+        width: "80%",
+        marginTop: "20px",
+    },
+});

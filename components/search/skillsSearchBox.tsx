@@ -23,7 +23,11 @@ const SkillSearchBox = ({ data }: SkillSearchBoxProps) => {
     }));
 
     return (
-        <StyledSearchBox>
+        <StyledSearchBox
+            onClick={() =>
+                handleSlideIn(data, setOpenSlider, setDataInSlider, setDataType, "skill", openSlider)
+            }
+        >
             <StyledImage>
                 <ImpactImage
                     src={data?.imageURL}

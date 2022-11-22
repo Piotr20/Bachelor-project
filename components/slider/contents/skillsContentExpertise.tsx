@@ -20,74 +20,188 @@ const SkillsContentExpertise = ({ skills }: SliderOverviewProps) => {
         setDataType: state.setDataType,
     }));
 
-    return (
-        <SkillsContainer>
-            {skills?.map((userSkill: UserSkill, key) => {
-                return (
-                    <SkillTag
-                        onClick={() =>
-                            handleSlideIn(
-                                userSkill?.skill,
-                                setOpenSlider,
-                                setDataInSlider,
-                                setDataType,
-                                "skill",
-                                openSlider
-                            )
-                        }
-                        key={key}
-                    >
-                        <ImpactImage
-                            src={userSkill?.skill?.imageURL}
-                            alt={userSkill?.skill?.name}
-                            layout="fill"
-                            ratio="1/1"
-                            objectFit="contain"
-                            containerStyles={{
-                                width: "24px",
+    const basicSkills = skills?.filter((skill: UserSkill) => {
+        if (skill.expertise === "basic") {
+            return skill;
+        }
+    });
+    const intermidiateSkills = skills?.filter((skill: UserSkill) => {
+        if (skill.expertise === "intermidiate") {
+            return skill;
+        }
+    });
+    const expertSkills = skills?.filter((skill: UserSkill) => {
+        if (skill.expertise === "expert") {
+            return skill;
+        }
+    });
 
-                                [mq("lg")]: {
-                                    width: "28px",
-                                },
-                                [mq("xl")]: {
-                                    width: "32px",
-                                },
-                            }}
-                            placeholderStyles={{
-                                width: "50%",
-                                aspectRatio: "1/1",
-                                borderRadius: "50%",
-                                [mq("lg")]: {
-                                    width: "184px",
-                                },
-                                [mq("xl")]: {
-                                    width: "200px",
-                                },
-                            }}
-                            style={{ borderRadius: "50%" }}
-                        />
-                        <Text tag="h6"> {userSkill?.skill?.name}</Text>
-                    </SkillTag>
-                );
-            })}
-        </SkillsContainer>
+    return (
+        <>
+            <Text
+                tag="h5"
+                additionalStyles={{
+                    color: colors.base.grey500,
+                    marginTop: "24px",
+                    marginBottom: "8px",
+                }}
+            >
+                Expert
+            </Text>
+            <SkillsContainer>
+                {expertSkills?.map((userSkill: UserSkill, key) => {
+                    return (
+                        <SkillTag key={key} expertise="expert">
+                            <ImpactImage
+                                src={(userSkill?.skill as Skill)?.imageURL}
+                                alt={(userSkill?.skill as Skill)?.name}
+                                layout="fill"
+                                ratio="1/1"
+                                objectFit="contain"
+                                containerStyles={{
+                                    width: "24px",
+
+                                    [mq("lg")]: {
+                                        width: "28px",
+                                    },
+                                    [mq("xl")]: {
+                                        width: "32px",
+                                    },
+                                }}
+                                placeholderStyles={{
+                                    width: "50%",
+                                    aspectRatio: "1/1",
+                                    borderRadius: "50%",
+                                    [mq("lg")]: {
+                                        width: "184px",
+                                    },
+                                    [mq("xl")]: {
+                                        width: "200px",
+                                    },
+                                }}
+                                style={{ borderRadius: "50%" }}
+                            />
+                            <Text tag="h6"> {(userSkill?.skill as Skill)?.name}</Text>
+                        </SkillTag>
+                    );
+                })}
+            </SkillsContainer>
+            <Text
+                tag="h5"
+                additionalStyles={{
+                    color: colors.base.grey500,
+                    marginBottom: "8px",
+                }}
+            >
+                Intermidiate
+            </Text>
+            <SkillsContainer>
+                {intermidiateSkills?.map((userSkill: UserSkill, key) => {
+                    return (
+                        <SkillTag key={key} expertise="intermidiate">
+                            <ImpactImage
+                                src={(userSkill?.skill as Skill)?.imageURL}
+                                alt={(userSkill?.skill as Skill)?.name}
+                                layout="fill"
+                                ratio="1/1"
+                                objectFit="contain"
+                                containerStyles={{
+                                    width: "24px",
+
+                                    [mq("lg")]: {
+                                        width: "28px",
+                                    },
+                                    [mq("xl")]: {
+                                        width: "32px",
+                                    },
+                                }}
+                                placeholderStyles={{
+                                    width: "50%",
+                                    aspectRatio: "1/1",
+                                    borderRadius: "50%",
+                                    [mq("lg")]: {
+                                        width: "184px",
+                                    },
+                                    [mq("xl")]: {
+                                        width: "200px",
+                                    },
+                                }}
+                                style={{ borderRadius: "50%" }}
+                            />
+                            <Text tag="h6"> {(userSkill?.skill as Skill)?.name}</Text>
+                        </SkillTag>
+                    );
+                })}
+            </SkillsContainer>
+            <Text
+                tag="h5"
+                additionalStyles={{
+                    color: colors.base.grey500,
+                    marginBottom: "8px",
+                }}
+            >
+                Basic
+            </Text>
+            <SkillsContainer>
+                {basicSkills?.map((userSkill: UserSkill, key) => {
+                    return (
+                        <SkillTag key={key} expertise="basic">
+                            <ImpactImage
+                                src={(userSkill?.skill as Skill)?.imageURL}
+                                alt={(userSkill?.skill as Skill)?.name}
+                                layout="fill"
+                                ratio="1/1"
+                                objectFit="contain"
+                                containerStyles={{
+                                    width: "24px",
+
+                                    [mq("lg")]: {
+                                        width: "28px",
+                                    },
+                                    [mq("xl")]: {
+                                        width: "32px",
+                                    },
+                                }}
+                                placeholderStyles={{
+                                    width: "50%",
+                                    aspectRatio: "1/1",
+                                    borderRadius: "50%",
+                                    [mq("lg")]: {
+                                        width: "184px",
+                                    },
+                                    [mq("xl")]: {
+                                        width: "200px",
+                                    },
+                                }}
+                                style={{ borderRadius: "50%" }}
+                            />
+                            <Text tag="h6"> {(userSkill?.skill as Skill)?.name}</Text>
+                        </SkillTag>
+                    );
+                })}
+            </SkillsContainer>
+        </>
     );
 };
 
 export default SkillsContentExpertise;
 
 export const SkillsContainer = styled.div({
-    marginTop: "24px",
     display: "flex",
     flexWrap: "wrap",
     gap: "8px",
+    marginBottom: "12px",
 });
 
-export const SkillTag = styled.div({
+export const SkillTag = styled.div<{ expertise: "basic" | "intermidiate" | "expert" }>(({ expertise }) => ({
     display: "flex",
     alignItems: "center",
     padding: "8px 24px",
-    backgroundColor: colors.secondary.lightYellow + "60",
+    backgroundColor:
+        expertise === "expert"
+            ? colors.secondary.red + "60"
+            : expertise === "intermidiate"
+            ? colors.secondary.lightYellow + "60"
+            : colors.secondary.green + "60",
     borderRadius: "48px",
-    cursor: "pointer",
-});
+}));

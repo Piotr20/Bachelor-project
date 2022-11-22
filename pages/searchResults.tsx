@@ -161,7 +161,8 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
                     !searchHits?.skills?.projects?.length &&
                     !searchHits?.skills?.skillsList?.length &&
                     !searchHits?.projects?.length &&
-                    !searchHits?.people?.length ? (
+                    !searchHits?.people?.length &&
+                    router.query.category ? (
                         <NoResults />
                     ) : null}
                 </StyledSearchResultsWrapper>

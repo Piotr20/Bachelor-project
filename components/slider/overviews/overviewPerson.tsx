@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { User } from "~/models";
+import { User, UserSkill } from "~/models";
 import Text from "../../typography/text";
 import { motion, AnimatePresence } from "framer-motion";
 import SkillsContent from "../contents/skillsContent";
@@ -68,7 +68,7 @@ const PersonOverview = ({ data }: SliderOverviewProps) => {
                     {activeTab === 0 ? (
                         <ProjectsContent projects={data?.projects} />
                     ) : activeTab === 1 ? (
-                        <SkillsContentExpertise skills={data?.skills} />
+                        <SkillsContentExpertise skills={data?.skills as UserSkill[]} />
                     ) : null}
                 </motion.div>
             </AnimatePresence>

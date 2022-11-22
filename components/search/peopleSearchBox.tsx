@@ -25,7 +25,11 @@ const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
     const router = useRouter();
 
     return (
-        <StyledSearchBox>
+        <StyledSearchBox
+            onClick={() =>
+                handleSlideIn(data, setOpenSlider, setDataInSlider, setDataType, "person", openSlider)
+            }
+        >
             <StyledImage>
                 <ImpactImage
                     src={data?.imageURL}
@@ -107,6 +111,7 @@ export const StyledSearchBox = styled.div({
     borderRadius: "12px",
     position: "relative",
     marginTop: "40px",
+    cursor: "pointer",
     [mq("lg")]: {
         marginTop: "50px",
     },

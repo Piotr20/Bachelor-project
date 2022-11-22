@@ -89,5 +89,4 @@ export const SkillTag = styled.div({
     padding: "8px 24px",
     backgroundColor: colors.secondary.lightYellow + "60",
     borderRadius: "48px",
-    cursor: "pointer",
 });
