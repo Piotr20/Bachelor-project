@@ -195,6 +195,16 @@ const Layout = ({ children, fallback }: LayoutProps) => {
         }
     }, [openProfile]);
 
+    useEffect(() => {
+        test();
+    }, []);
+
+    async function test() {
+        const response = await fetch("/api/test");
+        const data = await response.json();
+        console.log(data);
+    }
+
     if (router.pathname !== "/signUp") {
         return (
             <>

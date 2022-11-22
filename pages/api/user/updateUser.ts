@@ -3,6 +3,8 @@ import connectMongo from "../../../util/connectMongo";
 import User from "../../../models/mongoModals/userSchema";
 import Project from "~/models/mongoModals/projectSchema";
 import Skill from "~/models/mongoModals/skillSchema";
+import { removeLegacyPeopleFromProject } from "~/lib/services/mongoSyncRemove.service";
+import { addMissingPeopleToProjects } from "~/lib/services/mongoSyncAdd.service";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -37,6 +39,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 },
             ]);
         }
+        const userId = await mongoUser?._id;
+        removeLegacyPeopleFromProject(userId, mongoUser);
+        addMissingPeopleToProjects(userId, mongoUser);
 
         res.json({ user: mongoUser });
     } catch (error) {

@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { decodeJWT } from "~/lib/helpers/tokenDecode.helper";
+import { addMissingPeopleToProjects } from "~/lib/services/mongoSyncAdd.service";
+import { removeLegacyPeopleFromProject } from "~/lib/services/mongoSyncRemove.service";
 import Project from "~/models/mongoModals/projectSchema";
 import Skill from "~/models/mongoModals/skillSchema";
 import User from "~/models/mongoModals/userSchema";
@@ -9,8 +11,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         await connectMongo();
 
-        const user = await User.find({
-            _id: "634fe42fd8604cc58b9a73b1",
+        const mongoUser = await User.findOne({
+            email: "piotrpospiech00@gmail.com",
         }).populate([
             { path: "projects", model: Project },
             {
@@ -21,7 +23,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 },
             },
         ]);
-        res.json({ user });
+
+        const userId = await mongoUser?._id;
+        removeLegacyPeopleFromProject(userId, mongoUser);
+
+        addMissingPeopleToProjects(userId, mongoUser);
+
+        res.json({ mongoUser });
     } catch (error) {
         console.log(error);
         res.json({ error });
