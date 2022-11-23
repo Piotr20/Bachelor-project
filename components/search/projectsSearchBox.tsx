@@ -38,10 +38,9 @@ const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
                         alt={data?.name}
                         layout="fill"
                         objectFit="cover"
-                        ratio="1.618/1"
                         containerWidth="100%"
                         containerHeight="100%"
-                        placeholderStyles={{}}
+                        placeholderStyles={{ width: "100%" }}
                         style={{}}
                     />
                 </StyledBackgroundImage>
@@ -68,14 +67,8 @@ const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
                 additionalStyles={{
                     textAlign: "center",
                     marginBottom: "4px",
-                    minHeight: "5ch",
-                    maxHeight: "5ch",
-                    overflow: "hidden",
                     [mq("lg")]: {
                         marginBottom: "4px",
-
-                        minHeight: "2.5ch",
-                        maxHeight: "2.5ch",
                     },
                 }}
             >
@@ -87,14 +80,10 @@ const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
                     color: colors.primary.lightGrey,
                     fontWeight: 400,
                     marginTop: "4px",
-                    minHeight: "5ch",
-                    maxHeight: "5ch",
-                    overflow: "hidden",
+
                     textAlign: "center",
                     fontSize: "16px",
                     [mq("lg")]: {
-                        minHeight: "2.5ch",
-                        maxHeight: "2.5ch",
                         fontSize: "20px !important",
                     },
                     [mq("xl")]: {
@@ -146,23 +135,33 @@ export const StyledImageContainer = styled.div({
     position: "relative",
     width: "100%",
     marginBottom: "16px",
+    [mq("lg")]: {
+        marginBottom: "20px",
+    },
 });
 
 export const StyledBackgroundImage = styled.div({
-    height: "144px",
+    height: "84px",
+    [mq("lg")]: {
+        height: "144px",
+    },
 });
 
 export const StyledImage = styled.div({
-    width: "60px",
+    width: "50px",
     borderRadius: "50%",
     aspectRatio: "1/1",
     backgroundColor: colors.base.white,
     padding: "4px",
     position: "absolute",
-    bottom: "0",
+    bottom: "8px",
+    right: "4px",
     transform: "translateY(50%)",
+    boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
     [mq("lg")]: {
-        width: "108px",
+        width: "65px",
+        bottom: "12px",
+        right: "8px",
     },
 });
 
