@@ -133,6 +133,7 @@ export const StyledNavUl = styled.ul({
     alignItems: "center",
     listStyle: "none",
     position: "fixed",
+    zIndex: "3",
     bottom: 0,
     left: 0,
     backgroundColor: colors.primary.black,

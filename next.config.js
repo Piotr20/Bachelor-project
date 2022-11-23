@@ -21,6 +21,7 @@ const nextConfig = {
     },
     images: {
         domains: [
+            "",
             "cdn.pixabay.com",
             "images.punkapi.com",
             "media-exp1.licdn.com",
@@ -34,6 +35,7 @@ const nextConfig = {
             "drive.google.com",
             "l.facebook.com",
             "www.google.com ",
+            "github.com",
         ],
     },
 };

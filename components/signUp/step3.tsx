@@ -8,6 +8,7 @@ import { StepProps } from "~/models/signUpSteps";
 import Select from "react-select";
 import { StyledSelect } from "./step1";
 import { colors } from "~/util/colorPalette";
+import { Option } from "~/models/option";
 
 const Step3 = ({ user, setUser }: StepProps) => {
     const [skillOptions, setSkillOptions] = useState<any[]>([]);
@@ -17,6 +18,7 @@ const Step3 = ({ user, setUser }: StepProps) => {
     const [selectedMongoIntermidiateSkills, setSelectedMongoIntermidiateSkills] = useState<any>(null);
     const [selectedBasicSkills, setSelectedBasicSkills] = useState<any>(null);
     const [selectedMongoBasicSkills, setSelectedMongoBasicSkills] = useState<any>(null);
+
     useEffect(() => {
         getAllFromEndpointHelper(setSkillOptions, "skills");
     }, []);

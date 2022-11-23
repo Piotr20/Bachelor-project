@@ -50,7 +50,6 @@ export function UserPropsSkillsHelper(
     setMongoSkils: (data: UserSkill[]) => void
 ) {
     let selectedMongoSkills: UserSkill[] = [];
-    console.log(mongoSkills);
     selectedOptions.forEach((option: Option) => {
         selectedMongoSkills?.push({
             skill: option?.value,

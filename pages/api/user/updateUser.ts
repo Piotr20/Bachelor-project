@@ -28,7 +28,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                     skills: user?.skills,
                     imageURL: user.imageURL,
                 }
-            ).populate([
+            );
+            mongoUser = await User.findById(user._id).populate([
                 { path: "projects", model: Project },
                 {
                     path: "skills",

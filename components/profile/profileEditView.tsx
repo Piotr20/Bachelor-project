@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
 import { SvgIcon } from "../svg-icon";
 import { useSearchStore } from "~/store/searchStore";
-import { Project, Skill, User } from "~/models";
+import { Project, Skill, User, UserSkill } from "~/models";
 import SliderBioPerson from "../slider/bios/sliderBioPerson";
 import { mq } from "~/util/media-queries";
 import PersonOverview from "../slider/overviews/overviewPerson";
@@ -18,14 +18,25 @@ import { Input } from "../input/input";
 import { StyledSelect } from "../signUp/step1";
 import { departmentOptions } from "~/util/departmentOptions";
 import Select from "react-select";
-import { getAllFromEndpointHelper, handleUserPropsHelper } from "~/lib/helpers/signUp.helper";
+import {
+    getAllFromEndpointHelper,
+    handleUserPropsHelper,
+    UserPropsSkillsHelper,
+} from "~/lib/helpers/signUp.helper";
 import { Button } from "../button/button";
+import { positionsOptions } from "~/util/positionOptions";
 
 const ProfileEditView = () => {
-    const [selectedProjects, setSelectedProjects] = useState<any>(null);
-    const [projectOptions, setProjectOptions] = useState<any[]>([]);
-    const [selectedSkills, setSelectedSkills] = useState<any>(null);
-    const [skillOptions, setSkillOptions] = useState<any[]>([]);
+    const [selectedProjects, setSelectedProjects] = useState<any>();
+    const [projectOptions, setProjectOptions] = useState<any[]>();
+    const [selectedSkills, setSelectedSkills] = useState<any>();
+    const [skillOptions, setSkillOptions] = useState<any[]>();
+    const [selectedExpertSkills, setSelectedExpertSkills] = useState<any>();
+    const [selectedMongoExpertSkills, setSelectedMongoExpertSkills] = useState<any>();
+    const [selectedIntermidiateSkills, setSelectedIntermidiateSkills] = useState<any>();
+    const [selectedMongoIntermidiateSkills, setSelectedMongoIntermidiateSkills] = useState<any>();
+    const [selectedBasicSkills, setSelectedBasicSkills] = useState<any>();
+    const [selectedMongoBasicSkills, setSelectedMongoBasicSkills] = useState<any>();
     const router = useRouter();
     const { user, setUserData, setEditMode } = useUserStore((state) => ({
         user: state.user,
@@ -34,9 +45,42 @@ const ProfileEditView = () => {
     }));
 
     useEffect(() => {
+        let defaultBasicSkills: UserSkill[] = [];
+        let defaultIntermidiateSkills: UserSkill[] = [];
+        let defaultExpertSkills: UserSkill[] = [];
+        user?.skills?.forEach((userSkill: any) => {
+            if (userSkill?.expertise === "basic") {
+                defaultBasicSkills.push({ skill: userSkill?.skill?._id, expertise: "basic" });
+            }
+            if (userSkill?.expertise === "intermidiate") {
+                defaultIntermidiateSkills.push({ skill: userSkill?.skill?._id, expertise: "intermidiate" });
+            }
+            if (userSkill?.expertise === "expert") {
+                defaultExpertSkills.push({ skill: userSkill?.skill?._id, expertise: "expert" });
+            }
+        });
+        setSelectedMongoBasicSkills(defaultBasicSkills);
+        setSelectedMongoIntermidiateSkills(defaultIntermidiateSkills);
+        setSelectedMongoExpertSkills(defaultExpertSkills);
+    }, []);
+
+    useEffect(() => {
         getAllFromEndpointHelper(setProjectOptions, "projects");
         getAllFromEndpointHelper(setSkillOptions, "skills");
     }, []);
+
+    useEffect(() => {
+        if (selectedMongoBasicSkills || selectedMongoIntermidiateSkills || selectedMongoExpertSkills) {
+            setUserData({
+                ...user,
+                skills: [
+                    ...(selectedMongoBasicSkills || []),
+                    ...(selectedMongoIntermidiateSkills || []),
+                    ...(selectedMongoExpertSkills || []),
+                ],
+            });
+        }
+    }, [selectedMongoBasicSkills, selectedMongoIntermidiateSkills, selectedMongoExpertSkills]);
 
     let defaultProjects: any[] = [];
     user?.projects?.map((project: Project) => {
@@ -45,12 +89,29 @@ const ProfileEditView = () => {
             label: project?.name,
         });
     });
-    let defaultSkills: any[] = [];
-    user?.skills?.map((skill: Skill) => {
-        defaultSkills.push({
-            value: skill?._id,
-            label: skill?.name,
-        });
+    let basicSkills: any[] = [];
+    let intermidiateSkills: any[] = [];
+    let expertSkills: any[] = [];
+
+    user?.skills?.map((userSkill: any) => {
+        if (userSkill?.expertise === "basic") {
+            basicSkills?.push({
+                value: userSkill?.skill?._id,
+                label: userSkill?.skill?.name,
+            });
+        }
+        if (userSkill?.expertise === "intermidiate") {
+            intermidiateSkills?.push({
+                value: userSkill?.skill?._id,
+                label: userSkill?.skill?.name,
+            });
+        }
+        if (userSkill?.expertise === "expert") {
+            expertSkills?.push({
+                value: userSkill?.skill?._id,
+                label: userSkill?.skill?.name,
+            });
+        }
     });
 
     async function updateUser() {
@@ -63,6 +124,10 @@ const ProfileEditView = () => {
         router.reload();
         setEditMode(false);
     }
+    useEffect(() => {
+        console.log(user?.skills);
+    }, [user?.skills]);
+
     return (
         <ProfileOverview>
             <Text
@@ -73,17 +138,44 @@ const ProfileEditView = () => {
             >
                 Profile
             </Text>
-            <Input
-                type="text"
-                placeholder={user?.role}
-                defaultValue={user?.role}
-                onChange={(e) =>
-                    setUserData({
-                        ...user,
-                        role: (e.target as HTMLInputElement).value,
-                    })
-                }
-            />
+            <StyledSelect>
+                <Select
+                    isSearchable={true}
+                    placeholder="Chose your position"
+                    defaultValue={{
+                        value: user?.role,
+                        label: user?.role,
+                    }}
+                    onChange={(newValue: any) => {
+                        setUserData({
+                            ...user,
+                            role: newValue?.value,
+                        });
+                    }}
+                    options={positionsOptions}
+                    styles={{
+                        valueContainer: (provided) => ({
+                            ...provided,
+                            paddingLeft: "2.98px",
+                            paddingTop: "0",
+                            outline: "none !important",
+                        }),
+                        input: (provided) => ({
+                            ...provided,
+                            padding: "0",
+                            margin: "0",
+                        }),
+                        control: (provided) => ({
+                            ...provided,
+                            borderWidth: "0 !important",
+                            borderColor: "none !important",
+                        }),
+                        indicatorSeparator: () => ({
+                            display: "none",
+                        }),
+                    }}
+                />
+            </StyledSelect>
             <StyledSelect>
                 <Select
                     isSearchable={true}
@@ -217,9 +309,17 @@ const ProfileEditView = () => {
                 <Select
                     isSearchable={true}
                     isMulti={true}
-                    defaultValue={defaultSkills}
+                    placeholder="Expert skills (e.g. Next.js, Figma)"
+                    defaultValue={expertSkills}
+                    value={selectedExpertSkills}
                     onChange={(newValue: any) => {
-                        handleUserPropsHelper(newValue, setUserData, user, setSelectedSkills, "skills");
+                        setSelectedExpertSkills(newValue);
+                        UserPropsSkillsHelper(
+                            "expert",
+                            newValue,
+                            selectedMongoExpertSkills,
+                            setSelectedMongoExpertSkills
+                        );
                     }}
                     options={skillOptions}
                     styles={{
@@ -248,7 +348,103 @@ const ProfileEditView = () => {
                         }),
                         multiValue: (provided) => ({
                             ...provided,
-                            backgroundColor: colors.secondary.lightYellow + "40",
+                            backgroundColor: colors.secondary.red + "60",
+                        }),
+                    }}
+                />
+            </StyledSelect>
+            <StyledSelect>
+                <Select
+                    isSearchable={true}
+                    isMulti={true}
+                    placeholder="Intermidiate skills (e.g. Next.js, Figma)"
+                    defaultValue={intermidiateSkills}
+                    value={selectedIntermidiateSkills}
+                    onChange={(newValue: any) => {
+                        setSelectedIntermidiateSkills(newValue);
+                        UserPropsSkillsHelper(
+                            "intermidiate",
+                            newValue,
+                            selectedMongoIntermidiateSkills,
+                            setSelectedMongoIntermidiateSkills
+                        );
+                    }}
+                    options={skillOptions}
+                    styles={{
+                        valueContainer: (provided) => ({
+                            ...provided,
+                            paddingLeft: "2.98px",
+                            paddingTop: "0",
+                            outline: "none !important",
+                        }),
+                        input: (provided) => ({
+                            ...provided,
+                            padding: "0",
+                            margin: "0",
+                        }),
+                        control: (provided) => ({
+                            ...provided,
+                            borderWidth: "0 !important",
+                            borderColor: "none !important",
+                        }),
+                        indicatorSeparator: () => ({
+                            display: "none",
+                        }),
+                        indicatorsContainer: (provided) => ({
+                            ...provided,
+                            paddingRight: "0",
+                        }),
+                        multiValue: (provided) => ({
+                            ...provided,
+                            backgroundColor: colors.secondary.lightYellow + "60",
+                        }),
+                    }}
+                />
+            </StyledSelect>
+            <StyledSelect>
+                <Select
+                    isSearchable={true}
+                    isMulti={true}
+                    placeholder="Basic skills (e.g. Next.js, Figma)"
+                    defaultValue={basicSkills}
+                    value={selectedBasicSkills}
+                    onChange={(newValue: any) => {
+                        setSelectedBasicSkills(newValue);
+                        UserPropsSkillsHelper(
+                            "basic",
+                            newValue,
+                            selectedMongoBasicSkills,
+                            setSelectedMongoBasicSkills
+                        );
+                    }}
+                    options={skillOptions}
+                    styles={{
+                        valueContainer: (provided) => ({
+                            ...provided,
+                            paddingLeft: "2.98px",
+                            paddingTop: "0",
+                            outline: "none !important",
+                        }),
+                        input: (provided) => ({
+                            ...provided,
+                            padding: "0",
+                            margin: "0",
+                        }),
+                        control: (provided) => ({
+                            ...provided,
+                            borderWidth: "0 !important",
+                            borderColor: "none !important",
+                        }),
+                        indicatorSeparator: () => ({
+                            display: "none",
+                        }),
+                        indicatorsContainer: (provided) => ({
+                            ...provided,
+                            paddingRight: "0",
+                        }),
+                        multiValue: (provided) => ({
+                            ...provided,
+                            backgroundColor: colors.secondary.green + "60",
                         }),
                     }}
                 />

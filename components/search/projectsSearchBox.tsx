@@ -31,34 +31,49 @@ const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
                 handleSlideIn(data, setOpenSlider, setDataInSlider, setDataType, "project", openSlider)
             }
         >
-            <StyledImage>
-                <ImpactImage
-                    src={data?.imageURL}
-                    alt={data?.name}
-                    layout="fill"
-                    objectFit="contain"
-                    ratio="1/1"
-                    containerWidth="100%"
-                    placeholderStyles={{
-                        borderRadius: "50%",
-                    }}
-                    style={{
-                        borderRadius: "50%",
-                    }}
-                />
-            </StyledImage>
+            <StyledImageContainer>
+                <StyledBackgroundImage>
+                    <ImpactImage
+                        src={data?.backgroundImageURL}
+                        alt={data?.name}
+                        layout="fill"
+                        objectFit="cover"
+                        ratio="1.618/1"
+                        containerWidth="100%"
+                        containerHeight="100%"
+                        placeholderStyles={{}}
+                        style={{}}
+                    />
+                </StyledBackgroundImage>
+                <StyledImage>
+                    <ImpactImage
+                        src={data?.imageURL}
+                        alt={data?.name}
+                        layout="fill"
+                        objectFit="contain"
+                        ratio="1/1"
+                        containerWidth="100%"
+                        placeholderStyles={{
+                            borderRadius: "50%",
+                        }}
+                        style={{
+                            borderRadius: "50%",
+                        }}
+                    />
+                </StyledImage>
+            </StyledImageContainer>
+
             <Text
                 tag="h4"
                 additionalStyles={{
                     textAlign: "center",
-                    marginTop: "calc(10% + 28px)",
                     marginBottom: "4px",
                     minHeight: "5ch",
                     maxHeight: "5ch",
                     overflow: "hidden",
                     [mq("lg")]: {
                         marginBottom: "4px",
-                        marginTop: "calc(12.5% + 16px)",
+
                         minHeight: "2.5ch",
                         maxHeight: "2.5ch",
                     },
@@ -116,27 +131,36 @@ export const StyledSearchBox = styled.div({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: "16px",
+    padding: "8px",
     backgroundColor: "white",
     boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
     borderRadius: "12px",
     position: "relative",
-    marginTop: "40px",
     cursor: "pointer",
     [mq("lg")]: {
         marginTop: "50px",
     },
 });
 
+export const StyledImageContainer = styled.div({
+    position: "relative",
+    width: "100%",
+    marginBottom: "16px",
+});
+
+export const StyledBackgroundImage = styled.div({
+    height: "144px",
+});
+
 export const StyledImage = styled.div({
-    width: "80px",
+    width: "60px",
     borderRadius: "50%",
-    position: "absolute",
     aspectRatio: "1/1",
-    top: "0",
-    transform: "translate(0,-50%)",
     backgroundColor: colors.base.white,
     padding: "4px",
+    position: "absolute",
+    bottom: "0",
+    transform: "translateY(50%)",
     [mq("lg")]: {
         width: "108px",
     },

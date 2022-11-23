@@ -7,6 +7,15 @@ const projectSchema = new Schema(
         imageURL: String,
         startDate: Date,
         endDate: Date,
+        description: String,
+        backgroundImageURL: String,
+        featuredWork: [
+            {
+                type: Object,
+                name: String,
+                jiraURL: String,
+            },
+        ],
         people: [{ type: Schema.Types.ObjectId, ref: "User" }],
         skills: [{ type: Schema.Types.ObjectId, ref: "Skill" }],
     },

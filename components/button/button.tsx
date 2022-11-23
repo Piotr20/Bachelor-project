@@ -108,10 +108,7 @@ export const StyledButton = styled.button<{
         display: "flex",
         alignItems: "center",
         padding: "8px 12px",
-        ["&:hover"]: {
-            backgroundColor: colors.secondary.darkYellow,
-            color: colors.primary.black,
-        },
+
         ["p"]: {
             display: "none",
             [mq("lg")]: { display: "block" },

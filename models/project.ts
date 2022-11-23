@@ -11,5 +11,10 @@ export type Project =
           tag?: string;
           startDate?: Date;
           endDate?: Date;
+          backgroundImageURL?: string;
+          featuredWork?: {
+              name: String;
+              jiraURL: String;
+          };
       }
     | undefined;

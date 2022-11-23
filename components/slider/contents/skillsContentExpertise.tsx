@@ -21,17 +21,17 @@ const SkillsContentExpertise = ({ skills }: SliderOverviewProps) => {
     }));
 
     const basicSkills = skills?.filter((skill: UserSkill) => {
-        if (skill.expertise === "basic") {
+        if (skill?.expertise === "basic") {
             return skill;
         }
     });
     const intermidiateSkills = skills?.filter((skill: UserSkill) => {
-        if (skill.expertise === "intermidiate") {
+        if (skill?.expertise === "intermidiate") {
             return skill;
         }
     });
     const expertSkills = skills?.filter((skill: UserSkill) => {
-        if (skill.expertise === "expert") {
+        if (skill?.expertise === "expert") {
             return skill;
         }
     });

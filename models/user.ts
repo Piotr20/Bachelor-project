@@ -17,4 +17,4 @@ export type User =
       }
     | undefined;
 
-export type UserSkill = { skill?: Skill | string; expertise?: string };
+export type UserSkill = { skill?: Skill | string; expertise?: string } | undefined;
