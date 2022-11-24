@@ -126,9 +126,7 @@ export const StyledSearchBox = styled.div({
     borderRadius: "12px",
     position: "relative",
     cursor: "pointer",
-    [mq("lg")]: {
-        marginTop: "50px",
-    },
+   
 });
 
 export const StyledImageContainer = styled.div({

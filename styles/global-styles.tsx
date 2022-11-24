@@ -8,16 +8,6 @@ const GlobalStyles = createGlobalStyle`
             box-sizing: border-box; 
         };
         @font-face {
-            font-family: 'Flama'
-            src: url("/fonts/FlamaBold.woff2") format('woff2');
-            font-weight: bold;
-        };
-        @font-face {
-            font-family: 'Flama'
-            src: url("/fonts/FlamaLightRegular.woff2") format('woff2');
-            font-weight: normal;
-        };
-        @font-face {
             font-family: 'Flama Condensed';
             src: url('/fonts/FlamaCondensed-Medium.woff2') format('woff2');
         };
@@ -33,7 +23,7 @@ const GlobalStyles = createGlobalStyle`
             font-weight: normal;
         };
         h1,h2,h3,h4,h5,h6, button {
-            font-family: 'Flama';
+            font-family: 'Flama Condensed';
             font-weight: bold;
             letter-spacing: "1px",
         };
