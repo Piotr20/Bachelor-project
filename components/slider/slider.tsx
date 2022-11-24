@@ -155,14 +155,28 @@ export const AnimationContainer = styled.div({
     },
 });
 
-export const StyledIconContainer = styled.div({});
+export const StyledIconContainer = styled.div({
+    position: "absolute",
+    zIndex: 5
+});
 
 export const StyledSliderCloseWrapper = styled.span({
-    display: "inline-block",
+  
     cursor: "pointer",
-    ["svg"]: {
+    backgroundColor: colors.base.white,
+    borderRadius: "50%",
+    width: "40px",
+    height: "40px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    ["span"]: {
         width: "32px !important",
         height: "32px !important",
+        ["svg"]: {
+            width: "32px !important",
+        height: "32px !important",
+        },
     },
 });
 
