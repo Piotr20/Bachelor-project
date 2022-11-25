@@ -23,6 +23,7 @@ const SlideIn = () => {
     const [person, setPerson] = useState<User>();
     const [project, setProject] = useState<Project>();
     const [skill, setSkill] = useState<Skill>();
+    const [breadcrumbs, setBreadcrumbs] = useState<any>();
 
     const { openSlider, setOpenSlider } = useNavStore((state) => ({
         openSlider: state.openSlider,
@@ -33,6 +34,13 @@ const SlideIn = () => {
         searchResults: state.searchResults,
         setSearchResults: state.setSearchResults,
     }));
+    useEffect(() => {
+        const storage = localStorage.getItem("previousRoute");
+        if (storage) {
+            console.log(JSON.parse(storage));
+            setBreadcrumbs(storage);
+        }
+    }, []);
 
     useEffect(() => {
         if (router.query.openSlider === "true") {
@@ -100,19 +108,18 @@ const SlideIn = () => {
                         >
                             <SvgIcon svg="sliderArrowRight" />
                         </StyledSliderCloseWrapper>
+                        <StyledBreadcrumb>{breadcrumbs?.name}</StyledBreadcrumb>
                     </StyledIconContainer>
                     {person ? (
                         <>
                             <SliderBioPerson data={person} />
-                            <PersonOverview data={person} />{" "}
+                            <PersonOverview data={person} />
                             <ActionButtonsWrapper>
                                 <StyledAnchor href={`tel:${person?.phone}`}>
                                     <SvgIcon svg="phone" />
-                                    {person?.phone}
                                 </StyledAnchor>
                                 <StyledAnchor href={`mailto:${person?.email}`}>
                                     <SvgIcon svg="email" />
-                                    {person?.email}
                                 </StyledAnchor>
                             </ActionButtonsWrapper>
                         </>
@@ -139,13 +146,13 @@ export default SlideIn;
 
 export const StyledSliderWrapper = styled.div({
     backgroundColor: "white",
-    padding: "24px",
     height: "100vh",
     boxShadow: " 0px -22px 30px -10px rgba(0, 0, 0, 0.16)",
     overflowY: "auto",
     display: "flex",
     flexDirection: "column",
 });
+
 export const AnimationContainer = styled.div({
     ["&>div"]: {
         width: "100%",
@@ -157,11 +164,17 @@ export const AnimationContainer = styled.div({
 
 export const StyledIconContainer = styled.div({
     position: "absolute",
-    zIndex: 5
+    zIndex: 5,
+    top: "12px",
+    padding: "0 24px",
+    display: "flex",
+    [mq("lg")]: {
+        top: "24px",
+        padding: "0 40px",
+    },
 });
 
 export const StyledSliderCloseWrapper = styled.span({
-  
     cursor: "pointer",
     backgroundColor: colors.base.white,
     borderRadius: "50%",
@@ -170,28 +183,47 @@ export const StyledSliderCloseWrapper = styled.span({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    transition: "all .2s ease",
+    ["&:hover"]: {
+        backgroundColor: colors.secondary.lightYellow,
+        ["path"]: {},
+    },
     ["span"]: {
         width: "32px !important",
         height: "32px !important",
         ["svg"]: {
             width: "32px !important",
-        height: "32px !important",
+            height: "32px !important",
         },
+    },
+});
+
+export const StyledBreadcrumb = styled.div({
+    backgroundColor: colors.base.white,
+    marginLeft: "12px",
+    alignSelf: "center",
+    padding: "8px 16px",
+    borderRadius: "32px",
+    transition: "all .2s ease",
+    fontFamily: "Flama Condensed",
+    ["&:hover"]: {
+        ["path"]: {},
     },
 });
 
 export const ActionButtonsWrapper = styled.div({
     display: "flex",
-    flexWrap: "wrap",
     width: "100%",
     margin: "0 auto",
     marginTop: "auto",
     gap: "8px",
-    justifyContent: "center",
+    justifyContent: "flex-end",
+    paddingBottom: "12px",
+    paddingRight: "24px",
 });
 
 export const StyledAnchor = styled.a({
-    fontFamily: "Flama",
+    fontFamily: "Flama Condensed",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -201,12 +233,11 @@ export const StyledAnchor = styled.a({
     lineHeight: "155%",
     cursor: "pointer",
     letterSpacing: "1.75px",
-    padding: "8px 36px",
+    padding: "12px",
     fontSize: "16px",
-    width: "100%",
     [mq("lg")]: {
         width: "auto",
-        padding: "8px 36px",
+        padding: "12px",
         fontSize: "16px",
     },
     backgroundColor: colors.primary.black,
@@ -216,14 +247,23 @@ export const StyledAnchor = styled.a({
     ["&:hover"]: {
         backgroundColor: colors.secondary.lightYellow,
         color: colors.primary.black,
+        ["path"]: {
+            fill: colors.primary.black,
+        },
     },
     ["&>span"]: {
-        width: "16px !important",
-        height: "16px !important",
-        marginRight: "8px",
-        [mq("md")]: {
-            width: "20px !important",
-            height: "20px !important",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "20px !important",
+        height: "20px !important",
+        ["svg"]: {
+            width: "100%",
+            height: "100%",
+        },
+        [mq("lg")]: {
+            width: "24px !important",
+            height: "24px !important",
         },
     },
 });

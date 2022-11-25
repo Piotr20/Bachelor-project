@@ -52,6 +52,7 @@ const ProjectsContent = ({ projects }: SliderOverviewProps) => {
                                 }}
                                 style={{
                                     borderRadius: "50%",
+                                    boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
                                 }}
                             />
                         </StyledImage>

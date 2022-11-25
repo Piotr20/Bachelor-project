@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Project } from "~/models";
+import { Project, Skill } from "~/models";
 import Text from "../../typography/text";
 import { motion, AnimatePresence } from "framer-motion";
 import PeopleContent from "../contents/peopleContent";
 import SkillsContent from "../contents/skillsContent";
+import { mq } from "~/util/media-queries";
 
 type SliderOverviewProps = {
     data: Project;
@@ -67,7 +68,7 @@ const ProjectsOverview = ({ data }: SliderOverviewProps) => {
                     {activeTab === 0 ? (
                         <PeopleContent people={data?.people} />
                     ) : activeTab === 1 ? (
-                        <SkillsContent skills={data?.skills} />
+                        <SkillsContent skills={data?.skills as Skill[]} />
                     ) : null}
                 </motion.div>
             </AnimatePresence>
@@ -80,6 +81,10 @@ export default ProjectsOverview;
 export const OverviewContainer = styled.div({
     marginTop: "24px",
     overflow: "hidden",
+    padding: "0 24px",
+    [mq("lg")]: {
+        padding: "0 40px",
+    },
 });
 
 export const NavWrapper = styled.nav({

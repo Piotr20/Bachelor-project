@@ -13,9 +13,10 @@ type SliderOverviewProps = {
 };
 
 const PeopleContent = ({ people }: SliderOverviewProps) => {
-    const { openSlider, setDataInSlider, setOpenSlider, setDataType } = useNavStore((state) => ({
+    const { openSlider, sliderData, setDataInSlider, setOpenSlider, setDataType } = useNavStore((state) => ({
         openSlider: state.openSlider,
         toggleSlider: state.toggleSlider,
+        sliderData: state.sliderData,
         setDataInSlider: state.setDataInSlider,
         setOpenSlider: state.setOpenSlider,
         setDataType: state.setDataType,
@@ -25,7 +26,7 @@ const PeopleContent = ({ people }: SliderOverviewProps) => {
             {people?.map((emplouee: User, key: number) => {
                 return (
                     <PeopleTag
-                        onClick={() =>
+                        onClick={() => {
                             handleSlideIn(
                                 emplouee,
                                 setOpenSlider,
@@ -33,8 +34,15 @@ const PeopleContent = ({ people }: SliderOverviewProps) => {
                                 setDataType,
                                 "person",
                                 openSlider
-                            )
-                        }
+                            );
+                            localStorage.setItem(
+                                "previousRoute",
+                                JSON.stringify({
+                                    ...sliderData,
+                                    type: "person",
+                                })
+                            );
+                        }}
                         key={key}
                     >
                         <StyledImage>

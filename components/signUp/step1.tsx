@@ -79,6 +79,19 @@ const Step1 = ({ user, setUser }: StepProps) => {
                 />
             </StyledSelect>
             <Input
+                placeholder="What is your location?"
+                type="text"
+                onChange={(e) =>
+                    setUser({
+                        ...user,
+                        location: (e.target as HTMLInputElement).value,
+                    })
+                }
+                additionalStyles={{
+                    marginTop: "20px",
+                }}
+            />
+            <Input
                 placeholder="How long are you at IMPACT? (in years)"
                 type="number"
                 onChange={(e) =>

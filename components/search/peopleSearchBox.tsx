@@ -63,7 +63,7 @@ const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
                 {data?.name}
             </Text>
             <Text
-                tag="p"
+                tag="h5"
                 additionalStyles={{
                     color: colors.primary.lightGrey,
                     fontWeight: 400,

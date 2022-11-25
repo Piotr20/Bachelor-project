@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import SkillsContent from "../contents/skillsContent";
 import ProjectsContent from "../contents/projectContent";
 import SkillsContentExpertise from "../contents/skillsContentExpertise";
+import { mq } from "~/util/media-queries";
 
 type SliderOverviewProps = {
     data: User;
@@ -81,6 +82,10 @@ export default PersonOverview;
 export const OverviewContainer = styled.div({
     marginTop: "24px",
     overflow: "hidden",
+    padding: "0 24px",
+    [mq("lg")]: {
+        padding: "0 40px",
+    },
 });
 
 export const NavWrapper = styled.nav({

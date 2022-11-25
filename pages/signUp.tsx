@@ -226,12 +226,12 @@ export const StyledFormContentBox = styled.div({
     zIndex: "2",
     [mq("lg")]: {
         width: "45%",
-        height: "75%",
+        height: "70%",
         boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
         borderRadius: "40px",
     },
     [mq("xl")]: {
-        width: "35%",
+        width: "45%",
         height: "70%",
         boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
         borderRadius: "40px",

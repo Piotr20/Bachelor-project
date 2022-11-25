@@ -11,6 +11,7 @@ export enum TLASvg {
     chevronRight = 'chevronRight',
     circlePlusInverted = 'circlePlusInverted',
     circlePlus = 'circlePlus',
+    clipboard = 'clipboard',
     email = 'email',
     errorTextIcon = 'errorTextIcon',
     eyeClosed = 'eyeClosed',

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ImpactImage from "~/components/image/image";
 import { SvgIcon } from "~/components/svg-icon";
 import Text from "~/components/typography/text";
-import { Project, Skill, User } from "~/models";
+import { FeaturedWork, Project, Skill, User } from "~/models";
 import { colors } from "~/util/colorPalette";
 import { mq } from "~/util/media-queries";
 
@@ -13,7 +13,7 @@ type SliderBioProps = {
 const SliderBioProject = ({ data }: SliderBioProps) => {
     return (
         <BioContainer>
-              <StyledImageContainer>
+            <StyledImageContainer>
                 <StyledBackgroundImage>
                     <ImpactImage
                         src={data?.backgroundImageURL}
@@ -61,23 +61,89 @@ const SliderBioProject = ({ data }: SliderBioProps) => {
                 tag="h5"
                 additionalStyles={{
                     marginTop: "8px",
-                    color: colors.primary.lightGrey,
+                    color: colors.base.grey500,
                 }}
             >
                 {data?.tag}
             </Text>
 
-            <IconContainer>
-                <SvgIcon svg="calendarEmpty" />
+            <ProjectTimeWrapper>
                 <Text
-                    tag="p"
+                    tag="h6"
+                    additionalStyles={{
+                        color: colors.base.grey500,
+                    }}
+                >
+                    From:
+                </Text>
+                <Text
+                    tag="h6"
                     additionalStyles={{
                         marginLeft: "6px",
                     }}
                 >
-                    {data?.startDate?.toString().split("T")[0]} -{data?.endDate?.toString().split("T")[0]}
+                    {data?.startDate?.toString().split("T")[0]}
                 </Text>
-            </IconContainer>
+                <Text
+                    tag="h6"
+                    additionalStyles={{
+                        color: colors.base.grey500,
+                        marginLeft: "16px",
+                    }}
+                >
+                    To:
+                </Text>
+                <Text
+                    tag="h6"
+                    additionalStyles={{
+                        marginLeft: "6px",
+                    }}
+                >
+                    {data?.endDate?.toString().split("T")[0]}
+                </Text>
+            </ProjectTimeWrapper>
+            <ProjectDetails>
+                <Text
+                    tag="h5"
+                    additionalStyles={{
+                        color: colors.base.grey500,
+                    }}
+                >
+                    Description
+                </Text>
+                <Text
+                    tag="p"
+                    additionalStyles={{
+                        marginTop: "8px",
+                    }}
+                >
+                    {data?.description}
+                </Text>
+                <Text
+                    tag="h5"
+                    additionalStyles={{
+                        color: colors.base.grey500,
+                        marginTop: "12px",
+                        [mq("lg")]: {
+                            marginTop: "24px",
+                        },
+                    }}
+                >
+                    Featured work
+                </Text>
+                <FeaturedWrapper>
+                    {data?.featuredWork?.map((task: FeaturedWork, index) => {
+                        return (
+                            <span key={index}>
+                                <WorkLink href={task?.jiraURL}>{task.name}</WorkLink>
+                                {data?.featuredWork?.length && index < data?.featuredWork?.length - 1 ? (
+                                    <> | </>
+                                ) : null}
+                            </span>
+                        );
+                    })}
+                </FeaturedWrapper>
+            </ProjectDetails>
         </BioContainer>
     );
 };
@@ -85,7 +151,6 @@ const SliderBioProject = ({ data }: SliderBioProps) => {
 export default SliderBioProject;
 
 export const BioContainer = styled.div({
- 
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -101,6 +166,10 @@ export const IconContainer = styled.div({
     },
 });
 
+export const ProjectTimeWrapper = styled.div({
+    display: "flex",
+    marginTop: "8px",
+});
 
 export const StyledImageContainer = styled.div({
     position: "relative",
@@ -126,12 +195,48 @@ export const StyledImage = styled.div({
     padding: "4px",
     position: "absolute",
     bottom: "8px",
-    right: "8px",
+    right: "16px",
     transform: "translateY(50%)",
     boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
     [mq("lg")]: {
-        width: "96px",
+        width: "104px",
         bottom: "12px",
-        right: "12px",
+        right: "16px",
+    },
+});
+
+export const ProjectDetails = styled.div({
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    marginTop: "8px",
+    padding: "0 24px",
+    [mq("lg")]: {
+        padding: "0 40px",
+    },
+});
+
+export const FeaturedWrapper = styled.div({
+    width: "100%",
+    display: "flex",
+    marginTop: "8px",
+});
+
+export const WorkLink = styled.a({
+    textDecoration: "none",
+    color: colors.primary.black,
+    backgroundImage: "linear-gradient(#feff00,#feff00)",
+    backgroundSize: "0 40%",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "0 95%",
+    transition: "all 0.1s ease",
+    padding: "0 2px",
+    cursor: "pointer",
+    fontFamily: "Flama Condensed",
+
+    ["&:hover"]: {
+        backgroundImage: "linear-gradient(#feff00,#feff00)",
+        backgroundSize: "100% 40%",
+        backgroundPosition: "0 95%",
     },
 });
