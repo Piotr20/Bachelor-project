@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactEventHandler, ReactNode } from "react";
 import styled, { CSSObject } from "styled-components";
 import { ifProp } from "styled-tools";
 import { mq } from "~/util/media-queries";
@@ -13,9 +13,20 @@ type Props = {
     lineThrough?: boolean;
     url?: string;
     additionalStyles?: CSSObject;
+    onClick?: ReactEventHandler;
 };
 
-const Text = ({ tag, children, dark = false, bold, italic, lineThrough, url, additionalStyles }: Props) => {
+const Text = ({
+    tag,
+    children,
+    dark = false,
+    bold,
+    italic,
+    lineThrough,
+    url,
+    additionalStyles,
+    onClick,
+}: Props) => {
     switch (tag) {
         case "h1":
         case "h2":
@@ -24,7 +35,7 @@ const Text = ({ tag, children, dark = false, bold, italic, lineThrough, url, add
         case "h5":
         case "h6":
             return (
-                <Heading tag={tag} dark={dark} styles={additionalStyles} as={tag}>
+                <Heading onClick={onClick} tag={tag} dark={dark} styles={additionalStyles} as={tag}>
                     {children}
                 </Heading>
             );
@@ -32,6 +43,7 @@ const Text = ({ tag, children, dark = false, bold, italic, lineThrough, url, add
         case "p":
             return (
                 <Paragraph
+                    onClick={onClick}
                     dark={dark}
                     bold={bold}
                     italic={italic}

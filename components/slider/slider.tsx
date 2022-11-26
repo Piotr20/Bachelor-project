@@ -16,31 +16,26 @@ import ProjectsOverview from "./overviews/overviewProjects";
 import SkillsOverview from "./overviews/overviewSkills";
 import { Button } from "../button/button";
 import { colors } from "~/util/colorPalette";
+import Text from "../typography/text";
+import { handleSlideIn } from "~/lib/helpers/search.hepler";
 
 const SlideIn = () => {
     const router = useRouter();
-    const [sliderData, setSliderData] = useState<User | Project | Skill>();
     const [person, setPerson] = useState<User>();
     const [project, setProject] = useState<Project>();
     const [skill, setSkill] = useState<Skill>();
     const [breadcrumbs, setBreadcrumbs] = useState<any>();
 
-    const { openSlider, setOpenSlider } = useNavStore((state) => ({
+    const { openSlider, sliderData, setOpenSlider, setDataInSlider } = useNavStore((state) => ({
         openSlider: state.openSlider,
         sliderData: state.sliderData,
         setOpenSlider: state.setOpenSlider,
+        setDataInSlider: state.setDataInSlider,
     }));
     const { searchResults, setSearchResults } = useSearchStore((state) => ({
         searchResults: state.searchResults,
         setSearchResults: state.setSearchResults,
     }));
-    useEffect(() => {
-        const storage = localStorage.getItem("previousRoute");
-        if (storage) {
-            console.log(JSON.parse(storage));
-            setBreadcrumbs(storage);
-        }
-    }, []);
 
     useEffect(() => {
         if (router.query.openSlider === "true") {
@@ -49,18 +44,18 @@ const SlideIn = () => {
                 (result: User | Project | Skill) => result?._id === router.query.openedId
             );
             if (findResultById) {
-                setSliderData(findResultById);
+                setDataInSlider(findResultById);
             }
         } else if (router.query.openSlider === "false") {
             setOpenSlider(false);
         }
     }, [router.query.openSlider]);
 
-    async function getSliderDataById() {
+    async function getSliderDataById(id?: string[] | string) {
         const response = await fetch("/api/all/getById", {
             method: "POST",
             body: JSON.stringify({
-                id: router.query.openedId,
+                id: id,
             }),
         });
         const data = await response.json();
@@ -68,11 +63,44 @@ const SlideIn = () => {
         setPerson(person);
         setProject(project);
         setSkill(skill);
+        if (person) {
+            setDataInSlider(person);
+        }
+        if (project) {
+            setDataInSlider(project);
+        }
+        if (skill) {
+            setDataInSlider(skill);
+        }
+    }
+
+    async function getBreadcrumbDataById(id?: string[] | string) {
+        const response = await fetch("/api/all/getById", {
+            method: "POST",
+            body: JSON.stringify({
+                id: id,
+            }),
+        });
+        const data = await response.json();
+        const { person, project, skill } = data;
+        if (person) {
+            setBreadcrumbs(person);
+        }
+        if (project) {
+            setBreadcrumbs(project);
+        }
+        if (skill) {
+            setBreadcrumbs(skill);
+        }
     }
 
     useEffect(() => {
-        getSliderDataById();
+        getSliderDataById(router.query.openedId);
     }, [router.query.openedId]);
+
+    useEffect(() => {
+        getBreadcrumbDataById(router.query.breadcrumbId);
+    }, [router.query.breadcrumbId]);
 
     return (
         <AnimationContainer>
@@ -108,7 +136,53 @@ const SlideIn = () => {
                         >
                             <SvgIcon svg="sliderArrowRight" />
                         </StyledSliderCloseWrapper>
-                        <StyledBreadcrumb>{breadcrumbs?.name}</StyledBreadcrumb>
+                        {router?.query?.breadcrumbName &&
+                        router?.query?.breadcrumbType &&
+                        router?.query?.breadcrumbId ? (
+                            <StyledBreadcrumb>
+                                <Text
+                                    onClick={() => {
+                                        handleSlideIn(
+                                            breadcrumbs,
+                                            setOpenSlider,
+                                            setDataInSlider,
+                                            undefined,
+                                            router?.query?.breadcrumbType,
+                                            openSlider
+                                        );
+                                    }}
+                                    tag="h6"
+                                    additionalStyles={{
+                                        color: colors.base.grey500,
+                                        backgroundImage: "linear-gradient(#feff00,#feff00)",
+                                        backgroundSize: "0 40%",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundPosition: "0 95%",
+                                        transition: "all 0.1s ease",
+                                        padding: "0 2px",
+                                        cursor: "pointer",
+                                        ["&:hover"]: {
+                                            backgroundImage: "linear-gradient(#feff00,#feff00)",
+                                            backgroundSize: "100% 40%",
+                                            backgroundPosition: "0 95%",
+                                            color: colors.primary.black,
+                                        },
+                                    }}
+                                >
+                                    {router?.query?.breadcrumbName}
+                                </Text>
+                                <Text
+                                    tag="h6"
+                                    additionalStyles={{
+                                        padding: "0 4px",
+                                    }}
+                                >
+                                    {">"}
+                                </Text>
+
+                                <Text tag="h6">{sliderData?.name}</Text>
+                            </StyledBreadcrumb>
+                        ) : null}
                     </StyledIconContainer>
                     {person ? (
                         <>
@@ -206,6 +280,7 @@ export const StyledBreadcrumb = styled.div({
     borderRadius: "32px",
     transition: "all .2s ease",
     fontFamily: "Flama Condensed",
+    display: "flex",
     ["&:hover"]: {
         ["path"]: {},
     },

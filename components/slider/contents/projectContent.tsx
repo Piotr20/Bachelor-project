@@ -7,34 +7,41 @@ import { Project, Skill, User } from "~/models";
 import { useNavStore } from "~/store/store";
 import { colors } from "~/util/colorPalette";
 import { mq } from "~/util/media-queries";
+import { useRouter } from "next/router";
 
 type SliderOverviewProps = {
     projects?: Project[];
 };
 
 const ProjectsContent = ({ projects }: SliderOverviewProps) => {
-    const { openSlider, setDataInSlider, setOpenSlider, setDataType } = useNavStore((state) => ({
-        openSlider: state.openSlider,
-        toggleSlider: state.toggleSlider,
-        setDataInSlider: state.setDataInSlider,
-        setOpenSlider: state.setOpenSlider,
-        setDataType: state.setDataType,
-    }));
+    const { openSlider, sliderData, setDataInSlider, setOpenSlider, setDataType, setBreadcrumbData } =
+        useNavStore((state) => ({
+            openSlider: state.openSlider,
+            toggleSlider: state.toggleSlider,
+            sliderData: state.sliderData,
+            setDataInSlider: state.setDataInSlider,
+            setOpenSlider: state.setOpenSlider,
+            setDataType: state.setDataType,
+            setBreadcrumbData: state.setBreadcrumbData,
+        }));
+    const router = useRouter();
+
     return (
         <ProjectsContainer>
             {projects?.map((project: Project, key) => {
                 return (
                     <ProjectTag
-                        onClick={() =>
+                        onClick={() => {
                             handleSlideIn(
                                 project,
                                 setOpenSlider,
                                 setDataInSlider,
-                                setDataType,
+                                undefined,
                                 "project",
                                 openSlider
-                            )
-                        }
+                            );
+                            setBreadcrumbData({ ...sliderData, type: router?.query?.type });
+                        }}
                         key={key}
                     >
                         <StyledImage>

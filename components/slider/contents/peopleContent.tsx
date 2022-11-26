@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ImpactImage from "~/components/image/image";
 import { SvgIcon } from "~/components/svg-icon";
@@ -13,14 +15,26 @@ type SliderOverviewProps = {
 };
 
 const PeopleContent = ({ people }: SliderOverviewProps) => {
-    const { openSlider, sliderData, setDataInSlider, setOpenSlider, setDataType } = useNavStore((state) => ({
+    const {
+        openSlider,
+        sliderData,
+        breadcrumbData,
+        setDataInSlider,
+        setOpenSlider,
+        setDataType,
+        setBreadcrumbData,
+    } = useNavStore((state) => ({
         openSlider: state.openSlider,
         toggleSlider: state.toggleSlider,
         sliderData: state.sliderData,
+        breadcrumbData: state.breadcrumbData,
         setDataInSlider: state.setDataInSlider,
         setOpenSlider: state.setOpenSlider,
         setDataType: state.setDataType,
+        setBreadcrumbData: state.setBreadcrumbData,
     }));
+    const router = useRouter();
+
     return (
         <PeopleContainer>
             {people?.map((emplouee: User, key: number) => {
@@ -31,17 +45,11 @@ const PeopleContent = ({ people }: SliderOverviewProps) => {
                                 emplouee,
                                 setOpenSlider,
                                 setDataInSlider,
-                                setDataType,
+                                undefined,
                                 "person",
                                 openSlider
                             );
-                            localStorage.setItem(
-                                "previousRoute",
-                                JSON.stringify({
-                                    ...sliderData,
-                                    type: "person",
-                                })
-                            );
+                            setBreadcrumbData({ ...sliderData, type: router?.query?.type });
                         }}
                         key={key}
                     >

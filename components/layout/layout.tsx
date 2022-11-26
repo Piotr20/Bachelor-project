@@ -37,10 +37,11 @@ const Layout = ({ children, fallback }: LayoutProps) => {
     const { openProfile } = useUserStore((state) => ({
         openProfile: state.openProfile,
     }));
-    const { sliderData, openSlider, sliderDataType } = useNavStore((state) => ({
+    const { sliderData, openSlider, sliderDataType, breadcrumbData } = useNavStore((state) => ({
         openSlider: state.openSlider,
         sliderData: state.sliderData,
         sliderDataType: state.sliderDataType,
+        breadcrumbData: state.breadcrumbData,
     }));
 
     const searchQuery = (router.query.search ? router.query.search : "") as string;
@@ -125,7 +126,7 @@ const Layout = ({ children, fallback }: LayoutProps) => {
     }, [searchValue]);
 
     useEffect(() => {
-        const { search, category, ...queries } = router.query;
+        const { search, category, breadcrumbId, breadcrumbType, breadcrumbName, ...queries } = router.query;
         if (openSlider) {
             if (sliderData) {
                 router.replace(
@@ -133,6 +134,9 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                         query: {
                             ...(!!categoryQuery ? { category: `${categoryQuery}` } : {}),
                             ...(!!searchValue ? { search: `${searchValue}` } : {}),
+                            ...(!!breadcrumbId ? { breadcrumbId: `${breadcrumbId}` } : {}),
+                            ...(!!breadcrumbType ? { breadcrumbType: `${breadcrumbType}` } : {}),
+                            ...(!!breadcrumbName ? { breadcrumbName: `${breadcrumbName}` } : {}),
                             openSlider: `${openSlider}`,
                             openedId: `${sliderData._id}`,
                             type: `${sliderDataType}`,
@@ -194,6 +198,23 @@ const Layout = ({ children, fallback }: LayoutProps) => {
             );
         }
     }, [openProfile]);
+
+    useEffect(() => {
+        if (breadcrumbData) {
+            router.replace(
+                {
+                    query: {
+                        ...router.query,
+                        breadcrumbId: `${breadcrumbData._id}`,
+                        breadcrumbType: `${breadcrumbData.type}`,
+                        breadcrumbName: `${breadcrumbData.name}`,
+                    },
+                },
+                undefined,
+                { shallow: true }
+            );
+        }
+    }, [breadcrumbData]);
 
     if (router.pathname !== "/signUp") {
         return (
