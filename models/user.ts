@@ -14,6 +14,8 @@ export type User =
           projects?: Project[];
           skills?: UserSkill[] | Skill[] | string[];
           imageURL?: string;
+          createdAt: Date;
+          updatedAt: Date;
       }
     | undefined;
 

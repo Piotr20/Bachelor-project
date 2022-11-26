@@ -134,7 +134,7 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
                             </Text>
                             <BoxContainer>
                                 {searchHits?.skills?.people?.map((result: Skill) => {
-                                    return <PeopleSearchBox key={result?._id} data={result} />;
+                                    return <PeopleSearchBox key={result?._id} data={result as User} />;
                                 })}
                             </BoxContainer>
                         </StyledSearchCategory>
@@ -152,7 +152,7 @@ const SearchResults = ({ fallback }: SearchPageProps) => {
                             </Text>
                             <BoxContainer>
                                 {searchHits?.skills?.projects?.map((result: Skill) => {
-                                    return <ProjectsSearchBox key={result?._id} data={result} />;
+                                    return <ProjectsSearchBox key={result?._id} data={result as Project} />;
                                 })}
                             </BoxContainer>
                         </StyledSearchCategory>
