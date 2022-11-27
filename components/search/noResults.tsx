@@ -15,7 +15,7 @@ const NoResults = () => {
                     justifyContent: "center",
                 }}
             />
-            <Text tag="h3">We couldn't find any matches</Text>
+            <Text tag="h3">We couldn&apos;t find any matches</Text>
             <Text
                 tag="h5"
                 additionalStyles={{
