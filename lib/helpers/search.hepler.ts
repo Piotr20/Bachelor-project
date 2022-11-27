@@ -91,9 +91,9 @@ export function filterSkillListBySearchParam(searchQuery: string, array?: Skill[
 export function filterProjectSkillBySearchParam(searchQuery: string, array?: Project[]) {
     const hitsMap = new Map();
     array?.map((searchHit: Project) => {
-        searchHit?.skills?.map((skill: Skill) => {
+        (searchHit?.skills as Skill[])?.map((skill: Skill) => {
             if (skill?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())) {
-                hitsMap.set(`${searchHit._id}`, searchHit);
+                hitsMap.set(`${searchHit?._id}`, searchHit);
             }
         });
     });
@@ -103,9 +103,9 @@ export function filterProjectSkillBySearchParam(searchQuery: string, array?: Pro
 export function filterPersonSkillBySearchParam(searchQuery: string, array?: User[]) {
     const hitsMap = new Map();
     array?.map((searchHit: User) => {
-        searchHit?.skills?.map((userSkill: UserSkill & string) => {
-            if (userSkill.skill?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())) {
-                hitsMap.set(`${searchHit._id}`, searchHit);
+        (searchHit?.skills as UserSkill[])?.map((userSkill: UserSkill) => {
+            if (userSkill?.skill?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())) {
+                hitsMap.set(`${searchHit?._id}`, searchHit);
             }
         });
     });

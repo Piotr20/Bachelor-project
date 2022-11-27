@@ -11,11 +11,11 @@ export type User =
           location?: string;
           role?: string;
           projects?: Project[];
-          skills?: UserSkill[] | Skill[] | string[];
+          skills?: UserSkill[] | Skill[];
           imageURL?: string;
           createdAt?: Date;
           updatedAt?: Date;
       }
     | undefined;
 
-export type UserSkill = { skill?: Skill | string; expertise?: string } | undefined;
+export type UserSkill = { skill?: Skill & string; expertise?: string } | undefined;
