@@ -46,7 +46,6 @@ const SignUp: NextPage = () => {
             body: JSON.stringify({
                 name: session?.user?.name,
                 email: session?.user?.email,
-                experienceYears: user?.experienceYears,
                 phone: user?.phone,
                 department: user?.department,
                 location: user?.location,
