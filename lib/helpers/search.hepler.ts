@@ -1,7 +1,6 @@
 import { Project, Skill, User, UserSkill } from "~/models";
-import Projects from "~/pages/projects";
 import { skillsGroupType } from "~/pages/searchResults";
-import { DOMAIN_NAME } from "~/util/env-variables";
+import { NEXT_PUBLIC_DOMAIN_NAME } from "~/util/env-variables";
 
 export async function fetchSearchResults(category: "projects" | "skills" | "people" | "all") {
     switch (category) {
@@ -25,7 +24,7 @@ export async function fetchSearchResults(category: "projects" | "skills" | "peop
 }
 
 export async function fetchSingleEndpoint(endpoint: "projects" | "skills" | "user") {
-    const response = await fetch(`${DOMAIN_NAME}/api/${endpoint}/all`);
+    const response = await fetch(`${NEXT_PUBLIC_DOMAIN_NAME}/api/${endpoint}/all`);
     const mongoData = await response.json();
     switch (endpoint) {
         case "projects":
