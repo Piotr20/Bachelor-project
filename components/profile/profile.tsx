@@ -19,14 +19,13 @@ import ProfileEditView from "./profileEditView";
 
 const Profile = () => {
     const router = useRouter();
-    const { user, openProfile, editMode, setOpenProfile, setEditMode } =
-        useUserStore((state) => ({
-            user: state.user,
-            openProfile: state.openProfile,
-            editMode: state.editMode,
-            setOpenProfile: state.setOpenProfile,
-            setEditMode: state.setEditMode,
-        }));
+    const { user, openProfile, editMode, setOpenProfile, setEditMode } = useUserStore((state) => ({
+        user: state.user,
+        openProfile: state.openProfile,
+        editMode: state.editMode,
+        setOpenProfile: state.setOpenProfile,
+        setEditMode: state.setEditMode,
+    }));
     const { authSignIn, authSignOut } = useAuth();
 
     useEffect(() => {
@@ -149,11 +148,7 @@ const Profile = () => {
                                 },
                             }}
                         >
-                            {!editMode ? (
-                                <ProfileOverview user={user} />
-                            ) : (
-                                <ProfileEditView />
-                            )}
+                            {!editMode ? <ProfileOverview user={user} /> : <ProfileEditView />}
                         </motion.div>
                     </AnimatePresence>
                 </StyledSliderWrapper>
@@ -166,7 +161,6 @@ export default Profile;
 
 export const StyledSliderWrapper = styled.div({
     backgroundColor: "white",
-    padding: "24px",
     height: "100vh",
     boxShadow: " 0px -22px 30px -10px rgba(0, 0, 0, 0.16)",
     overflowY: "auto",
@@ -181,44 +175,96 @@ export const AnimationContainer = styled.div({
 });
 
 export const StyledIconContainer = styled.div({
+    position: "absolute",
+    zIndex: 5,
+    top: "12px",
+    padding: "0 24px",
     display: "flex",
     justifyContent: "space-between",
+    width: "100%",
+    [mq("lg")]: {
+        top: "24px",
+        padding: "0 40px",
+    },
 });
 
 export const StyledSliderCloseWrapper = styled.span({
-    display: "inline-block",
     cursor: "pointer",
-    ["svg"]: {
+    backgroundColor: colors.base.white,
+    borderRadius: "50%",
+    width: "40px",
+    height: "40px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    transition: "all .2s ease",
+    ["&:hover"]: {
+        backgroundColor: colors.secondary.lightYellow,
+    },
+    ["span"]: {
         width: "32px !important",
         height: "32px !important",
+        ["svg"]: {
+            width: "32px !important",
+            height: "32px !important",
+        },
     },
 });
 
 export const StyledSliderEditWrapper = styled.span({
-    display: "inline-block",
     cursor: "pointer",
-    marginRight: "12px",
-    ["svg"]: {
+    backgroundColor: colors.base.white,
+    borderRadius: "50%",
+    width: "40px",
+    height: "40px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    transition: "all .2s ease",
+    ["&:hover"]: {
+        backgroundColor: colors.secondary.lightYellow,
+    },
+    ["span"]: {
         width: "32px !important",
         height: "32px !important",
+        ["svg"]: {
+            width: "32px !important",
+            height: "32px !important",
+        },
     },
 });
 
 export const StyledSliderSignOutWrapper = styled.span({
-    display: "inline-block",
     cursor: "pointer",
-    ["svg"]: {
+    backgroundColor: colors.base.white,
+    borderRadius: "50%",
+    width: "40px",
+    height: "40px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    transition: "all .2s ease",
+    ["&:hover"]: {
+        backgroundColor: colors.secondary.lightYellow,
+    },
+    ["span"]: {
         width: "32px !important",
         height: "32px !important",
+        ["svg"]: {
+            width: "32px !important",
+            height: "32px !important",
+        },
     },
 });
-export const IconGroup = styled.div({});
+export const IconGroup = styled.div({
+    display: "flex",
+});
 
 export const BioContainer = styled.div({
-    marginTop: "16px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    marginTop: "84px",
 });
 
 export const IconContainer = styled.div({

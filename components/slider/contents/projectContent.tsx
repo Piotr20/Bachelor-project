@@ -89,9 +89,9 @@ export const ProjectsContainer = styled.div({
     marginTop: "24px",
     display: "flex",
     flexWrap: "wrap",
-    gap: "16px",
+    gap: "4px",
     [mq("lg")]: {
-        gap: "12px",
+        gap: "8px",
     },
 });
 

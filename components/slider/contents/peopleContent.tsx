@@ -68,6 +68,9 @@ const PeopleContent = ({ people }: SliderOverviewProps) => {
                                 style={{
                                     borderRadius: "50%",
                                 }}
+                                containerStyles={{
+                                    boxShadow: "0px 22px 30px -10px rgba(0, 0, 0, 0.1)",
+                                }}
                             />
                         </StyledImage>
                         <TextWrapper>

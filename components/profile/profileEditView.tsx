@@ -215,20 +215,6 @@ const ProfileEditView = () => {
                     }}
                 />
             </StyledSelect>
-            <Input
-                placeholder={`${user?.experienceYears}`}
-                defaultValue={user?.experienceYears}
-                type="number"
-                onChange={(e) =>
-                    setUserData({
-                        ...user,
-                        experienceYears: Number((e.target as HTMLInputElement).value),
-                    })
-                }
-                additionalStyles={{
-                    marginTop: "20px",
-                }}
-            />
 
             <Input
                 placeholder={user?.phone}
@@ -469,6 +455,7 @@ export const ProfileOverview = styled.div({
     marginTop: "40px",
     display: "flex",
     flexDirection: "column",
+    padding: "0 24px 24px 24px",
     [mq("lg")]: {
         width: "80%",
         margin: "0 auto",

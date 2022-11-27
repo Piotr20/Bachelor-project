@@ -23,7 +23,7 @@ const ProjectsOverview = ({ data }: SliderOverviewProps) => {
             <NavWrapper>
                 <NavNode onClick={() => setActiveTab(0)}>
                     <Text
-                        tag="h5"
+                        tag="h4"
                         additionalStyles={{
                             cursor: "pointer",
                             transition: "all .3s ease",
@@ -35,7 +35,7 @@ const ProjectsOverview = ({ data }: SliderOverviewProps) => {
                 </NavNode>
                 <NavNode onClick={() => setActiveTab(1)}>
                     <Text
-                        tag="h5"
+                        tag="h4"
                         additionalStyles={{
                             cursor: "pointer",
                             transition: "all .3s ease",

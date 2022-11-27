@@ -1,6 +1,6 @@
 export const options = [
-    { value: "all", label: "all" },
-    { value: "people", label: "people" },
-    { value: "projects", label: "projects" },
-    { value: "skills", label: "skills" },
+    { value: "all", label: "All" },
+    { value: "people", label: "People" },
+    { value: "projects", label: "Projects" },
+    { value: "skills", label: "Skills" },
 ];

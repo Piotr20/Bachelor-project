@@ -39,156 +39,145 @@ const SearchSuggestions = ({
                     ((searchHits?.skills?.skillsList?.length || 0) as number)
                 })`}
             </Text>
-            {searchHits?.people?.length ? (
-                <>
+            <SearchWrapper>
+                {searchHits?.people?.length ? (
+                    <>
+                        <Text
+                            tag="h6"
+                            additionalStyles={{
+                                color: colors.primary.lightGrey,
+                                marginBottom: "2px",
+                                marginTop: "4px",
+                                padding: "0 8px",
+                                [mq("lg")]: {
+                                    padding: "0 12px",
+                                },
+                            }}
+                        >
+                            People
+                        </Text>
+                        {searchHits.people?.map((employee: User, key) => {
+                            return (
+                                <SearchSuggestion
+                                    key={key}
+                                    onClick={() => {
+                                        setSearchValue(employee?.name);
+                                        const query = {
+                                            ...router.query,
+                                            search: employee?.name,
+                                        };
+                                        const url = {
+                                            pathname: "/searchResults",
+                                            query,
+                                        };
+                                        setShowSuggestions(false);
+                                        router.push(url);
+                                    }}
+                                >
+                                    <Text tag="h5" additionalStyles={{}}>
+                                        {employee?.name}
+                                    </Text>
+                                </SearchSuggestion>
+                            );
+                        })}
+                    </>
+                ) : null}
+                {searchHits?.projects?.length ? (
+                    <>
+                        <Text
+                            tag="h6"
+                            additionalStyles={{
+                                color: colors.primary.lightGrey,
+                                marginBottom: "2px",
+                                marginTop: "4px",
+                                padding: "0 8px",
+                                [mq("lg")]: {
+                                    padding: "0 12px",
+                                },
+                            }}
+                        >
+                            Projects
+                        </Text>
+                        {searchHits.projects?.map((project: Project, key) => {
+                            return (
+                                <SearchSuggestion
+                                    key={key}
+                                    onClick={() => {
+                                        setSearchValue(project?.name);
+                                        const query = {
+                                            ...router.query,
+                                            search: project?.name,
+                                        };
+                                        const url = {
+                                            pathname: "/searchResults",
+                                            query,
+                                        };
+                                        setShowSuggestions(false);
+                                        router.push(url);
+                                    }}
+                                >
+                                    <Text tag="h5">{project?.name}</Text>
+                                </SearchSuggestion>
+                            );
+                        })}
+                    </>
+                ) : null}
+                {searchHits?.skills?.skillsList?.length ? (
+                    <>
+                        <Text
+                            tag="h6"
+                            additionalStyles={{
+                                color: colors.primary.lightGrey,
+                                marginBottom: "2px",
+                                marginTop: "4px",
+                                padding: "0 8px",
+                                [mq("lg")]: {
+                                    padding: "0 12px",
+                                },
+                            }}
+                        >
+                            Skills
+                        </Text>
+                        {searchHits.skills?.skillsList?.map((skill: Skill, key) => {
+                            return (
+                                <SearchSuggestion
+                                    key={key}
+                                    onClick={() => {
+                                        setSearchValue(skill?.name);
+                                        const query = {
+                                            ...router.query,
+                                            search: skill?.name,
+                                        };
+                                        const url = {
+                                            pathname: "/searchResults",
+                                            query,
+                                        };
+                                        setShowSuggestions(false);
+                                        router.push(url);
+                                    }}
+                                >
+                                    <Text tag="h5">{skill?.name}</Text>
+                                </SearchSuggestion>
+                            );
+                        })}
+                    </>
+                ) : null}
+                {!searchHits?.skills?.skillsList?.length &&
+                !searchHits?.projects?.length &&
+                !searchHits?.people?.length ? (
                     <Text
                         tag="h5"
                         additionalStyles={{
-                            marginBottom: "4px",
-                            padding: "0 8px",
+                            paddingLeft: "8px",
                             [mq("lg")]: {
-                                padding: "0 12px",
+                                paddingLeft: "12px",
                             },
                         }}
                     >
-                        People
+                        No suggestions found
                     </Text>
-                    {searchHits.people?.map((employee: User, key) => {
-                        return (
-                            <SearchSuggestion
-                                key={key}
-                                onClick={() => {
-                                    setSearchValue(employee?.name);
-                                    const query = {
-                                        ...router.query,
-                                        search: employee?.name,
-                                    };
-                                    const url = {
-                                        pathname: "/searchResults",
-                                        query,
-                                    };
-                                    setShowSuggestions(false);
-                                    router.push(url);
-                                }}
-                            >
-                                <Text
-                                    tag="h6"
-                                    additionalStyles={{
-                                        color: colors.primary.lightGrey,
-                                    }}
-                                >
-                                    {employee?.name}
-                                </Text>
-                            </SearchSuggestion>
-                        );
-                    })}
-                </>
-            ) : null}
-            {searchHits?.projects?.length ? (
-                <>
-                    <Text
-                        tag="h5"
-                        additionalStyles={{
-                            marginBottom: "4px",
-                            padding: "0 8px",
-                            [mq("lg")]: {
-                                padding: "0 12px",
-                            },
-                        }}
-                    >
-                        Projects
-                    </Text>
-                    {searchHits.projects?.map((project: Project, key) => {
-                        return (
-                            <SearchSuggestion
-                                key={key}
-                                onClick={() => {
-                                    setSearchValue(project?.name);
-                                    const query = {
-                                        ...router.query,
-                                        search: project?.name,
-                                    };
-                                    const url = {
-                                        pathname: "/searchResults",
-                                        query,
-                                    };
-                                    setShowSuggestions(false);
-                                    router.push(url);
-                                }}
-                            >
-                                <Text
-                                    tag="h6"
-                                    additionalStyles={{
-                                        color: colors.primary.lightGrey,
-                                    }}
-                                >
-                                    {project?.name}
-                                </Text>
-                            </SearchSuggestion>
-                        );
-                    })}
-                </>
-            ) : null}
-            {searchHits?.skills?.skillsList?.length ? (
-                <>
-                    <Text
-                        tag="h5"
-                        additionalStyles={{
-                            marginBottom: "4px",
-                            padding: "0 8px",
-                            [mq("lg")]: {
-                                padding: "0 12px",
-                            },
-                        }}
-                    >
-                        Skills
-                    </Text>
-                    {searchHits.skills?.skillsList?.map((skill: Skill, key) => {
-                        return (
-                            <SearchSuggestion
-                                key={key}
-                                onClick={() => {
-                                    setSearchValue(skill?.name);
-                                    const query = {
-                                        ...router.query,
-                                        search: skill?.name,
-                                    };
-                                    const url = {
-                                        pathname: "/searchResults",
-                                        query,
-                                    };
-                                    setShowSuggestions(false);
-                                    router.push(url);
-                                }}
-                            >
-                                <Text
-                                    tag="h6"
-                                    additionalStyles={{
-                                        color: colors.primary.lightGrey,
-                                    }}
-                                >
-                                    {skill?.name}
-                                </Text>
-                            </SearchSuggestion>
-                        );
-                    })}
-                </>
-            ) : null}
-            {!searchHits?.skills?.skillsList?.length &&
-            !searchHits?.projects?.length &&
-            !searchHits?.people?.length ? (
-                <Text
-                    tag="p"
-                    additionalStyles={{
-                        paddingLeft: "8px",
-                        [mq("lg")]: {
-                            paddingLeft: "12px",
-                        },
-                    }}
-                >
-                    No suggestions found
-                </Text>
-            ) : null}
+                ) : null}{" "}
+            </SearchWrapper>
         </SearchSuggestionsContainer>
     );
 };
@@ -215,12 +204,20 @@ export const SearchSuggestionsContainer = styled.div<{ active: boolean }>(({ act
     },
 }));
 
+export const SearchWrapper = styled.div({
+    backgroundColor: "white",
+    width: "100%",
+    maxHeight: "40ch",
+    overflowY: "auto",
+    [mq("lg")]: {},
+});
+
 export const SearchSuggestion = styled.div({
     width: "100%",
     cursor: "pointer",
     padding: "3px 12px",
     transition: "all .1s ease",
-    ["h6"]: {
+    ["h5"]: {
         width: "fit-content",
         backgroundImage: "linear-gradient(#feff00,#feff00)",
         backgroundSize: "0 40%",
@@ -230,7 +227,7 @@ export const SearchSuggestion = styled.div({
         padding: "0 2px",
     },
     ["&:hover"]: {
-        ["h6"]: {
+        ["h5"]: {
             backgroundImage: "linear-gradient(#feff00,#feff00)",
             backgroundSize: "100% 40%",
 

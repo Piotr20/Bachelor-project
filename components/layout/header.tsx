@@ -87,7 +87,10 @@ export default Header;
 
 export const StyledHeader = styled.header({
     width: "100%",
-    height: "6.5vh",
+    height: "8vh",
+    [mq("lg")]: {
+        height: "7vh",
+    },
 });
 export const StyledHeaderContainer = styled.div({
     width: "100%",

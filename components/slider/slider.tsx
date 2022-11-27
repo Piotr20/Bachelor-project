@@ -103,7 +103,7 @@ const SlideIn = () => {
     }, [router.query.breadcrumbId]);
 
     return (
-        <AnimationContainer>
+        <AnimationContainer tabIndex={1}>
             <motion.div
                 initial={{
                     position: "fixed",
@@ -226,6 +226,7 @@ export const StyledSliderWrapper = styled.div({
     height: "100vh",
     boxShadow: " 0px -22px 30px -10px rgba(0, 0, 0, 0.16)",
     overflowY: "auto",
+    overflowX: "hidden",
     display: "flex",
     flexDirection: "column",
 });

@@ -30,7 +30,7 @@ const Layout = ({ children, fallback }: LayoutProps) => {
     const router = useRouter();
     const [selectedOption, setSelectedOption] = useState<any>({
         value: router.query.category ? router.query.category : "all",
-        label: router.query.category ? router.query.category : "all",
+        label: router.query.category ? router.query.category : "All",
     });
     const [searchValue, setSearchValue] = useState<string | string[] | undefined>(router.query.search);
     const [showSuggestions, setShowSuggestions] = useState<boolean>(false);

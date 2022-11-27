@@ -24,7 +24,7 @@ const PersonOverview = ({ data }: SliderOverviewProps) => {
             <NavWrapper>
                 <NavNode onClick={() => setActiveTab(0)}>
                     <Text
-                        tag="h5"
+                        tag="h4"
                         additionalStyles={{
                             cursor: "pointer",
                             transition: "all .3s ease",
@@ -36,7 +36,7 @@ const PersonOverview = ({ data }: SliderOverviewProps) => {
                 </NavNode>
                 <NavNode onClick={() => setActiveTab(1)}>
                     <Text
-                        tag="h5"
+                        tag="h4"
                         additionalStyles={{
                             cursor: "pointer",
                             transition: "all .3s ease",
@@ -81,7 +81,6 @@ export default PersonOverview;
 
 export const OverviewContainer = styled.div({
     marginTop: "24px",
-    overflow: "hidden",
     padding: "0 24px",
     [mq("lg")]: {
         padding: "0 40px",
