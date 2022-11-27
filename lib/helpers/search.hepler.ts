@@ -170,8 +170,8 @@ export function handleSlideIn(
     data: User | Project | Skill,
     setOpenSlider: (open: boolean) => void,
     setDataInSlider: (data: User | Project | Skill) => void,
-    setDataType?: (data: "project" | "skill" | "person" | string | string[] | undefined) => void,
-    type?: "project" | "skill" | "person" | string | string[],
+    setDataType?: (data: "project" | "skill" | "person" | undefined) => void,
+    type?: "project" | "skill" | "person",
     openSlider?: boolean
 ) {
     if (openSlider) {

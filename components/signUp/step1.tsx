@@ -92,20 +92,6 @@ const Step1 = ({ user, setUser }: StepProps) => {
                 }}
             />
             <Input
-                placeholder="How long are you at IMPACT? (in years)"
-                type="number"
-                onChange={(e) =>
-                    setUser({
-                        ...user,
-                        experienceYears: Number((e.target as HTMLInputElement).value),
-                    })
-                }
-                additionalStyles={{
-                    marginTop: "20px",
-                }}
-            />
-
-            <Input
                 placeholder="Enter phone number"
                 type="text"
                 onChange={(e) =>

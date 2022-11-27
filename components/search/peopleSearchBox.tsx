@@ -10,6 +10,7 @@ import { colors } from "~/util/colorPalette";
 import { mq } from "~/util/media-queries";
 import { SvgIcon } from "../svg-icon";
 import { handleSlideIn } from "~/lib/helpers/search.hepler";
+import { recentSearchesManager } from "~/lib/services/recentSearchesManager.service";
 
 type PeopleSearchBoxProps = {
     data: User;
@@ -26,9 +27,10 @@ const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
 
     return (
         <StyledSearchBox
-            onClick={() =>
-                handleSlideIn(data, setOpenSlider, setDataInSlider, setDataType, "person", openSlider)
-            }
+            onClick={() => {
+                handleSlideIn(data, setOpenSlider, setDataInSlider, setDataType as any, "person", openSlider);
+                recentSearchesManager(data, "person");
+            }}
         >
             <StyledImage>
                 <ImpactImage
@@ -88,7 +90,14 @@ const PeopleSearchBox = ({ data }: PeopleSearchBoxProps) => {
             <CTASection>
                 <Button
                     onClick={() =>
-                        handleSlideIn(data, setOpenSlider, setDataInSlider, setDataType, "person", openSlider)
+                        handleSlideIn(
+                            data,
+                            setOpenSlider,
+                            setDataInSlider,
+                            setDataType as any,
+                            "person",
+                            openSlider
+                        )
                     }
                     kind="link"
                 >

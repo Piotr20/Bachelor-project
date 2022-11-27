@@ -6,7 +6,6 @@ export type User =
           _id?: string;
           name?: string;
           email?: string;
-          experienceYears?: number;
           phone?: string;
           department?: string;
           location?: string;
@@ -14,8 +13,8 @@ export type User =
           projects?: Project[];
           skills?: UserSkill[] | Skill[] | string[];
           imageURL?: string;
-          createdAt: Date;
-          updatedAt: Date;
+          createdAt?: Date;
+          updatedAt?: Date;
       }
     | undefined;
 

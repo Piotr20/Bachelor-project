@@ -10,6 +10,7 @@ import { mq } from "~/util/media-queries";
 import { colors } from "~/util/colorPalette";
 import { SvgIcon } from "../svg-icon";
 import { handleSlideIn } from "~/lib/helpers/search.hepler";
+import { recentSearchesManager } from "~/lib/services/recentSearchesManager.service";
 
 type ProjectsSearchBoxProps = {
     data: Project;
@@ -27,9 +28,17 @@ const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
 
     return (
         <StyledSearchBox
-            onClick={() =>
-                handleSlideIn(data, setOpenSlider, setDataInSlider, setDataType, "project", openSlider)
-            }
+            onClick={() => {
+                handleSlideIn(
+                    data,
+                    setOpenSlider,
+                    setDataInSlider,
+                    setDataType as any,
+                    "project",
+                    openSlider
+                );
+                recentSearchesManager(data, "project");
+            }}
         >
             <StyledImageContainer>
                 <StyledBackgroundImage>
@@ -100,7 +109,7 @@ const ProjectsSearchBox = ({ data }: ProjectsSearchBoxProps) => {
                             data,
                             setOpenSlider,
                             setDataInSlider,
-                            setDataType,
+                            setDataType as any,
                             "project",
                             openSlider
                         )
@@ -126,7 +135,6 @@ export const StyledSearchBox = styled.div({
     borderRadius: "12px",
     position: "relative",
     cursor: "pointer",
-   
 });
 
 export const StyledImageContainer = styled.div({

@@ -10,10 +10,7 @@ type PageTransitionProps = {
     animationType?: "fade" | "blip";
 };
 
-const PageTransition = ({
-    children,
-    animationType = "blip",
-}: PageTransitionProps) => {
+const PageTransition = ({ children, animationType = "blip" }: PageTransitionProps) => {
     const { pathname } = useRouter();
 
     const variants = {
@@ -29,90 +26,20 @@ const PageTransition = ({
                 duration: animationSettings.fadeDuration,
             },
         },
-        shrinkHeight: {
-            backgroundColor: colors.secondary.lightYellow,
-            scaleY: 0.005,
-            transition: {
-                duration: animationSettings.blipDuration,
-            },
-        },
-        shrinkWidth: {
-            scaleX: 0.2,
-            transition: {
-                duration: animationSettings.blipDuration,
-                delay: 0.4,
-            },
-        },
-        disappear: {
-            opacity: 0,
-            transition: {
-                duration: 0.3,
-                delay: 0.7,
-            },
-        },
-        initial: {
-            scaleY: 0.005,
-            scaleX: 0.2,
-            opacity: 0,
-            backgroundColor: colors.secondary.lightYellow,
-        },
-        appear: {
-            opacity: 1,
-            transition: {
-                duration: animationSettings.blipDuration,
-                delay: 0.3,
-            },
-        },
-        stretchWidth: {
-            scaleX: 1,
-            transition: {
-                duration: animationSettings.blipDuration,
-                delay: 0.4,
-            },
-        },
-        stretchHeight: {
-            scaleY: 1,
-            transition: {
-                duration: animationSettings.blipDuration,
-                delay: 0.85,
-            },
-        },
-        colorRemove: {
-            backgroundColor: "transparent",
-            transition: {
-                duration: animationSettings.blipDuration,
-                delay: 1.25,
-            },
-        },
     };
-    return (
-        <PageBackground>
-            <AnimatePresence initial={true} mode="wait">
-                <motion.div
-                    key={pathname}
-                    variants={variants}
-                    initial={animationType === "blip" ? "initial" : "fadeOut"}
-                    animate={
-                        animationType === "blip"
-                            ? [
-                                  "appear",
-                                  "stretchWidth",
-                                  "stretchHeight",
-                                  "colorRemove",
-                              ]
-                            : "fadeIn"
-                    }
-                    exit={
-                        animationType === "blip"
-                            ? ["shrinkHeight", "shrinkWidth", "disappear"]
-                            : "fadeOut"
-                    }
-                >
-                    {children}
-                </motion.div>
-            </AnimatePresence>
-        </PageBackground>
-    );
+    if (pathname !== "/searchResults") {
+        return (
+            <PageBackground>
+                <AnimatePresence initial={true} mode="wait">
+                    <motion.div key={pathname} variants={variants} initial={"fadeOut"} animate={"fadeIn"}>
+                        {children}
+                    </motion.div>
+                </AnimatePresence>
+            </PageBackground>
+        );
+    } else {
+        return <PageBackground>{children}</PageBackground>;
+    }
 };
 
 export default PageTransition;

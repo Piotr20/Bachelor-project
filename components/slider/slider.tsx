@@ -147,13 +147,16 @@ const SlideIn = () => {
                                             setOpenSlider,
                                             setDataInSlider,
                                             undefined,
-                                            router?.query?.breadcrumbType,
+                                            router?.query?.breadcrumbType as
+                                                | "project"
+                                                | "skill"
+                                                | "person"
+                                                | undefined,
                                             openSlider
                                         );
                                     }}
                                     tag="h6"
                                     additionalStyles={{
-                                        color: colors.base.grey500,
                                         backgroundImage: "linear-gradient(#feff00,#feff00)",
                                         backgroundSize: "0 40%",
                                         backgroundRepeat: "no-repeat",
