@@ -69,10 +69,20 @@ const Home: NextPage = () => {
                                       | (Project & { type: "project" })
                               ) => {
                                   if (recentSearchHit.type === "person") {
-                                      return <PersonTag person={recentSearchHit}></PersonTag>;
+                                      return (
+                                          <PersonTag
+                                              key={recentSearchHit._id}
+                                              person={recentSearchHit}
+                                          ></PersonTag>
+                                      );
                                   }
                                   if (recentSearchHit.type === "project") {
-                                      return <ProjectsTag project={recentSearchHit}></ProjectsTag>;
+                                      return (
+                                          <ProjectsTag
+                                              key={recentSearchHit._id}
+                                              project={recentSearchHit}
+                                          ></ProjectsTag>
+                                      );
                                   }
                               }
                           )
