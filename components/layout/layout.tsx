@@ -14,7 +14,10 @@ import { colors } from "~/util/colorPalette";
 import Text from "../typography/text";
 import { useUserStore } from "~/store/userStore";
 import Profile from "../profile/profile";
-import { fetchSearchResults, outputFormatterHelper } from "~/lib/helpers/search.hepler";
+import {
+    fetchSearchResults,
+    outputFormatterHelper,
+} from "~/lib/helpers/search.hepler";
 import { SearchHits } from "~/pages/searchResults";
 import useSearch from "~/hooks/useSearch";
 import { Project, Skill, User } from "~/models";
@@ -32,24 +35,27 @@ const Layout = ({ children, fallback }: LayoutProps) => {
         value: router.query.category ? router.query.category : "all",
         label: router.query.category ? router.query.category : "All",
     });
-    const [searchValue, setSearchValue] = useState<string | string[] | undefined>(router.query.search);
+    const [searchValue, setSearchValue] = useState<
+        string | string[] | undefined
+    >(router.query.search);
     const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
     const { openProfile } = useUserStore((state) => ({
         openProfile: state.openProfile,
     }));
-    const { sliderData, openSlider, sliderDataType, breadcrumbData } = useNavStore((state) => ({
-        openSlider: state.openSlider,
-        sliderData: state.sliderData,
-        sliderDataType: state.sliderDataType,
-        breadcrumbData: state.breadcrumbData,
-    }));
+    const { sliderData, openSlider, sliderDataType, breadcrumbData } =
+        useNavStore((state) => ({
+            openSlider: state.openSlider,
+            sliderData: state.sliderData,
+            sliderDataType: state.sliderDataType,
+            breadcrumbData: state.breadcrumbData,
+        }));
 
-    const searchQuery = (router.query.search ? router.query.search : "") as string;
-    const categoryQuery = (router.query.category ? router?.query?.category : "all") as
-        | "all"
-        | "people"
-        | "projects"
-        | "skills";
+    const searchQuery = (
+        router.query.search ? router.query.search : ""
+    ) as string;
+    const categoryQuery = (
+        router.query.category ? router?.query?.category : "all"
+    ) as "all" | "people" | "projects" | "skills";
 
     const fallbackHits = fallback?.searchHits;
     const searchData = useSearch(
@@ -86,7 +92,9 @@ const Layout = ({ children, fallback }: LayoutProps) => {
 
     useEffect(() => {
         if (router.isReady) {
-            const optionToSet = options.find((o) => o.value === router.query.category);
+            const optionToSet = options.find(
+                (o) => o.value === router.query.category
+            );
 
             if (optionToSet) {
                 setSelectedOption(optionToSet);
@@ -126,17 +134,35 @@ const Layout = ({ children, fallback }: LayoutProps) => {
     }, [searchValue]);
 
     useEffect(() => {
-        const { search, category, breadcrumbId, breadcrumbType, breadcrumbName, ...queries } = router.query;
+        const {
+            search,
+            category,
+            breadcrumbId,
+            breadcrumbType,
+            breadcrumbName,
+            ...queries
+        } = router.query;
         if (openSlider) {
+            document.body.style.overflow = "hidden";
             if (sliderData) {
                 router.replace(
                     {
                         query: {
-                            ...(!!categoryQuery ? { category: `${categoryQuery}` } : {}),
-                            ...(!!searchValue ? { search: `${searchValue}` } : {}),
-                            ...(!!breadcrumbId ? { breadcrumbId: `${breadcrumbId}` } : {}),
-                            ...(!!breadcrumbType ? { breadcrumbType: `${breadcrumbType}` } : {}),
-                            ...(!!breadcrumbName ? { breadcrumbName: `${breadcrumbName}` } : {}),
+                            ...(!!categoryQuery
+                                ? { category: `${categoryQuery}` }
+                                : {}),
+                            ...(!!searchValue
+                                ? { search: `${searchValue}` }
+                                : {}),
+                            ...(!!breadcrumbId
+                                ? { breadcrumbId: `${breadcrumbId}` }
+                                : {}),
+                            ...(!!breadcrumbType
+                                ? { breadcrumbType: `${breadcrumbType}` }
+                                : {}),
+                            ...(!!breadcrumbName
+                                ? { breadcrumbName: `${breadcrumbName}` }
+                                : {}),
                             openSlider: `${openSlider}`,
                             openedId: `${sliderData._id}`,
                             type: `${sliderDataType}`,
@@ -147,10 +173,13 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                 );
             }
         } else {
+            document.body.style.overflow = "auto";
             router.replace(
                 {
                     query: {
-                        ...(!!categoryQuery ? { category: `${categoryQuery}` } : {}),
+                        ...(!!categoryQuery
+                            ? { category: `${categoryQuery}` }
+                            : {}),
                         ...(!!searchValue ? { search: `${searchValue}` } : {}),
                     },
                 },
@@ -162,7 +191,11 @@ const Layout = ({ children, fallback }: LayoutProps) => {
 
     useEffect(() => {
         if (openProfile) {
-            if (router.query.search || typeof router.query.search === "string") {
+            document.body.style.overflow = "hidden";
+            if (
+                router.query.search ||
+                typeof router.query.search === "string"
+            ) {
                 router.replace(
                     {
                         query: {
@@ -186,6 +219,7 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                 );
             }
         } else {
+            document.body.style.overflow = "auto";
             let { openProfile, ...query } = router.query;
             router.replace(
                 {
@@ -252,7 +286,15 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                                                 setShowSuggestions(true);
                                             }}
                                             onKeyDown={(e) => executeSearch(e)}
-                                            onBlur={(e) => setTimeout(() => setShowSuggestions(false), 100)}
+                                            onBlur={(e) =>
+                                                setTimeout(
+                                                    () =>
+                                                        setShowSuggestions(
+                                                            false
+                                                        ),
+                                                    100
+                                                )
+                                            }
                                         />
                                     </SearchInputWrapper>
                                     <StyledSelect>
@@ -276,8 +318,10 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                                                     height: "100%",
                                                     border: "none",
                                                     borderRadius: 0,
-                                                    borderTopRightRadius: "32px",
-                                                    borderBottomRightRadius: "32px",
+                                                    borderTopRightRadius:
+                                                        "32px",
+                                                    borderBottomRightRadius:
+                                                        "32px",
                                                     boxShadow: "none",
                                                     outline: "none",
                                                     ["&:hover"]: {
@@ -318,7 +362,10 @@ const Layout = ({ children, fallback }: LayoutProps) => {
                                             search: router.query.search,
                                         };
 
-                                        const url = { pathname: "/searchResults", query };
+                                        const url = {
+                                            pathname: "/searchResults",
+                                            query,
+                                        };
                                         router.push(url);
                                     }}
                                 >
@@ -334,7 +381,8 @@ const Layout = ({ children, fallback }: LayoutProps) => {
     } else {
         return (
             <>
-                <PageTransition animationType="fade">{children}</PageTransition>;
+                <PageTransition animationType="fade">{children}</PageTransition>
+                ;
             </>
         );
     }
@@ -345,13 +393,17 @@ export const getServerSideProps: GetServerSideProps<{
     fallback: { searchHits: SearchHits };
 }> = async (context) => {
     const search = context.query["search"] as string;
-    const category = (context.query["category"] ? context.query["category"] : "all") as
-        | "projects"
-        | "skills"
-        | "people"
-        | "all";
+    const category = (
+        context.query["category"] ? context.query["category"] : "all"
+    ) as "projects" | "skills" | "people" | "all";
     const data = await fetchSearchResults(category);
-    const searchHits = outputFormatterHelper(category, search, data?.people, data?.projects, data?.skills);
+    const searchHits = outputFormatterHelper(
+        category,
+        search,
+        data?.people,
+        data?.projects,
+        data?.skills
+    );
 
     return {
         props: {
@@ -362,21 +414,23 @@ export const getServerSideProps: GetServerSideProps<{
     };
 };
 
-export const StyledPageContainer = styled.div<{ additionalStyles?: CSSObject }>(({ additionalStyles }) => ({
-    padding: "0 24px",
-    width: "100%",
-    [mq("lg")]: {
-        maxWidth: "1440px",
-        margin: "0 auto",
-        padding: "0 32px",
-    },
-    [mq("xl")]: {
-        maxWidth: "1600px",
-        margin: "0 auto",
-        padding: "0 48px",
-    },
-    ...additionalStyles,
-}));
+export const StyledPageContainer = styled.div<{ additionalStyles?: CSSObject }>(
+    ({ additionalStyles }) => ({
+        padding: "0 24px",
+        width: "100%",
+        [mq("lg")]: {
+            maxWidth: "1440px",
+            margin: "0 auto",
+            padding: "0 32px",
+        },
+        [mq("xl")]: {
+            maxWidth: "1600px",
+            margin: "0 auto",
+            padding: "0 48px",
+        },
+        ...additionalStyles,
+    })
+);
 
 export const DashboardWrapper = styled.div(({}) => ({
     display: "flex",
@@ -423,29 +477,31 @@ export const SearchContainer = styled.div({
     gap: "8px",
 });
 
-export const StyledSearchInput = styled.input<{ active: boolean }>(({ active }) => ({
-    padding: "10px 6px",
-    paddingLeft: "12px",
-    width: "100%",
-    boxShadow: active ? "0px 22px 30px -10px rgba(0, 0, 0, 0.1)" : "none",
-    borderBottomLeftRadius: "32px",
-    borderTopLeftRadius: "32px",
-    borderTop: `2px solid ${colors.primary.black}`,
-    borderBottom: "none",
-    borderLeft: "none",
-    borderRight: "none",
-    fontSize: "16px",
-    zIndex: "2",
-    outline: "none",
-    height: "100%",
-    [mq("lg")]: {
-        padding: "12px 8px",
-        paddingLeft: "16px",
-        borderBottomLeftRadius: "48px",
-        borderTopLeftRadius: "48px",
-        fontSize: "20px",
-    },
-}));
+export const StyledSearchInput = styled.input<{ active: boolean }>(
+    ({ active }) => ({
+        padding: "10px 6px",
+        paddingLeft: "12px",
+        width: "100%",
+        boxShadow: active ? "0px 22px 30px -10px rgba(0, 0, 0, 0.1)" : "none",
+        borderBottomLeftRadius: "32px",
+        borderTopLeftRadius: "32px",
+        borderTop: `2px solid ${colors.primary.black}`,
+        borderBottom: "none",
+        borderLeft: "none",
+        borderRight: "none",
+        fontSize: "16px",
+        zIndex: "2",
+        outline: "none",
+        height: "100%",
+        [mq("lg")]: {
+            padding: "12px 8px",
+            paddingLeft: "16px",
+            borderBottomLeftRadius: "48px",
+            borderTopLeftRadius: "48px",
+            fontSize: "20px",
+        },
+    })
+);
 
 export const SearchIconWrapper = styled.span({
     position: "absolute",

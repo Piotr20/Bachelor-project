@@ -26,12 +26,13 @@ const SlideIn = () => {
     const [skill, setSkill] = useState<Skill>();
     const [breadcrumbs, setBreadcrumbs] = useState<any>();
 
-    const { openSlider, sliderData, setOpenSlider, setDataInSlider } = useNavStore((state) => ({
-        openSlider: state.openSlider,
-        sliderData: state.sliderData,
-        setOpenSlider: state.setOpenSlider,
-        setDataInSlider: state.setDataInSlider,
-    }));
+    const { openSlider, sliderData, setOpenSlider, setDataInSlider } =
+        useNavStore((state) => ({
+            openSlider: state.openSlider,
+            sliderData: state.sliderData,
+            setOpenSlider: state.setOpenSlider,
+            setDataInSlider: state.setDataInSlider,
+        }));
     const { searchResults, setSearchResults } = useSearchStore((state) => ({
         searchResults: state.searchResults,
         setSearchResults: state.setSearchResults,
@@ -41,7 +42,8 @@ const SlideIn = () => {
         if (router.query.openSlider === "true") {
             setOpenSlider(true);
             const findResultById = searchResults?.find(
-                (result: User | Project | Skill) => result?._id === router.query.openedId
+                (result: User | Project | Skill) =>
+                    result?._id === router.query.openedId
             );
             if (findResultById) {
                 setDataInSlider(findResultById);
@@ -157,7 +159,8 @@ const SlideIn = () => {
                                     }}
                                     tag="h6"
                                     additionalStyles={{
-                                        backgroundImage: "linear-gradient(#feff00,#feff00)",
+                                        backgroundImage:
+                                            "linear-gradient(#feff00,#feff00)",
                                         backgroundSize: "0 40%",
                                         backgroundRepeat: "no-repeat",
                                         backgroundPosition: "0 95%",
@@ -165,7 +168,8 @@ const SlideIn = () => {
                                         padding: "0 2px",
                                         cursor: "pointer",
                                         ["&:hover"]: {
-                                            backgroundImage: "linear-gradient(#feff00,#feff00)",
+                                            backgroundImage:
+                                                "linear-gradient(#feff00,#feff00)",
                                             backgroundSize: "100% 40%",
                                             backgroundPosition: "0 95%",
                                             color: colors.primary.black,
@@ -298,6 +302,8 @@ export const ActionButtonsWrapper = styled.div({
     gap: "8px",
     justifyContent: "flex-end",
     paddingBottom: "12px",
+    paddingTop: "12px",
+
     paddingRight: "24px",
 });
 

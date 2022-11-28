@@ -80,10 +80,11 @@ export default ProjectsOverview;
 
 export const OverviewContainer = styled.div({
     marginTop: "24px",
-    overflow: "hidden",
     padding: "0 24px",
+    paddingBottom: "12px",
     [mq("lg")]: {
         padding: "0 40px",
+        paddingBottom: "24px",
     },
 });
 

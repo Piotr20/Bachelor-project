@@ -12,31 +12,20 @@ type SliderOverviewProps = {
 };
 
 const SkillsContent = ({ skills }: SliderOverviewProps) => {
-    const { openSlider, setDataInSlider, setOpenSlider, setDataType } = useNavStore((state) => ({
-        openSlider: state.openSlider,
-        toggleSlider: state.toggleSlider,
-        setDataInSlider: state.setDataInSlider,
-        setOpenSlider: state.setOpenSlider,
-        setDataType: state.setDataType,
-    }));
+    const { openSlider, setDataInSlider, setOpenSlider, setDataType } =
+        useNavStore((state) => ({
+            openSlider: state.openSlider,
+            toggleSlider: state.toggleSlider,
+            setDataInSlider: state.setDataInSlider,
+            setOpenSlider: state.setOpenSlider,
+            setDataType: state.setDataType,
+        }));
 
     return (
         <SkillsContainer>
             {skills?.map((skill: Skill, key) => {
                 return (
-                    <SkillTag
-                        onClick={() =>
-                            handleSlideIn(
-                                skill,
-                                setOpenSlider,
-                                setDataInSlider,
-                                setDataType,
-                                "skill",
-                                openSlider
-                            )
-                        }
-                        key={key}
-                    >
+                    <SkillTag key={key}>
                         <ImpactImage
                             src={skill?.imageURL}
                             alt={skill?.name}

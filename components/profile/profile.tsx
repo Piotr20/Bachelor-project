@@ -19,13 +19,14 @@ import ProfileEditView from "./profileEditView";
 
 const Profile = () => {
     const router = useRouter();
-    const { user, openProfile, editMode, setOpenProfile, setEditMode } = useUserStore((state) => ({
-        user: state.user,
-        openProfile: state.openProfile,
-        editMode: state.editMode,
-        setOpenProfile: state.setOpenProfile,
-        setEditMode: state.setEditMode,
-    }));
+    const { user, openProfile, editMode, setOpenProfile, setEditMode } =
+        useUserStore((state) => ({
+            user: state.user,
+            openProfile: state.openProfile,
+            editMode: state.editMode,
+            setOpenProfile: state.setOpenProfile,
+            setEditMode: state.setEditMode,
+        }));
     const { authSignIn, authSignOut } = useAuth();
 
     useEffect(() => {
@@ -148,7 +149,11 @@ const Profile = () => {
                                 },
                             }}
                         >
-                            {!editMode ? <ProfileOverview user={user} /> : <ProfileEditView />}
+                            {!editMode ? (
+                                <ProfileOverview user={user} />
+                            ) : (
+                                <ProfileEditView />
+                            )}
                         </motion.div>
                     </AnimatePresence>
                 </StyledSliderWrapper>
@@ -164,6 +169,10 @@ export const StyledSliderWrapper = styled.div({
     height: "100vh",
     boxShadow: " 0px -22px 30px -10px rgba(0, 0, 0, 0.16)",
     overflowY: "auto",
+    overflowX: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    paddingBottom: "24px",
 });
 export const AnimationContainer = styled.div({
     ["&>div"]: {
