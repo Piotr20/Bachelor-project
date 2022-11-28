@@ -302,9 +302,11 @@ export const ActionButtonsWrapper = styled.div({
     gap: "8px",
     justifyContent: "flex-end",
     paddingBottom: "12px",
-    paddingTop: "12px",
-
+    paddingTop: "24px",
     paddingRight: "24px",
+    [mq("lg")]: {
+        paddingTop: "40px",
+    },
 });
 
 export const StyledAnchor = styled.a({
@@ -320,15 +322,15 @@ export const StyledAnchor = styled.a({
     letterSpacing: "1.75px",
     padding: "12px",
     fontSize: "16px",
+    backgroundColor: colors.primary.black,
+    color: colors.base.white,
+    transition: "all 0.3s ease",
+    borderRadius: "48px",
     [mq("lg")]: {
         width: "auto",
         padding: "12px",
         fontSize: "16px",
     },
-    backgroundColor: colors.primary.black,
-    color: colors.base.white,
-    transition: "all 0.3s ease",
-    borderRadius: "48px",
     ["&:hover"]: {
         backgroundColor: colors.secondary.lightYellow,
         color: colors.primary.black,
