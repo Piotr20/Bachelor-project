@@ -32,11 +32,17 @@ const ProfileEditView = () => {
     const [selectedSkills, setSelectedSkills] = useState<any>();
     const [skillOptions, setSkillOptions] = useState<any[]>();
     const [selectedExpertSkills, setSelectedExpertSkills] = useState<any>();
-    const [selectedMongoExpertSkills, setSelectedMongoExpertSkills] = useState<any>();
-    const [selectedIntermidiateSkills, setSelectedIntermidiateSkills] = useState<any>();
-    const [selectedMongoIntermidiateSkills, setSelectedMongoIntermidiateSkills] = useState<any>();
+    const [selectedMongoExpertSkills, setSelectedMongoExpertSkills] =
+        useState<any>();
+    const [selectedIntermidiateSkills, setSelectedIntermidiateSkills] =
+        useState<any>();
+    const [
+        selectedMongoIntermidiateSkills,
+        setSelectedMongoIntermidiateSkills,
+    ] = useState<any>();
     const [selectedBasicSkills, setSelectedBasicSkills] = useState<any>();
-    const [selectedMongoBasicSkills, setSelectedMongoBasicSkills] = useState<any>();
+    const [selectedMongoBasicSkills, setSelectedMongoBasicSkills] =
+        useState<any>();
     const router = useRouter();
     const { user, setUserData, setEditMode } = useUserStore((state) => ({
         user: state.user,
@@ -50,13 +56,22 @@ const ProfileEditView = () => {
         let defaultExpertSkills: UserSkill[] = [];
         user?.skills?.forEach((userSkill: any) => {
             if (userSkill?.expertise === "basic") {
-                defaultBasicSkills.push({ skill: userSkill?.skill?._id, expertise: "basic" });
+                defaultBasicSkills.push({
+                    skill: userSkill?.skill?._id,
+                    expertise: "basic",
+                });
             }
             if (userSkill?.expertise === "intermidiate") {
-                defaultIntermidiateSkills.push({ skill: userSkill?.skill?._id, expertise: "intermidiate" });
+                defaultIntermidiateSkills.push({
+                    skill: userSkill?.skill?._id,
+                    expertise: "intermidiate",
+                });
             }
             if (userSkill?.expertise === "expert") {
-                defaultExpertSkills.push({ skill: userSkill?.skill?._id, expertise: "expert" });
+                defaultExpertSkills.push({
+                    skill: userSkill?.skill?._id,
+                    expertise: "expert",
+                });
             }
         });
         setSelectedMongoBasicSkills(defaultBasicSkills);
@@ -70,7 +85,11 @@ const ProfileEditView = () => {
     }, []);
 
     useEffect(() => {
-        if (selectedMongoBasicSkills || selectedMongoIntermidiateSkills || selectedMongoExpertSkills) {
+        if (
+            selectedMongoBasicSkills ||
+            selectedMongoIntermidiateSkills ||
+            selectedMongoExpertSkills
+        ) {
             setUserData({
                 ...user,
                 skills: [
@@ -80,7 +99,11 @@ const ProfileEditView = () => {
                 ],
             });
         }
-    }, [selectedMongoBasicSkills, selectedMongoIntermidiateSkills, selectedMongoExpertSkills]);
+    }, [
+        selectedMongoBasicSkills,
+        selectedMongoIntermidiateSkills,
+        selectedMongoExpertSkills,
+    ]);
 
     let defaultProjects: any[] = [];
     user?.projects?.map((project: Project) => {
@@ -215,6 +238,20 @@ const ProfileEditView = () => {
                     }}
                 />
             </StyledSelect>
+            <Input
+                defaultValue={user?.location}
+                placeholder={user?.location}
+                type="text"
+                onChange={(e) =>
+                    setUserData({
+                        ...user,
+                        location: (e.target as HTMLInputElement).value,
+                    })
+                }
+                additionalStyles={{
+                    marginTop: "20px",
+                }}
+            />
 
             <Input
                 placeholder={user?.phone}
@@ -248,7 +285,13 @@ const ProfileEditView = () => {
                     isMulti={true}
                     defaultValue={defaultProjects}
                     onChange={(newValue: any) => {
-                        handleUserPropsHelper(newValue, setUserData, user, setSelectedProjects, "projects");
+                        handleUserPropsHelper(
+                            newValue,
+                            setUserData,
+                            user,
+                            setSelectedProjects,
+                            "projects"
+                        );
                     }}
                     options={projectOptions}
                     styles={{
@@ -274,7 +317,8 @@ const ProfileEditView = () => {
                         }),
                         multiValue: (privided) => ({
                             ...privided,
-                            backgroundColor: colors.secondary.lightYellow + "40",
+                            backgroundColor:
+                                colors.secondary.lightYellow + "40",
                         }),
                     }}
                 />
@@ -382,7 +426,8 @@ const ProfileEditView = () => {
                         }),
                         multiValue: (provided) => ({
                             ...provided,
-                            backgroundColor: colors.secondary.lightYellow + "60",
+                            backgroundColor:
+                                colors.secondary.lightYellow + "60",
                         }),
                     }}
                 />
