@@ -12,7 +12,7 @@ export const authOptions = {
                 process.env.NEXT_PUBLIC_AZURE_AD_B2C_PRIMARY_USER_FLOW,
             authorization: {
                 params: {
-                    scope: `https://${process.env.AZURE_AD_B2C_TENANT_NAME}.onmicrosoft.com/api/Api.read offline_access openid`,
+                    scope: `https://${process.env.NEXT_PUBLIC_AZURE_AD_B2C_TENANT_NAME}.onmicrosoft.com/api/Api.read offline_access openid`,
                 },
             },
         }),
